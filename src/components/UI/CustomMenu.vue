@@ -21,7 +21,7 @@ const handleClose = (key: string, keyPath: string[]) => {
             <el-icon><location /></el-icon>
             <span>Меню</span>
           </template>
-          <el-menu-item-group title="">
+          <el-menu-item-group class="pos" title="">
             <el-menu-item index="1-1">Актеры</el-menu-item>
             <el-menu-item index="1-2">Режиссеры</el-menu-item>
           </el-menu-item-group>
@@ -34,6 +34,12 @@ const handleClose = (key: string, keyPath: string[]) => {
 <style scoped>
 .tac {
   width: 198%;
+}
+.pos{
+  
+  position: absolute;
+  z-index: 1000;
+
 }
 
 @media screen and (max-width: 600px) {

@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import HelloWorld from './HelloWorld.vue'
+
+const modal = ()=>{
+  console.log('был клииик')
+}
 </script>
 
-<template>
-  <div>
+<template @click="modal">
+  <div >
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>

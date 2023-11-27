@@ -1,10 +1,27 @@
 <script setup lang="ts">
 import NavBar from './components/NavBar.vue';
+import { ref } from 'vue';
+import { useMovieStore } from './store';
+
+const movieStore = useMovieStore()
+
+const show = ref(false)
+
+
+
+const modal = ()=>{
+  // show.value = true
+  console.log('был клик у папы')
+  movieStore.setShowModalTrue()
+}
 </script>
 
-<template>
-  <NavBar />
-  <RouterView/>
+<template >
+  <div @click="modal">
+    <NavBar :modal="show"/>
+    <RouterView />
+  </div>
+ 
 
 </template>
 
