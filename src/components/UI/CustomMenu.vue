@@ -1,51 +1,43 @@
 <script setup lang="ts">
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue';
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
-};
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
-};
+import { ArrowDown } from '@element-plus/icons-vue';
 </script>
 
 <template>
-  <el-row class="tac">
-    <el-col :span="12">
-      <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose">
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><location /></el-icon>
-            <span>Меню</span>
-          </template>
-          <el-menu-item-group class="pos" title="">
-            <el-menu-item index="1-1">Актеры</el-menu-item>
-            <el-menu-item index="1-2">Режиссеры</el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
-      </el-menu>
-    </el-col>
-  </el-row>
+  <div class="flex flex-wrap items-center zz">
+    <el-dropdown class="sz">
+      <el-button class="sz" type="primary">
+        Меню<el-icon class="el-icon--right"><arrow-down /></el-icon>
+      </el-button>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>Режиссеры</el-dropdown-item>
+          <el-dropdown-item>Актеры</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </div>
 </template>
 
 <style scoped>
-.tac {
-  width: 198%;
+.example-showcase .el-dropdown + .el-dropdown {
+  margin-left: 15px;
 }
-.pos{
-  
-  position: absolute;
-  z-index: 1000;
-
+.example-showcase .el-dropdown-link {
+  cursor: pointer;
+  color: var(--el-color-primary);
+  display: flex;
+  align-items: center;
 }
-
+.zz {
+  width: 150px;
+}
+.sz {
+  width: 100%;
+}
 @media screen and (max-width: 600px) {
   .tac {
-    width: 100% ;
+    width: 100%;
   }
-
 }
 </style>

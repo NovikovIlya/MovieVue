@@ -7,10 +7,15 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ActorAward: typeof import('./src/components/ActorAward.vue')['default']
     CustomMenu: typeof import('./src/components/UI/CustomMenu.vue')['default']
     DirectorAward: typeof import('./src/components/DirectorAward.vue')['default']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
+    ElDropdown: typeof import('element-plus/es')['ElDropdown']
+    ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
+    ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']

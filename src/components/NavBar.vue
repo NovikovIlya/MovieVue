@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-import { dataTagSymbol, useQuery } from '@tanstack/vue-query';
+import { ref } from 'vue';
+import { useQuery } from '@tanstack/vue-query';
 import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
 
+type DataType = {
+  id: number
+  name: string
+  enName: string
+  photo: string
+}
+
 defineProps<{ modal: boolean }>();
 
-const movieStore = useMovieStore();
 
+const movieStore = useMovieStore();
 const inputValue = ref('');
 
-const getTodos = async (name: any) => {
+const getPerson = async (inputValue) => {
   const res = await fetch(
     `https://api.kinopoisk.dev/v1.4/person/search?query=${inputValue.value}`,
     {
@@ -24,9 +31,9 @@ const getTodos = async (name: any) => {
   return dataZ;
 };
 
-const { data, refetch, isLoading, isPending } = useQuery<any, any>({
+const { data, refetch, isLoading,isError } = useQuery<DataType[], any>({
   queryKey: ['todos', inputValue],
-  queryFn: () => getTodos(inputValue),
+  queryFn: () => getPerson(inputValue),
   retry: false,
   enabled: false,
   refetchOnWindowFocus: false,
@@ -42,16 +49,16 @@ const showModal = () => {
 const showModalFalse = () => {
   movieStore.setShowModalFalse();
 };
-const imageLoadOnError = (e)=>{
-  e.target.src = "https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png"
-}
+const imageLoadOnError = (e) => {
+  e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
+};
 </script>
 
 <template>
   <div @click="showModal" class="container">
-    <div>ПриветЛюдям!</div>
+    <img class="imgLogo" src="https://i.ibb.co/qkXN6VH/photo-2023-11-27-22-37-57.jpg"/>
 
-    <div>
+    <div class="mainInp">
       <input
         class="inp"
         @keypress.enter.stop
@@ -60,14 +67,16 @@ const imageLoadOnError = (e)=>{
         @input.stop="onInputChange"
         type="text" />
 
-      <div :class="['spis','blk',movieStore.showModal ? 'hidden' : '', 'kek']">
-        <RouterLink 
-          :to=" 'person/' + item.id"
+      <div :class="['spis', 'blk', movieStore.showModal ? 'hidden' : '', 'kek']">
+        <RouterLink
+          :to="'person/' + item.id"
           @click.stop="showModal"
           class="inp2"
+          :key='item.id'
           v-for="item of data">
-            <img @error="imageLoadOnError" class="img" :src="item.photo"/> {{ item.name }} {{ item.id }}
-        </RouterLink >
+          <img @error="imageLoadOnError" class="img" :src="item.photo" /> {{ item.name }}
+          {{ item.id }}
+        </RouterLink>
       </div>
 
       <div class="spis2" v-if="isLoading">
@@ -79,6 +88,7 @@ const imageLoadOnError = (e)=>{
           </template>
         </el-skeleton>
       </div>
+      <div class="spis2" v-if="isError">Произошла ошибка, попробуйте позже</div>
     </div>
 
     <div class="men">
@@ -89,9 +99,13 @@ const imageLoadOnError = (e)=>{
 
 <style scoped>
 .container {
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.imgLogo{
+  width: 150px;
 }
 .autoInput {
   position: absolute;
@@ -114,7 +128,7 @@ const imageLoadOnError = (e)=>{
 }
 
 .inp {
-  width: 100%;
+  /* width: 100%; */
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
@@ -144,20 +158,35 @@ const imageLoadOnError = (e)=>{
   background: rgb(251, 251, 251);
   transition: all 0.1s ease 0s;
 }
-.blk{
+.blk {
   box-shadow: 10px 8px 0px rgb(191 219 254);
 }
-.img{
+.img {
   width: 30px;
   height: 30px;
   margin-right: 8px;
 }
 @media screen and (max-width: 600px) {
+  .container{
+  
+    flex-wrap: wrap;
+  }
+  .imgLogo{
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  .mainInp{
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
   .men {
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
-  .autoInput {
+  
+  /* .autoInput {
     position: relative;
-  }
+  } */
 }
 </style>

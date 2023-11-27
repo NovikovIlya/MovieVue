@@ -2,6 +2,7 @@ import { createWebHistory,createRouter } from 'vue-router'
 import Vue from "vue"
 import DirectorAward from '../components/DirectorAward.vue'
 import PersonPage from '../components/PersonPage.vue'
+import ActorAward from '../components/ActorAward.vue'
 
 const routes = [
     {
@@ -11,6 +12,10 @@ const routes = [
     {
         path: '/person/:id',
         component: PersonPage
+    },
+    {
+        path: '/actor',
+        component: ActorAward
     },
    
 
