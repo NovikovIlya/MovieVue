@@ -28,6 +28,6 @@ const modal = ()=>{
 
 <style scoped>
 .hh{
-  height: 100vh;
+  /* height: 100vh; */
 }
 </style>

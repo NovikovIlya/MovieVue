@@ -3,16 +3,10 @@ import { ref } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
 import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
+import { DataType } from '../types';
 
-type DataType = {
-  id: number
-  name: string
-  enName: string
-  photo: string
-}
 
 defineProps<{ modal: boolean }>();
-
 
 const movieStore = useMovieStore();
 const inputValue = ref('');

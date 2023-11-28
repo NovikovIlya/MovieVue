@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router';
 import { useMovieStore } from '../store/index';
 import { useQuery } from '@tanstack/vue-query';
 import { onMounted } from 'vue';
-import { PersonInfo } from '../types';
+import { PersonInfo } from '../types/index.js';
 
 const movieStore = useMovieStore()
 const {params:{id}} = useRoute()

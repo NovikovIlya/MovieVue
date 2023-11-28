@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue';
 import { ArrowDown } from '@element-plus/icons-vue';
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
@@ -11,8 +12,8 @@ import { ArrowDown } from '@element-plus/icons-vue';
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>Режиссеры</el-dropdown-item>
-          <el-dropdown-item>Актеры</el-dropdown-item>
+          <el-dropdown-item ><RouterLink class="td" to="/">Режиссеры</RouterLink></el-dropdown-item>
+          <el-dropdown-item ><RouterLink class="td" to="/actor">Актеры</RouterLink></el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -34,6 +35,9 @@ import { ArrowDown } from '@element-plus/icons-vue';
 }
 .sz {
   width: 100%;
+}
+.td{
+  text-decoration: none;
 }
 @media screen and (max-width: 600px) {
   .tac {

@@ -55,3 +55,9 @@ export type  PersonInfo = {
     enProfession: string
   }
   
+  export type DataType = {
+    id: number
+    name: string
+    enName: string
+    photo: string
+  }
