@@ -59,5 +59,17 @@ export type  PersonInfo = {
     id: number
     name: string
     enName: string
-    photo: string
+    photo: string,
+    age: number,
+    title?: string,
+    type?: any;
   }
+
+  export type DataPersonType = {
+    id: number;
+    name: string;
+    enName: string;
+    photo: string;
+    age: number;
+    sex: string;
+  };

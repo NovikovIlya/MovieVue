@@ -12,8 +12,9 @@ import { RouterLink } from 'vue-router';
       </el-button>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item ><RouterLink class="td" to="/">Режиссеры</RouterLink></el-dropdown-item>
-          <el-dropdown-item ><RouterLink class="td" to="/actor">Актеры</RouterLink></el-dropdown-item>
+          <el-dropdown-item ><RouterLink class="td" to="/">Люди</RouterLink></el-dropdown-item>
+          <el-dropdown-item ><RouterLink class="td" to="/actor">Студии</RouterLink></el-dropdown-item>
+          <el-dropdown-item ><RouterLink class="td" to="/actor">Избранное</RouterLink></el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -38,6 +39,7 @@ import { RouterLink } from 'vue-router';
 }
 .td{
   text-decoration: none;
+  width: 100%;
 }
 @media screen and (max-width: 600px) {
   .tac {

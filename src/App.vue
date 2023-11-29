@@ -8,18 +8,17 @@ const movieStore = useMovieStore()
 const show = ref(false)
 
 
-
 const modal = ()=>{
-  // show.value = true
   console.log('был клик у папы')
   movieStore.setShowModalTrue()
 }
 </script>
 
+
 <template >
   <div class="hh" @click="modal">
     <NavBar :modal="show"/>
-    <RouterView />
+    <RouterView></RouterView>
   </div>
  
 
@@ -27,7 +26,5 @@ const modal = ()=>{
 
 
 <style scoped>
-.hh{
-  /* height: 100vh; */
-}
+
 </style>

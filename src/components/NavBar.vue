@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
 import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
@@ -10,16 +10,34 @@ defineProps<{ modal: boolean }>();
 
 const movieStore = useMovieStore();
 const inputValue = ref('');
+const switcher = ref('Люди')
 
 const getPerson = async (inputValue) => {
-  const res = await fetch(
+  if(inputValue.value.length <= 0){
+    return
+  }
+  if(switcher.value === 'Люди'){
+    var res = await fetch(
     `https://api.kinopoisk.dev/v1.4/person/search?query=${inputValue.value}`,
+    {
+      headers: {
+        'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
+      },
+
+    },
+  );
+  }
+  else{
+    var res = await fetch(
+    `https://api.kinopoisk.dev/v1.4/studio?title=${inputValue.value}`,
     {
       headers: {
         'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
       },
     },
   );
+  }
+  
   const data = await res.json();
   const dataZ = data.docs;
   return dataZ;
@@ -34,6 +52,9 @@ const { data, refetch, isLoading,isError } = useQuery<DataType[], any>({
 });
 
 function onInputChange() {
+  if(inputValue.value.length <= 0){
+    return
+  }
   refetch();
 }
 
@@ -46,11 +67,29 @@ const showModalFalse = () => {
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
+
+watch(switcher,(newSwitcher)=>{
+  console.log('switcher',switcher)
+  console.log('newSwitcher',newSwitcher)
+
+  refetch()
+})
 </script>
 
 <template>
   <div @click="showModal" class="container">
-    <img class="imgLogo" src="https://i.ibb.co/qkXN6VH/photo-2023-11-27-22-37-57.jpg"/>
+    <RouterLink to="/">
+      <img class="imgLogo" src="https://i.ibb.co/qkXN6VH/photo-2023-11-27-22-37-57.jpg"/>
+    </RouterLink>
+    <div>
+    <div class="switcherStyle">
+      <el-radio-group v-model="switcher" size="large">
+      <el-radio-button label="Люди" />
+      <el-radio-button label="Студии" />
+    </el-radio-group>
+    </div>
+    
+    
 
     <div class="mainInp">
       <input
@@ -68,17 +107,24 @@ const imageLoadOnError = (e) => {
           class="inp2"
           :key='item.id'
           v-for="item of data">
-          <img @error="imageLoadOnError" class="img" :src="item.photo" /> {{ item.name }}
-          {{ item.id }}
+          <div v-if="item.name?.length > 0 || item.title?.length > 0">
+            <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" /> 
+            {{ item.name }}
+            {{ item.title }}
+           <div> {{  item.age === undefined ? item.type : '' }}</div>
+           {{item?.age && item.age === 0 || item.age === undefined ? '' : ',' + ' ' + item.age}}
+          </div>
+          
         </RouterLink>
       </div>
-
-      <div class="spis2" v-if="isLoading">
-        <el-skeleton animated style="width: 100%">
+      </div>
+      <div class="spis2 ss" v-if="isLoading">
+        <el-skeleton animated style="width: 100%; height: 24px">
           <template #template>
-            <el-skeleton-item variant="text" style="margin-right: 16px" />
-            <el-skeleton-item variant="text" style="margin-right: 16px" />
-            <el-skeleton-item variant="text" style="margin-right: 16px" />
+            <el-skeleton-item  variant="text" style="margin-right: 16px;height: 24px" />
+            <el-skeleton-item variant="text" style="margin-right: 16px;height: 24px" />
+            <el-skeleton-item variant="text" style="margin-right: 16px;height: 24px" />
+            <el-skeleton-item variant="text" style="margin-right: 16px;height: 24px" />
           </template>
         </el-skeleton>
       </div>
@@ -97,6 +143,9 @@ const imageLoadOnError = (e) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.ss{
+  margin-top: 10px;
 }
 .imgLogo{
   width: 150px;
@@ -138,6 +187,7 @@ const imageLoadOnError = (e) => {
   border: 2px solid rgb(124, 138, 255);
 }
 .inp2 {
+  text-decoration: none;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -160,9 +210,14 @@ const imageLoadOnError = (e) => {
   height: 30px;
   margin-right: 8px;
 }
+.switcherStyle{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
 @media screen and (max-width: 600px) {
   .container{
-  
+    justify-content: center;
     flex-wrap: wrap;
   }
   .imgLogo{

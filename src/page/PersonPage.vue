@@ -8,9 +8,6 @@ import { PersonInfo } from '../types/index.js';
 const movieStore = useMovieStore()
 const {params:{id}} = useRoute()
 
-type DataType = {
-
-}
 
 const getPerson = async (id) => {
   const res = await fetch(
@@ -33,20 +30,16 @@ const { data, refetch, isLoading,isError } = useQuery<PersonInfo, Error>({
   enabled: false,
   refetchOnWindowFocus: false,
 });
-
-// onMounted(()=>{
-//     getPerson(id)
-// })
 </script>
 
 
 <template>
     <div class="container">
         <div class="left">
-            <img :src="data.photo" alt="text"/>
+            <img :src="data?.photo ? data.photo : ''" alt="text"/>
         </div>
         <div class="right">
-            <h1>{{ data.name }}</h1>
+            <h1>{{ data?.name }}</h1>
 
             <h2>О персоне:</h2>
             <div class="about">

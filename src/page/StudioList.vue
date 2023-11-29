@@ -3,92 +3,26 @@ import { ref, onMounted, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { DataPersonType } from '../types';
 
-const valueSort = ref('countAwards');
-const valueSortType = ref('-1');
-const valueSortProffession = ref('Режиссер');
+
+const valueSortProffession = ref('1');
 const page = ref(0);
-const dataPerson = ref<DataPersonType[]>([]);
+const dataPerson = ref<any[]>([]);
 const isLoading = ref(false);
 const isError = ref(false);
 
-const options = [
-  {
-    value: 'countAwards',
-    label: 'По наградам',
-  },
-  {
-    value: 'age',
-    label: 'По возрасту',
-  },
-  {
-    value: 'movies.rating',
-    label: 'По рейтингу фильма',
-  },
-];
+
 const options2 = [
-  {
-    value: 'Режиссер',
-    label: 'Режиссер',
-  },
-  {
-    value: 'Актер',
-    label: 'Актер',
-  },
-  {
-    value: 'Актер дубляжа',
-    label: 'Актер дубляжа',
-  },
-  {
-    value: 'Актриса',
-    label: 'Актриса',
-  },
-  {
-    value: 'Актриса дубляжа',
-    label: 'Актриса дубляжа',
-  },
-  {
-    value: 'Звукорежиссер',
-    label: 'Звукорежиссер',
-  },
-  {
-    value: 'Композитор',
-    label: 'Композитор',
-  },
-  {
-    value: 'Монтажер',
-    label: 'Монтажер',
-  },
-  {
-    value: 'Озвучка',
-    label: 'Озвучка',
-  },
-  {
-    value: 'Оператор',
-    label: 'Оператор',
-  },
-  {
-    value: 'Переводчик',
-    label: 'Переводчик',
-  },
-  {
-    value: 'Сценарист',
-    label: 'Сценарист',
-  },
-  {
-    value: 'Художник',
-    label: 'Художник',
-  },
-];
-const options3 = [
-  {
-    value: '-1',
-    label: 'По убыванию',
-  },
   {
     value: '1',
     label: 'По возрастанию',
   },
+  {
+    value: '-1',
+    label: 'По убыванию',
+  },
+  
 ];
+
 
 const load = () => {
   if (page.value === 35651) {
@@ -105,7 +39,7 @@ const getPerson = async (page) => {
     isError.value = false;
     isLoading.value = true;
     const res = await fetch(
-      `https://api.kinopoisk.dev/v1.4/person?profession.value=${valueSortProffession.value}&sortType=-1&limit=20&sortField=${valueSort.value}&page=${page.value}`,
+      `https://api.kinopoisk.dev/v1.4/studio?sortField=title&sortType=${valueSortProffession.value}`,
       {
         headers: {
           'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
@@ -129,39 +63,24 @@ const getPerson = async (page) => {
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
-// const { data, refetch, isLoading,isError } = useInfiniteQuery<any, any>({
-//   queryKey: ['todos', page],
-//   queryFn: () => getPerson(page),
-//   retry: false,
-//   // enabled: false,
-//   refetchOnWindowFocus: false,
-// });
+
 
 onMounted(() => {
   load();
 });
-watch(valueSort, (_) => {
-  console.log('valueSort', valueSort);
+watch(valueSortProffession, (_) => {
+  console.log('valueSort', valueSortProffession);
   dataPerson.value = [];
   page.value = 1;
   getPerson(page);
 });
-watch(valueSortProffession, () => {
-  dataPerson.value = [];
-  page.value = 1;
-  getPerson(page);
-});
-watch(valueSortType, () => {
-  dataPerson.value = [];
-  page.value = 1;
-  getPerson(page);
-});
+
 </script>
 
 <template>
   <div class="mainSort">
     <div class="mainSort__left">
-      <h4 class="header">Роль: </h4>
+      <h4 class="header">Сортировать: </h4>
       <el-select v-model="valueSortProffession" class="m-2" placeholder="Select" size="large">
         <el-option
           v-for="item in options2"
@@ -170,24 +89,7 @@ watch(valueSortType, () => {
           :value="item.value" />
       </el-select>
     </div>
-    <div class="mainSort__right">
-      <h4 class="header">Сортировать:</h4>
-      <el-select v-model="valueSort" class="m-2" placeholder="Select" size="large">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value" />
-      </el-select>
 
-      <el-select v-model="valueSortType" class="m-2" placeholder="Select" size="large">
-        <el-option
-          v-for="item in options3"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value" />
-      </el-select>
-    </div>
   </div>
 
   <div style="width: 100%" v-loading="isLoading">
@@ -203,10 +105,10 @@ watch(valueSortType, () => {
                 : 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png'
             " />
           <div class="name">
-            <div class="name__text">{{ person.name ? person.name : person.enName }}</div>
+            <div class="name__text">{{ person.title ? person.title : '' }}</div>
             <div>
-              <div class="name__info">Возраст: {{ person.age }}</div>
-              <div class="name__info">Пол: {{ person.sex }}</div>
+              <div class="name__info">Тип: {{ person.type }}</div>
+              <!-- <div class="name__info">Подтип: {{ person.subType }}</div> -->
             </div>
           </div>
         </RouterLink>
