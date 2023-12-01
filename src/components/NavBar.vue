@@ -18,7 +18,7 @@ const getPerson = async (inputValue) => {
   }
   if(switcher.value === 'Люди'){
     var res = await fetch(
-    `https://api.kinopoisk.dev/v1.4/person/search?query=${inputValue.value}`,
+    `https://api.kinopoisk.dev/v1.4/person/search?limit=10&query=${inputValue.value}`,
     {
       headers: {
         'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
@@ -102,14 +102,14 @@ watch(switcher,(newSwitcher)=>{
 
       <div :class="['spis', 'blk', movieStore.showModal ? 'hidden' : '', 'kek']">
         <RouterLink
-          :to="'person/' + item.id"
+          :to="'/person/' + item.id"
           @click.stop="showModal"
           class="inp2"
           :key='item.id'
           v-for="item of data">
-          <div v-if="item.name?.length > 0 || item.title?.length > 0">
+          <div class="nameAct" v-if="item.name?.length > 0 || item.title?.length > 0">
             <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" /> 
-            {{ item.name }}
+            <div class="nameAct">{{ item.name }}</div>
             {{ item.title }}
            <div> {{  item.age === undefined ? item.type : '' }}</div>
            {{item?.age && item.age === 0 || item.age === undefined ? '' : ',' + ' ' + item.age}}
@@ -214,6 +214,10 @@ watch(switcher,(newSwitcher)=>{
   display: flex;
   width: 100%;
   justify-content: center;
+}
+.nameAct{
+  display: flex;
+  align-items: center;
 }
 @media screen and (max-width: 600px) {
   .container{

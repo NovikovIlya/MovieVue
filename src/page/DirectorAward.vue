@@ -105,7 +105,7 @@ const getPerson = async (page) => {
     isError.value = false;
     isLoading.value = true;
     const res = await fetch(
-      `https://api.kinopoisk.dev/v1.4/person?profession.value=${valueSortProffession.value}&sortType=-1&limit=20&sortField=${valueSort.value}&page=${page.value}`,
+      `https://api.kinopoisk.dev/v1.4/person?profession.value=${valueSortProffession.value}&sortType=${valueSortType.value}&limit=20&sortField=${valueSort.value}&page=${page.value}`,
       {
         headers: {
           'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
