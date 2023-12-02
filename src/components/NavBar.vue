@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/vue-query';
 import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
 import { DataType } from '../types';
+import { useRoute,useRouter } from 'vue-router';
 
 
 defineProps<{ modal: boolean }>();
@@ -11,6 +12,7 @@ defineProps<{ modal: boolean }>();
 const movieStore = useMovieStore();
 const inputValue = ref('');
 const switcher = ref('Люди')
+const route = useRoute()
 
 const getPerson = async (inputValue) => {
   if(inputValue.value.length <= 0){
@@ -74,6 +76,7 @@ watch(switcher,(newSwitcher)=>{
 
   refetch()
 })
+
 </script>
 
 <template>
@@ -89,8 +92,6 @@ watch(switcher,(newSwitcher)=>{
     </el-radio-group>
     </div>
     
-    
-
     <div class="mainInp">
       <input
         class="inp"

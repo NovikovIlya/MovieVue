@@ -2,10 +2,12 @@
 import NavBar from './components/NavBar.vue';
 import { ref } from 'vue';
 import { useMovieStore } from './store';
+import { useRoute } from 'vue-router';
 
 const movieStore = useMovieStore()
 
 const show = ref(false)
+const route = useRoute()
 
 
 const modal = ()=>{
@@ -18,7 +20,7 @@ const modal = ()=>{
 <template >
   <div class="hh" @click="modal">
     <NavBar :modal="show"/>
-    <RouterView></RouterView>
+    <RouterView :key="route.fullPath"></RouterView>
   </div>
  
 
