@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useQuery } from '@tanstack/vue-query';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 const props = defineProps<{
   show: boolean;
   idz?: any;
@@ -39,6 +39,8 @@ const awards = computed(() => {
     return array;
   }
 });
+
+
 </script>
 
 <template>
@@ -62,7 +64,10 @@ const awards = computed(() => {
   </Transition>
 </template>
 
-<style>
+<style scoped>
+.fix{
+
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;

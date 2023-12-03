@@ -27,6 +27,8 @@ const modal = ()=>{
 </template>
 
 
-<style scoped>
-
+<style >
+.fix{
+  overflow: hidden;
+}
 </style>

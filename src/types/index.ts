@@ -16,7 +16,8 @@ export type  PersonInfo = {
     facts: Fact[]
     movies: Movie[]
     updatedAt: string
-    createdAt: string
+    createdAt: string,
+    error:any
   }
   
   export type BirthPlace = {
