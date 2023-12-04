@@ -5,7 +5,9 @@ import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
 import { DataType } from '../types';
 import { useRoute,useRouter } from 'vue-router';
-
+import { ElMessage } from 'element-plus'
+import 'element-plus/es/components/message/style/css'; // this is only needed if the page also used ElMessage
+import 'element-plus/es/components/message-box/style/css';
 
 defineProps<{ modal: boolean }>();
 
@@ -45,13 +47,17 @@ const getPerson = async (inputValue) => {
   return dataZ;
 };
 
-const { data, refetch, isLoading,isError } = useQuery<DataType[], any>({
+const { data, refetch, isLoading,isError:isErr } = useQuery<DataType[], any>({
   queryKey: ['todos', inputValue],
   queryFn: () => getPerson(inputValue),
   retry: false,
   enabled: false,
   refetchOnWindowFocus: false,
 });
+
+const open4 = () => {
+  ElMessage.error('Произошла ошибка, попробуйте позже.')
+}
 
 function onInputChange() {
   if(inputValue.value.length <= 0){
@@ -73,8 +79,12 @@ const imageLoadOnError = (e) => {
 watch(switcher,(newSwitcher)=>{
   console.log('switcher',switcher)
   console.log('newSwitcher',newSwitcher)
-
   refetch()
+})
+watch(isErr,()=>{
+  if(isErr.value===true){
+    open4()
+  }
 })
 
 </script>
@@ -129,7 +139,7 @@ watch(switcher,(newSwitcher)=>{
           </template>
         </el-skeleton>
       </div>
-      <div class="spis2" v-if="isError">Произошла ошибка, попробуйте позже</div>
+      <!-- <div class="spis2" v-if="isError">Произошла ошибка, попробуйте позже</div> -->
     </div>
 
     <div class="men">
@@ -139,6 +149,9 @@ watch(switcher,(newSwitcher)=>{
 </template>
 
 <style scoped>
+.el-message {
+  position: absolute;
+}
 .container {
   margin-top: 10px;
   display: flex;

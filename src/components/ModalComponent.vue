@@ -56,7 +56,7 @@ const awards = computed(() => {
               <el-table-column prop="state" label="Год" width="150" />
               <el-table-column prop="city" label="Фильм" width="200" />
             </el-table>
-            <button class="modal-default-button" @click="$emit('close')">OK</button>
+            <el-button class="modal-default-button" @click="$emit('close')">OK</el-button>
           </slot>
         </div>
       </div>

@@ -3,6 +3,7 @@ import Vue from "vue"
 import DirectorAward from '../page/DirectorAward.vue'
 import PersonPage from '../page/PersonPage.vue'
 import ActorAward from '../page/StudioList.vue'
+import FavoriteList from '../page/FavoritesList.vue'
 
 const routes = [
     {
@@ -16,6 +17,10 @@ const routes = [
     {
         path: '/actor',
         component: ActorAward
+    },
+    {
+        path: '/favorite',
+        component: FavoriteList
     },
    
 

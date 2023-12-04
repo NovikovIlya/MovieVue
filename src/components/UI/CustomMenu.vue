@@ -14,7 +14,7 @@ import { RouterLink } from 'vue-router';
         <el-dropdown-menu>
           <el-dropdown-item ><RouterLink class="td" to="/">Люди</RouterLink></el-dropdown-item>
           <el-dropdown-item ><RouterLink class="td" to="/actor">Студии</RouterLink></el-dropdown-item>
-          <el-dropdown-item ><RouterLink class="td" to="/actor">Избранное</RouterLink></el-dropdown-item>
+          <el-dropdown-item ><RouterLink class="td" to="/favorite">Избранное</RouterLink></el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
