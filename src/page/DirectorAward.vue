@@ -2,6 +2,11 @@
 import { ref, onMounted, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { DataPersonType } from '../types';
+import Axios from 'axios';
+// import { setupCache } from 'axios-cache-interceptor';
+
+// const axios = setupCache(Axios); 
+import cachedAxios from '../axios.js'
 
 const valueSort = ref('countAwards');
 const valueSortType = ref('-1');
@@ -97,14 +102,13 @@ const load = () => {
   }
   page.value++;
   getPerson(page);
-  console.log('след страница');
 };
 
 const getPerson = async (page) => {
   try {
     isError.value = false;
     isLoading.value = true;
-    const res = await fetch(
+    const res = await cachedAxios.get(
       `https://api.kinopoisk.dev/v1.4/person?profession.value=${valueSortProffession.value}&sortType=${valueSortType.value}&limit=20&sortField=${valueSort.value}&page=${page.value}`,
       {
         headers: {
@@ -112,8 +116,9 @@ const getPerson = async (page) => {
         },
       },
     );
-    const data = await res.json();
-    const dataZ = data.docs;
+    // const data = await res.json();
+    //@ts-ignore
+    const dataZ = res.data.docs;
     if (!dataZ) {
       throw new Error('Произошла ошибка');
     }
@@ -129,7 +134,7 @@ const getPerson = async (page) => {
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
-// const { data, refetch, isLoading,isError } = useInfiniteQuery<any, any>({
+
 //   queryKey: ['todos', page],
 //   queryFn: () => getPerson(page),
 //   retry: false,

@@ -7,7 +7,7 @@ import 'element-plus/es/components/message/style/css'; // this is only needed if
 import 'element-plus/es/components/message-box/style/css';
 
 const props = defineProps<{
-  id: any;
+  id: string | string[];
 }>();
 
 const showModalMessage = ref(false);
@@ -35,7 +35,6 @@ const form = ref({
 });
 
 const onSubmit = () => {
-  console.log('submit!', form.value.name, form.value.desc);
   const data = {
     id: props.id,
     messages: { name: form.value.name, message: form.value.desc },
@@ -57,25 +56,16 @@ watchEffect(() => {
   if (props.id) {
     //@ts-ignore
     muta({ id: props.id });
-    console.log('prossYY', props.id);
   }
 });
 
-watch(
-  dataGet,
-  (newData, prewData) => {
-    console.log('prewData', prewData);
-    console.log('newData', newData);
-  },
-  { deep: true },
-);
+
 watch(showModalMessage, () => {
   document.body.classList.toggle('fix');
 });
 watch(
   dataPost,
   () => {
-    // console.log('dataPost',dataPost.value.data.message)
     if (dataPost.value.data.message.includes('Сообщение добавлено')) {
       open1();
     }

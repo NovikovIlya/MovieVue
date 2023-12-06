@@ -76,11 +76,9 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-watch(switcher,(newSwitcher)=>{
-  console.log('switcher',switcher)
-  console.log('newSwitcher',newSwitcher)
-  refetch()
-})
+// watch(switcher,(newSwitcher)=>{
+//   refetch()
+// })
 watch(isErr,()=>{
   if(isErr.value===true){
     open4()
@@ -95,12 +93,12 @@ watch(isErr,()=>{
       <img class="imgLogo" src="https://i.ibb.co/qkXN6VH/photo-2023-11-27-22-37-57.jpg"/>
     </RouterLink>
     <div>
-    <div class="switcherStyle">
+    <!-- <div class="switcherStyle">
       <el-radio-group v-model="switcher" size="large">
       <el-radio-button label="Люди" />
       <el-radio-button label="Студии" />
     </el-radio-group>
-    </div>
+    </div> -->
     
     <div class="mainInp">
       <input
@@ -189,7 +187,7 @@ watch(isErr,()=>{
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
-  min-height: 28px;
+  min-height: 20px;
   border-radius: 4px;
   padding: 8px 16px;
   border: 2px solid transparent;

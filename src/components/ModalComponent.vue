@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { useQuery } from '@tanstack/vue-query';
 import { computed, watch } from 'vue';
+import { awardsType } from '../types/index';
+
+
 const props = defineProps<{
   show: boolean;
-  idz?: any;
+  idz?: string | string[];
 }>();
 
 const getAward = async (idz) => {
@@ -17,7 +20,7 @@ const getAward = async (idz) => {
   return dataZ;
 };
 
-const { data, refetch, isLoading, isError } = useQuery<any, Error>({
+const { data, refetch, isLoading, isError } = useQuery<awardsType[], Error>({
   queryKey: ['modal', props.idz],
   queryFn: () => getAward(props.idz),
   retry: false,
@@ -35,7 +38,6 @@ const awards = computed(() => {
         city: item.movie.name,
       };
     });
-    console.log('array', array);
     return array;
   }
 });
@@ -65,9 +67,7 @@ const awards = computed(() => {
 </template>
 
 <style scoped>
-.fix{
 
-}
 .modal-mask {
   position: fixed;
   z-index: 9998;

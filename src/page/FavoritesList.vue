@@ -1,22 +1,43 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 
-const persons = JSON.parse(localStorage.getItem('persons'))
-
-onMounted(()=>{
-    if(persons){
-        console.log('persons',persons)
+const deleteFavorite = (person) => {
+  const text = localStorage.getItem('persons') !== null ? localStorage.getItem('persons') : [];
+  if (text) {
+    //@ts-ignore
+    const localstorage = JSON.parse(text);
+    const ls = localstorage.filter((item) => {
+      console.log('ii', item.id, person.id);
+      return item.id != person.id;
+    });
+    console.log('ls', ls);
+    if (ls) {
+      localStorage.setItem('persons', JSON.stringify(ls));
+    } else {
+      alert('Что-то пошло не так');
     }
-})
+  }
+};
+
+const arraLocal = computed(() => {
+  const text = localStorage.getItem('persons');
+  if (text) {
+    const localstorage = JSON.parse(text);
+    return localstorage;
+  } else {
+    return [];
+  }
+});
+
+
 </script>
 
 <template>
-  <div style="width: 100%" >
-    <ul  class="infinite-list" infinite-scroll-immediate="false">
-      <li v-for="person of persons" :key="person.id" class="infinite-list-item">
+  <div style="width: 100%">
+    <ul class="infinite-list" infinite-scroll-immediate="false">
+      <li v-for="person of arraLocal" :key="person.id" class="infinite-list-item">
         <RouterLink :to="'/person/' + person.id" class="personContainer">
           <img
-           
             class="photo"
             :src="
               person.photo
@@ -31,24 +52,22 @@ onMounted(()=>{
             </div>
           </div>
         </RouterLink>
+        <el-button @click="deleteFavorite(person)">Удалить</el-button>
       </li>
     </ul>
-  
   </div>
 </template>
 
-
-
 <style scoped>
-.infinite-list{
+.infinite-list {
   display: grid;
   grid-template-columns: 33% 33% 33%;
 }
-.photo{
+.photo {
   width: 300px;
-  height:400px;
+  height: 400px;
 }
-.personContainer{
+.personContainer {
   text-decoration: none;
 }
 </style>
