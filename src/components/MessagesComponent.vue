@@ -52,6 +52,7 @@ const open1 = () => {
 };
 
 
+
 watchEffect(() => {
   if (props.id) {
     //@ts-ignore
@@ -63,6 +64,7 @@ watchEffect(() => {
 watch(showModalMessage, () => {
   document.body.classList.toggle('fix');
 });
+
 watch(
   dataPost,
   () => {
@@ -77,7 +79,7 @@ watch(
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="showModalMessage" class="modal-mask">
+      <div v-if="showModalMessage" @click.stop="showModalMessage = false" class="modal-mask">
         <div class="modal-container">
           <el-form :model="form" label-width="120px">
             <el-form-item label="Ваше имя:">

@@ -188,7 +188,7 @@ watch(valueSortType, () => {
 
   <div style="width: 100%" v-loading="isLoading">
     <ul v-infinite-scroll="load" class="infinite-list" infinite-scroll-immediate="false">
-      <li v-for="person of dataPerson" :key="person.id" class="infinite-list-item">
+      <li v-for="(person,index) in dataPerson" :key="person.id" class="infinite-list-item">
         <RouterLink :to="'/person/' + person.id" class="personContainer">
           <img
             @error="imageLoadOnError"
@@ -203,7 +203,9 @@ watch(valueSortType, () => {
             <div>
               <div class="name__info">Возраст: {{ person.age }}</div>
               <div class="name__info">Пол: {{ person.sex }}</div>
+              
             </div>
+            <div class="ind">{{ index + 1}}</div>
           </div>
         </RouterLink>
       </li>
@@ -217,6 +219,16 @@ watch(valueSortType, () => {
 </template>
 
 <style scoped lang="scss">
+.name__text{
+  font-weight: 700;
+}
+.ind{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  font-size: 15px;
+  margin-right: 15px;
+}
 .infinite-list {
   height: 99%;
   padding: 0;
@@ -232,15 +244,21 @@ watch(valueSortType, () => {
 .infinite-list .infinite-list-item + .list-item {
   margin-top: 10px;
 }
+.infinite-list{
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
 .photo {
-  width: 70px;
-  height: 90px;
+  width: 140px;
+  height: 180px;
 }
 .personContainer {
+  width: 60%;
   text-decoration: none;
   margin-bottom: 20px;
   display: grid;
-  grid-template-columns: 88px 150px;
+  grid-template-columns: 50% 50%;
   border: 2px solid transparent;
   box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
 }
@@ -282,5 +300,6 @@ watch(valueSortType, () => {
 }
 .header {
   margin-right: 10px;
+  margin-left: 5px;
 }
 </style>

@@ -8,6 +8,11 @@ const props = defineProps<{
   show: boolean;
   idz?: string | string[];
 }>();
+// const emit = defineEmits(['close'])
+const emit = defineEmits<{
+  (e:'close')
+}>()
+
 
 const getAward = async (idz) => {
   const res = await fetch(`https://api.kinopoisk.dev/v1.4/person/awards?personId=${idz}`, {
@@ -42,14 +47,18 @@ const awards = computed(() => {
   }
 });
 
+const hehe = ()=>{
+  console.log('hehe')
+  emit('close')
+}
+
 
 </script>
 
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div v-if="show" class="modal-mask" @click.stop="hehe">
       <div class="modal-container">
-
         <div class="modal-footer">
           <slot name="footer">
             <el-table :data="awards" style="width: 100%" height="250">
@@ -58,7 +67,7 @@ const awards = computed(() => {
               <el-table-column prop="state" label="Год" width="150" />
               <el-table-column prop="city" label="Фильм" width="200" />
             </el-table>
-            <el-button class="modal-default-button" @click="$emit('close')">OK</el-button>
+            <el-button class="modal-default-button hh" @click="$emit('close')">OK</el-button>
           </slot>
         </div>
       </div>
@@ -67,6 +76,9 @@ const awards = computed(() => {
 </template>
 
 <style scoped>
+.hh{
+  margin-top: 10px;
+}
 
 .modal-mask {
   position: fixed;

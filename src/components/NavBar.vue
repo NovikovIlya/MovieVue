@@ -121,10 +121,8 @@ watch(isErr,()=>{
       <div class="spis2 ss" v-if="isLoading">
         <el-skeleton animated style="width: 100%; height: 24px">
           <template #template>
-            <el-skeleton-item  variant="text" style="margin-right: 16px;height: 24px" />
-            <el-skeleton-item variant="text" style="margin-right: 16px;height: 24px" />
-            <el-skeleton-item variant="text" style="margin-right: 16px;height: 24px" />
-            <el-skeleton-item variant="text" style="margin-right: 16px;height: 24px" />
+            <el-skeleton-item  variant="text" style="margin-right: 16px;height: 500px" />
+         
           </template>
         </el-skeleton>
       </div>

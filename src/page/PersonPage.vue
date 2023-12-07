@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useMovieStore } from '../store/index';
 import { useQuery } from '@tanstack/vue-query';
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch,onUpdated } from 'vue';
 import { PersonInfo } from '../types/index.js';
 import ModalComponent from '../components/ModalComponent.vue';
 import MovieList from '../components/MovieList.vue';
@@ -12,6 +12,7 @@ import 'element-plus/es/components/message/style/css'; // this is only needed if
 import 'element-plus/es/components/message-box/style/css';
 
 const isFavorite = ref(false);
+const isFav = ref(false)
 const movieStore = useMovieStore();
 const {
   params: { id },
@@ -52,23 +53,26 @@ const chechFavorite = () => {
   isFavorite.value = true;
   movieStore.addFavorite(data);
   open1();
+  isFav.value = true
 };
 
-const isFavoriteLocal = computed(() => {
-  const text = localStorage.getItem('persons');
-  if (text) {
-    const localstorage = JSON.parse(text);
-    console.log('localstorage',localstorage)
-    if (localstorage.length > 0) {
-      var ls = localstorage.filter((item) => {
-        console.log('item id',item.id,id)
-        return item.id == id;
-      });
-    }
-    console.log('ls',ls)
-    return ls?.length > 0 ? true : false;
-  }
-});
+// const isFavoriteLocal = computed(() => {
+//   const text = localStorage.getItem('persons');
+//   console.log('text',text)
+//   if (text) {
+//     const localstorage = JSON.parse(text);
+//     console.log('localstorage',localstorage)
+//     if (localstorage.length > 0) {
+//       var ls = localstorage.filter((item) => {
+//         console.log('item id',item.id,id)
+//         return item.id == id;
+//       });
+//     }
+//     console.log('ls',ls)
+//     isFav.value = ls?.length > 0 ? true : false;
+//     // return ls?.length > 0 ? true : false;
+//   }
+// });
 
 const goBack = () => {
   router.push('/');
@@ -109,8 +113,8 @@ const height = computed(() => {
     if (data.value.growth) {
       const heightValid = String(data.value.growth).split('');
       const len = heightValid.length - 1;
-      const he = heightValid.map((item) => {
-        if (heightValid[len] === item) {
+      const he = heightValid.map((item,index) => {
+        if (heightValid[len] === item && len === index) {
           return item + ' М';
         } else if (heightValid[0] === item) {
           return item + ',';
@@ -178,6 +182,10 @@ const desc = computed(() => {
     }
 });
 
+const imageLoadOnError = (e) => {
+  e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
+};
+
 watch(
   data,
   (newData, prevData) => {
@@ -190,6 +198,9 @@ watch(
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
+onUpdated(()=>{
+  console.log('я обновился')
+})
 </script>
 
 <template>
@@ -207,7 +218,7 @@ watch(showModal, () => {
     <div v-if="data && !data.error" class="data2">
       <div class="containerMain">
         <div class="left">
-          <img class="imageActor" :src="data?.photo ? data.photo : ''" alt="text" />
+          <img   @error="imageLoadOnError" class="imageActor" :src="data?.photo ? data.photo : ''" alt="text" />
           <img
             v-if="data"
             class="imgAward2"
@@ -217,11 +228,11 @@ watch(showModal, () => {
 
           <el-icon
             class="iconFav"
-            v-if="isFavorite === false && !isFavoriteLocal"
+            v-if="isFavorite === false && !isFav"
             @click="chechFavorite"
             ><StarFilled
           /></el-icon>
-          <el-icon class="iconFav1" v-if="isFavoriteLocal"><CircleCheckFilled /></el-icon>
+          <el-icon class="iconFav1" v-if="isFav"><CircleCheckFilled /></el-icon>
         </div>
         <div class="right">
           <div class="about">
@@ -252,14 +263,14 @@ watch(showModal, () => {
         </div>
       </div>
 
-      <el-divider class="divid" />
+      <el-divider v-if="!data.error && data.facts.length > 0" class="divid" />
 
-      <h2 v-if="!data.error" style="width: 60%">Интересные факты:</h2>
+      <h2 v-if="!data.error && data.facts.length > 0" style="width: 60%">Интересные факты:</h2>
       <div v-if="!data.error" class="bottom">
         <div class="bottom__left">
           <div>
             <ul v-for="(item, index) in desc">
-              <li>{{ item }}</li>
+              <li v-html="item" />
               <el-divider v-if="index !== desc.length - 1" />
             </ul>
           </div>
@@ -269,10 +280,10 @@ watch(showModal, () => {
 
       <el-divider v-if="desc" class="divid" />
 
-      <div v-if="!data.error" class="wh">
+      <div v-if="!data.error"  class="wh">
         <h2 style="width: 60%">Фильмы:</h2>
       </div>
-      <div v-if="!data.error" class="movielist">
+      <div v-if="!data.error " class="movielist">
         <MovieList :movies="data?.movies" />
       </div>
 
@@ -375,8 +386,7 @@ watch(showModal, () => {
 .bottom {
   margin-top: 3px;
   width: 60%;
-  /* display: grid;
-  grid-template-columns: 70% 30%; */
+
 }
 .header {
   font-size: 42px;
@@ -395,7 +405,6 @@ watch(showModal, () => {
   display: grid;
   grid-template-columns: 35% 65%;
   font-size: 17px;
-  /* grid-auto-rows: 100%; */
 }
 .imageActor {
   width: 250px;
@@ -432,6 +441,16 @@ watch(showModal, () => {
   }
   .about {
     grid-template-columns: 24% 58%;
+  }
+  .back2{
+    display: none;
+  }
+  .imgAward2{
+    right: 0%;
+  }
+  .about{
+    font-size: 3vw;
+    grid-template-columns: 40% 60%;
   }
 }
 </style>

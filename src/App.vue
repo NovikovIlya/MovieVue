@@ -11,7 +11,7 @@ const route = useRoute()
 
 
 const modal = ()=>{
-  console.log('был клик у папы')
+  // console.log('был клик у папы')
   movieStore.setShowModalTrue()
 }
 </script>
