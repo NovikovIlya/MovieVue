@@ -32,7 +32,10 @@ const getPerson = async (id) => {
 
 const {
   data,
+  refetch,
   isLoading: isLoad,
+  isError: isEr,
+  error,
 } = useQuery<PersonInfo, Error>({
   queryKey: ['todos', id],
   queryFn: () => getPerson(id),
@@ -75,7 +78,7 @@ const kek = computed(() => {
   if (data.value)
     if (data.value.profession) {
       const len = data.value.profession.length - 1;
-      const array = data.value.profession.map((item_) => {
+      const array = data.value.profession.map((item, index) => {
         if (data.value.profession[len] === item) {
           return item.value;
         } else {
@@ -90,7 +93,7 @@ const Place = computed(() => {
   if (data.value)
     if (data.value.birthPlace) {
       const len = data.value.birthPlace.length - 1;
-      const array = data.value.birthPlace.map((item_) => {
+      const array = data.value.birthPlace.map((item, index) => {
         if (data.value.birthPlace[len] === item) {
           return item.value;
         } else {
@@ -201,7 +204,7 @@ watch(showModal, () => {
       </el-col>
     </div>
 
-    <div v-if="data && data.error" class="data2">
+    <div v-if="data && !data.error" class="data2">
       <div class="containerMain">
         <div class="left">
           <img class="imageActor" :src="data?.photo ? data.photo : ''" alt="text" />

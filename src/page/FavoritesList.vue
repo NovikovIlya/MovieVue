@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { computed } from 'vue';
 
 const deleteFavorite = (person) => {
   const text = localStorage.getItem('persons') !== null ? localStorage.getItem('persons') : [];
@@ -52,7 +52,7 @@ const arraLocal = computed(() => {
             </div>
           </div>
         </RouterLink>
-        <el-button @click="deleteFavorite(person)">Удалить</el-button>
+        <el-button class="elll" @click="deleteFavorite(person)">Удалить</el-button>
       </li>
     </ul>
   </div>
@@ -62,6 +62,7 @@ const arraLocal = computed(() => {
 .infinite-list {
   display: grid;
   grid-template-columns: 33% 33% 33%;
+  list-style-type:none;
 }
 .photo {
   width: 300px;
@@ -69,5 +70,19 @@ const arraLocal = computed(() => {
 }
 .personContainer {
   text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+  .infinite-list{
+    margin-bottom: 20px;
+    grid-template-columns: 100%;
+  }
+  .infinite-list-item{
+    margin-bottom: 20px;
+  }
+  .elll{
+    width: 90%;
+    margin: 0 auto;
+  }
 }
 </style>

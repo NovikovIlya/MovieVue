@@ -2,11 +2,9 @@
 import { ref, onMounted, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { DataPersonType } from '../types';
-import Axios from 'axios';
-// import { setupCache } from 'axios-cache-interceptor';
 
-// const axios = setupCache(Axios); 
-import cachedAxios from '../axios.js'
+
+import cachedAxios from '../axios.js';
 
 const valueSort = ref('countAwards');
 const valueSortType = ref('-1');
@@ -135,13 +133,6 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-//   queryKey: ['todos', page],
-//   queryFn: () => getPerson(page),
-//   retry: false,
-//   // enabled: false,
-//   refetchOnWindowFocus: false,
-// });
-
 onMounted(() => {
   load();
 });
@@ -166,7 +157,7 @@ watch(valueSortType, () => {
 <template>
   <div class="mainSort">
     <div class="mainSort__left">
-      <h4 class="header">Роль: </h4>
+      <h4 class="header">Роль:</h4>
       <el-select v-model="valueSortProffession" class="m-2" placeholder="Select" size="large">
         <el-option
           v-for="item in options2"
@@ -219,7 +210,7 @@ watch(valueSortType, () => {
     </ul>
     <div class="err" v-if="isError">
       <el-col :sm="12" :lg="6">
-        <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
+        <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте пожалуйста позднее"> </el-result>
       </el-col>
     </div>
   </div>
@@ -277,19 +268,19 @@ watch(valueSortType, () => {
   display: flex;
   justify-content: center;
 }
-.mainSort{
+.mainSort {
   display: flex;
   justify-content: space-between;
-  &__left{
+  &__left {
     display: flex;
     align-items: baseline;
   }
-  &__right{
+  &__right {
     display: flex;
     align-items: baseline;
   }
 }
-.header{
+.header {
   margin-right: 10px;
 }
 </style>

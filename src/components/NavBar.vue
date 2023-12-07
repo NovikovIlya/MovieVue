@@ -4,9 +4,8 @@ import { useQuery } from '@tanstack/vue-query';
 import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
 import { DataType } from '../types';
-import { useRoute,useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus'
-import 'element-plus/es/components/message/style/css'; // this is only needed if the page also used ElMessage
+import 'element-plus/es/components/message/style/css'; 
 import 'element-plus/es/components/message-box/style/css';
 
 defineProps<{ modal: boolean }>();
@@ -14,7 +13,7 @@ defineProps<{ modal: boolean }>();
 const movieStore = useMovieStore();
 const inputValue = ref('');
 const switcher = ref('Люди')
-const route = useRoute()
+
 
 const getPerson = async (inputValue) => {
   if(inputValue.value.length <= 0){
@@ -76,9 +75,7 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-// watch(switcher,(newSwitcher)=>{
-//   refetch()
-// })
+
 watch(isErr,()=>{
   if(isErr.value===true){
     open4()
@@ -93,12 +90,6 @@ watch(isErr,()=>{
       <img class="imgLogo" src="https://i.ibb.co/qkXN6VH/photo-2023-11-27-22-37-57.jpg"/>
     </RouterLink>
     <div>
-    <!-- <div class="switcherStyle">
-      <el-radio-group v-model="switcher" size="large">
-      <el-radio-button label="Люди" />
-      <el-radio-button label="Студии" />
-    </el-radio-group>
-    </div> -->
     
     <div class="mainInp">
       <input
@@ -137,7 +128,6 @@ watch(isErr,()=>{
           </template>
         </el-skeleton>
       </div>
-      <!-- <div class="spis2" v-if="isError">Произошла ошибка, попробуйте позже</div> -->
     </div>
 
     <div class="men">
@@ -183,7 +173,6 @@ watch(isErr,()=>{
 }
 
 .inp {
-  /* width: 100%; */
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
@@ -250,8 +239,6 @@ watch(isErr,()=>{
     justify-content: center;
   }
   
-  /* .autoInput {
-    position: relative;
-  } */
+
 }
 </style>
