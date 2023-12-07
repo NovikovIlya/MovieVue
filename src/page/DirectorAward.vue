@@ -210,7 +210,7 @@ watch(valueSortType, () => {
     </ul>
     <div class="err" v-if="isError">
       <el-col :sm="12" :lg="6">
-        <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
+        <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте пожалуйста позднее"> </el-result>
       </el-col>
     </div>
   </div>
