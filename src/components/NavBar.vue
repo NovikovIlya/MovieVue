@@ -149,6 +149,7 @@ watch(isErr,()=>{
 }
 .imgLogo{
   width: 150px;
+  margin-left: -5px;
 }
 .autoInput {
   position: absolute;

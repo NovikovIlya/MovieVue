@@ -221,6 +221,10 @@ watch(valueSortType, () => {
 </template>
 
 <style scoped lang="scss">
+.container{
+  padding-left: 5%;
+  padding-right: 5%;
+}
 .name__text{
   font-weight: 700;
 }
