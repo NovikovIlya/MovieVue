@@ -346,5 +346,8 @@ watch(valueSortType, () => {
   .mainSort{
     flex-wrap: wrap;
   }
+  .err{
+    margin-top: 10px;
+  }
 }
 </style>

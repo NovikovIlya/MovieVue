@@ -106,7 +106,10 @@ watch(isErr,()=>{
           @click.stop="showModal"
           class="inp2"
           :key='item.id'
-          v-for="item of data">
+          v-for="item of data"
+          v-show='item.age !== 0'
+          >
+          
           <div class="nameAct" v-if="item.name?.length > 0 || item.title?.length > 0">
             <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" /> 
             <div class="nameAct">{{ item.name }}</div>
@@ -240,6 +243,26 @@ watch(isErr,()=>{
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+  .spis[data-v-c3ceb15a]{
+    width: 60%;
+  }
+  .ss{
+    width: 60%;
+    z-index: 10000;
+  }
+  .it{
+    align-items: center
+  }
+  .proff{
+    flex-wrap: wrap;
+  }
+  .el-table{
+    width: 80% ;
+    font-size: 10px;
+  }
+  .el-table__column-resize-proxy{
+    font-size: 10px;
   }
   
 
