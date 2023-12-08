@@ -234,8 +234,8 @@ watch(valueSortType, () => {
 }
 .infinite-list {
   height: 99%;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 3%;
+  padding-right: 3%;
   list-style: none;
 }
 .infinite-list .infinite-list-item {
@@ -308,6 +308,8 @@ watch(valueSortType, () => {
 }
 .mainSort {
   display: flex;
+  padding-left: 5%;
+  padding-right: 5%;
   justify-content: space-between;
   &__left {
     display: flex;
@@ -320,7 +322,7 @@ watch(valueSortType, () => {
 }
 .header {
   margin-right: 10px;
-  margin-left: 5px;
+  // margin-left: 5px;
 }
 
 .list-enter-active,
@@ -336,6 +338,9 @@ watch(valueSortType, () => {
 @media screen and (max-width:600px) {
   .infinite-list{
     grid-template-columns: 100%;
+  }
+  .mainSort{
+    flex-wrap: wrap;
   }
 }
 </style>
