@@ -198,6 +198,7 @@ watch(
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
+
 onUpdated(()=>{
   console.log('я обновился')
 })

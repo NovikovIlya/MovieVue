@@ -27,6 +27,7 @@ const deleteFavorite = (person) => {
 <template>
   <div style="width: 100%">
     <ul class="infinite-list" infinite-scroll-immediate="false">
+   
       <TransitionGroup  name="list"  >
         <li v-for="person of cartItems" :key="person.id" class="infinite-list-item">
           <RouterLink :to="'/person/' + person.id" class="personContainer">
