@@ -144,6 +144,10 @@ watch(isErr,()=>{
   justify-content: space-between;
   align-items: center;
 }
+.container{
+  padding-left: 5%;
+  padding-right: 5%;
+}
 .ss{
   margin-top: 10px;
 }

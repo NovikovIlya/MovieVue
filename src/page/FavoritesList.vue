@@ -25,7 +25,7 @@ const deleteFavorite = (person) => {
 </script>
 
 <template>
-  <div style="width: 100%">
+  <div class="container2" >
     <ul class="infinite-list" infinite-scroll-immediate="false">
    
       <TransitionGroup  name="list"  >
@@ -54,10 +54,15 @@ const deleteFavorite = (person) => {
 </template>
 
 <style scoped>
+.container2{
+  padding-left: 5%;
+  padding-right: 5%;
+}
 .infinite-list {
   display: grid;
   grid-template-columns: 33% 33% 33%;
   list-style-type: none;
+  padding-left: 0;
 }
 .photo {
   width: 100%;
