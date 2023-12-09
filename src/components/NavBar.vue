@@ -173,6 +173,7 @@ watch(isErr, () => {
 }
 
 .inp {
+  
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
@@ -239,7 +240,7 @@ watch(isErr, () => {
     justify-content: center;
   }
   .spis[data-v-c3ceb15a] {
-    width: 60%;
+    width: 300px;
   }
   .ss {
     width: 60%;
@@ -257,6 +258,9 @@ watch(isErr, () => {
   }
   .el-table__column-resize-proxy {
     font-size: 10px;
+  }
+  .inp{
+    width: 266px;
   }
 }
 </style>
