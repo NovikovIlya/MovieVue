@@ -164,12 +164,12 @@ watch(isErr, () => {
 .spis {
   position: absolute;
   z-index: 1000;
-  width: 22%;
+  /* width: 22%; */
 }
 .spis2 {
   position: absolute;
   z-index: 1000;
-  width: 22%;
+  /* width: 22%; */
 }
 
 .inp {
@@ -243,7 +243,7 @@ watch(isErr, () => {
     width: 300px;
   }
   .ss {
-    width: 60%;
+    width: 300px;
     z-index: 10000;
   }
   .it {
