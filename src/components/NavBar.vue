@@ -239,7 +239,7 @@ watch(isErr, () => {
     display: flex;
     justify-content: center;
   }
-  .spis[data-v-c3ceb15a] {
+  .spis {
     width: 300px;
   }
   .ss {
