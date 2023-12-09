@@ -57,7 +57,7 @@ const hehe = ()=>{
 
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask" @click.stop="hehe">
+    <div v-if="show" class="modal-mask" @click.stop="hehe" style="width: 100%">
       <div class="modal-container">
         <div class="modal-footer">
           <slot name="footer">
@@ -115,14 +115,6 @@ const hehe = ()=>{
   float: right;
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
 
 .modal-enter-from {
   opacity: 0;
@@ -147,7 +139,10 @@ const hehe = ()=>{
 
 @media screen and (max-width: 600px) {
   .modal-container {
-    width: 300px;
+    width: 99%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 6px;
   }
 
 }

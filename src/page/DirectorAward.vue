@@ -186,7 +186,7 @@ watch(valueSortType, () => {
     </div>
   </div>
 
-  <div style="width: 100%" v-loading="isLoading">
+  <div class="ww" style="width: 100%" v-loading="isLoading">
     <ul v-infinite-scroll="load" class="infinite-list" infinite-scroll-immediate="false">
       <TransitionGroup  name="list"  >
       <li v-for="(person,index) in dataPerson" :key="person.id" class="infinite-list-item">
@@ -221,6 +221,9 @@ watch(valueSortType, () => {
 </template>
 
 <style scoped lang="scss">
+.ww{
+  margin-top: 10px;
+}
 .container{
   padding-left: 5%;
   padding-right: 5%;
