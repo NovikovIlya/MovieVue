@@ -373,8 +373,8 @@ onUpdated(()=>{
 }
 .ff {
   color: rgba(0, 0, 0, 0.6);
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva,
-    Verdana, sans-serif;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva,
+    Verdana, sans-serif; */
 }
 .movielist {
   width: 100%;
@@ -439,6 +439,7 @@ onUpdated(()=>{
   .containerMain {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
   .imageActor {
     width: 100%;

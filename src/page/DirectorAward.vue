@@ -221,6 +221,9 @@ watch(valueSortType, () => {
 </template>
 
 <style scoped lang="scss">
+.el-loading-spinner{
+  margin-top: 0;
+}
 .ww{
   margin-top: 10px;
 }

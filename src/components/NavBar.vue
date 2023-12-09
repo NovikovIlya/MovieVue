@@ -4,49 +4,48 @@ import { useQuery } from '@tanstack/vue-query';
 import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
 import { DataType } from '../types';
-import { ElMessage } from 'element-plus'
-import 'element-plus/es/components/message/style/css'; 
+import { ElMessage } from 'element-plus';
+import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 
 defineProps<{ modal: boolean }>();
 
 const movieStore = useMovieStore();
 const inputValue = ref('');
-const switcher = ref('Люди')
-
+const switcher = ref('Люди');
 
 const getPerson = async (inputValue) => {
-  if(inputValue.value.length <= 0){
-    return
+  if (inputValue.value.length <= 0) {
+    return;
   }
-  if(switcher.value === 'Люди'){
+  if (switcher.value === 'Люди') {
     var res = await fetch(
-    `https://api.kinopoisk.dev/v1.4/person/search?limit=10&query=${inputValue.value}`,
-    {
+      `https://api.kinopoisk.dev/v1.4/person/search?limit=250&query=${inputValue.value}`,
+      {
+        headers: {
+          'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
+        },
+      },
+    );
+  } else {
+    var res = await fetch(`https://api.kinopoisk.dev/v1.4/studio?title=${inputValue.value}`, {
       headers: {
         'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
       },
+    });
+  }
 
-    },
-  );
-  }
-  else{
-    var res = await fetch(
-    `https://api.kinopoisk.dev/v1.4/studio?title=${inputValue.value}`,
-    {
-      headers: {
-        'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
-      },
-    },
-  );
-  }
-  
   const data = await res.json();
   const dataZ = data.docs;
   return dataZ;
 };
 
-const { data, refetch, isLoading,isError:isErr } = useQuery<DataType[], any>({
+const {
+  data,
+  refetch,
+  isLoading,
+  isError: isErr,
+} = useQuery<DataType[], any>({
   queryKey: ['todos', inputValue],
   queryFn: () => getPerson(inputValue),
   retry: false,
@@ -55,12 +54,12 @@ const { data, refetch, isLoading,isError:isErr } = useQuery<DataType[], any>({
 });
 
 const open4 = () => {
-  ElMessage.error('Произошла ошибка, попробуйте позже.')
-}
+  ElMessage.error('Произошла ошибка, попробуйте позже.');
+};
 
 function onInputChange() {
-  if(inputValue.value.length <= 0){
-    return
+  if (inputValue.value.length <= 0) {
+    return;
   }
   refetch();
 }
@@ -75,57 +74,52 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-
-watch(isErr,()=>{
-  if(isErr.value===true){
-    open4()
+watch(isErr, () => {
+  if (isErr.value === true) {
+    open4();
   }
-})
-
+});
 </script>
 
 <template>
   <div @click="showModal" class="container">
     <RouterLink to="/">
-      <img class="imgLogo" src="https://i.ibb.co/qkXN6VH/photo-2023-11-27-22-37-57.jpg"/>
+      <img class="imgLogo" src="https://i.ibb.co/qkXN6VH/photo-2023-11-27-22-37-57.jpg" />
     </RouterLink>
     <div>
-    
-    <div class="mainInp">
-      <input
-        class="inp"
-        @keypress.enter.stop
-        @click.stop="showModalFalse"
-        v-model.stop="inputValue"
-        @input.stop="onInputChange"
-        type="text" />
+      <div class="mainInp">
+        <input
+          class="inp"
+          @keypress.enter.stop
+          @click.stop="showModalFalse"
+          v-model.stop="inputValue"
+          @input.stop="onInputChange"
+          type="text" />
 
-      <div :class="['spis', 'blk', movieStore.showModal ? 'hidden' : '', 'kek']">
-        <RouterLink
-          :to="'/person/' + item.id"
-          @click.stop="showModal"
-          class="inp2"
-          :key='item.id'
-          v-for="item of data"
-          v-show='item.age !== 0'
-          >
-          
-          <div class="nameAct" v-if="item.name?.length > 0 || item.title?.length > 0">
-            <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" /> 
-            <div class="nameAct">{{ item.name }}</div>
-            {{ item.title }}
-           <div> {{  item.age === undefined ? item.type : '' }}</div>
-           {{item?.age && item.age === 0 || item.age === undefined ? '' : ',' + ' ' + item.age}}
-          </div>
-          
-        </RouterLink>
-      </div>
+        <div :class="['spis', 'blk', movieStore.showModal ? 'hidden' : '', 'kek']">
+          <RouterLink
+            :to="'/person/' + item.id"
+            @click.stop="showModal"
+            class="inp2"
+            :key="item.id"
+            v-for="item of data"
+            v-show="item.age !== 0 && item.photo">
+            <div class="nameAct" v-if="item.name?.length > 0 || item.title?.length > 0">
+              <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" />
+              <div class="nameAct">{{ item.name }}</div>
+              {{ item.title }}
+              <div>{{ item.age === undefined ? item.type : '' }}</div>
+              {{
+                (item?.age && item.age === 0) || item.age === undefined ? '' : ',' + ' ' + item.age
+              }}
+            </div>
+          </RouterLink>
+        </div>
       </div>
       <div class="spis2 ss" v-if="isLoading">
         <el-skeleton animated style="width: 100%; height: 24px">
           <template #template>
-            <el-skeleton-item  variant="text" style="margin-right: 16px;height: 500px" />
-         
+            <el-skeleton-item variant="text" style="margin-right: 16px; height: 500px" />
           </template>
         </el-skeleton>
       </div>
@@ -147,14 +141,14 @@ watch(isErr,()=>{
   justify-content: space-between;
   align-items: center;
 }
-.container{
+.container {
   padding-left: 5%;
   padding-right: 5%;
 }
-.ss{
+.ss {
   margin-top: 10px;
 }
-.imgLogo{
+.imgLogo {
   width: 150px;
   margin-left: -5px;
 }
@@ -217,25 +211,25 @@ watch(isErr,()=>{
   height: 30px;
   margin-right: 8px;
 }
-.switcherStyle{
+.switcherStyle {
   display: flex;
   width: 100%;
   justify-content: center;
 }
-.nameAct{
+.nameAct {
   display: flex;
   align-items: center;
 }
 @media screen and (max-width: 600px) {
-  .container{
+  .container {
     justify-content: center;
     flex-wrap: wrap;
   }
-  .imgLogo{
+  .imgLogo {
     margin: 0 auto;
     margin-bottom: 10px;
   }
-  .mainInp{
+  .mainInp {
     margin: 0 auto;
     margin-bottom: 10px;
   }
@@ -244,27 +238,25 @@ watch(isErr,()=>{
     display: flex;
     justify-content: center;
   }
-  .spis[data-v-c3ceb15a]{
+  .spis[data-v-c3ceb15a] {
     width: 60%;
   }
-  .ss{
+  .ss {
     width: 60%;
     z-index: 10000;
   }
-  .it{
-    align-items: center
+  .it {
+    align-items: center;
   }
-  .proff{
+  .proff {
     flex-wrap: wrap;
   }
-  .el-table{
-    width: 80% ;
+  .el-table {
+    width: 80%;
     font-size: 10px;
   }
-  .el-table__column-resize-proxy{
+  .el-table__column-resize-proxy {
     font-size: 10px;
   }
-  
-
 }
 </style>
