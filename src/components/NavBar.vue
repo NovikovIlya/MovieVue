@@ -103,7 +103,7 @@ watch(isErr, () => {
             class="inp2"
             :key="item.id"
             v-for="item of data"
-            v-show="item.age !== 0 && item.photo">
+            v-show="item.age !== 0 && item.photo ">
             <div class="nameAct" v-if="item.name?.length > 0 || item.title?.length > 0">
               <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" />
               <div class="nameAct">{{ item.name }}</div>
@@ -114,6 +114,7 @@ watch(isErr, () => {
               }}
             </div>
           </RouterLink>
+          <RouterLink v-show="data" :class="['lil', movieStore.showModal ? 'hidden' : '', 'kek']" :to="'/search/' + inputValue" >Показать всех</RouterLink>
         </div>
       </div>
       <div class="spis2 ss" v-if="isLoading">
@@ -132,6 +133,16 @@ watch(isErr, () => {
 </template>
 
 <style scoped>
+.lil{
+  border:1px solid rgba(128, 128, 128, 0.342);
+  border-radius: 0 0 0 0;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  background-color: white;
+  z-index: 10000;
+  position: relative;
+}
 .el-message {
   position: absolute;
 }
@@ -169,7 +180,7 @@ watch(isErr, () => {
 }
 .spis2 {
   position: absolute;
-  z-index: 1000;
+  z-index: 10000;
   width: 231px;
   /* width: 22%; */
 }

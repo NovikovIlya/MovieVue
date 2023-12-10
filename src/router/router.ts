@@ -3,6 +3,7 @@ import Vue from 'vue';
 import DirectorAward from '../page/DirectorAward.vue';
 import PersonPage from '../page/PersonPage.vue';
 import FavoriteList from '../page/FavoritesList.vue';
+import SearchComponent from '../page/SearchComponent.vue'
 
 const routes = [
   {
@@ -16,6 +17,10 @@ const routes = [
   {
     path: '/favorite',
     component: FavoriteList,
+  },
+  {
+    path: '/search/:id',
+    component: SearchComponent,
   },
 ];
 
