@@ -20,7 +20,7 @@ const getPerson = async (inputValue) => {
   }
   if (switcher.value === 'Люди') {
     var res = await fetch(
-      `https://api.kinopoisk.dev/v1.4/person/search?limit=250&query=${inputValue.value}`,
+      `https://api.kinopoisk.dev/v1.4/person/search?limit=15&query=${inputValue.value}`,
       {
         headers: {
           'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
@@ -103,7 +103,8 @@ watch(isErr, () => {
             class="inp2"
             :key="item.id"
             v-for="item of data"
-            v-show="item.age !== 0 && item.photo ">
+           
+            >
             <div class="nameAct" v-if="item.name?.length > 0 || item.title?.length > 0">
               <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" />
               <div class="nameAct">{{ item.name }}</div>

@@ -8,7 +8,7 @@ import ModalComponent from '../components/ModalComponent.vue';
 import MovieList from '../components/MovieList.vue';
 import MessagesComponent from '../components/MessagesComponent.vue';
 import { ElMessage } from 'element-plus';
-import 'element-plus/es/components/message/style/css'; // this is only needed if the page also used ElMessage
+import 'element-plus/es/components/message/style/css'; 
 import 'element-plus/es/components/message-box/style/css';
 
 const isFavorite = ref(false);
