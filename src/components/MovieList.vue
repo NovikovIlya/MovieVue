@@ -8,21 +8,21 @@ const movieData = computed(() => {
     const array = props.movies.map((item) => {
       // if (item.name && item.description && item.rating && item.enProfession) {
         return {
-          name: item.name,
-          desc: item.description,
-          rating: item.rating,
+          name: item.name ? item.name : 'Нет информации',
+          desc: item.description ? item.description : 'Нет информации',
+          rating: item.rating ? item.rating : 'Нет информации',
           role: item.enProfession === 'uncredited' ? 'Нет в титрах' 
           : item.enProfession === 'actor' ? 'Актер' : item.enProfession,
 
         
       }
     });
-    const x = array.filter((item) => {
-       if(item === undefined){
-        return 'Нет информации'
-      }
-    });
-    return x;
+    // const x = array.filter((item) => {
+    //    if(item === undefined){
+    //     return 'Нет информации'
+    //   }
+    // });
+    return array;
   }
 });
 

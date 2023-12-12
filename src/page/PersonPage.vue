@@ -287,7 +287,7 @@ onUpdated(()=>{
         <h2 style="width: 60%">Фильмы:</h2>
       </div>
       <div v-if="!data.error " class="movielist">
-        <MovieList :movies="data?.movies" />
+        <MovieList :movies="data.movies" />
       </div>
 
       <h2 style="width: 60%">Отзывы о персоне:</h2>
