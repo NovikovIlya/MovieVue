@@ -11,8 +11,11 @@ const movieData = computed(() => {
           name: item.name ? item.name : 'Нет информации',
           desc: item.description ? item.description : 'Нет информации',
           rating: item.rating ? item.rating : 'Нет информации',
-          role: item.enProfession === 'uncredited' ? 'Нет в титрах' 
-          : item.enProfession === 'actor' ? 'Актер' : item.enProfession,
+          role: item.enProfession 
+          // === 'uncredited' ? 'Нет в титрах' 
+          // : item.enProfession === 'actor' ? 'Актер' 
+          // : item.enProfession === 'cameo' ? 'Камео'
+          // : item.enProfession === 'producer' ?  'Продюссер' : item.enProfession,
 
         
       }
