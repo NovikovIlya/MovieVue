@@ -31,4 +31,7 @@ const modal = ()=>{
 .fix{
   overflow: hidden;
 }
+.hh{
+  min-height: 100vh;
+}
 </style>
