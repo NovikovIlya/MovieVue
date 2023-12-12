@@ -51,6 +51,9 @@ const hehe = ()=>{
   console.log('hehe')
   emit('close')
 }
+const haha = (e)=>{
+  console.log('haha')
+}
 
 
 </script>
@@ -58,8 +61,8 @@ const hehe = ()=>{
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask" @click.stop="hehe" style="width: 100%">
-      <div class="modal-container">
-        <div class="modal-footer">
+      <div @click.stop='haha' class="modal-container">
+        <div  class="modal-footer">
           <slot name="footer">
             <el-table :data="awards" style="width: 100%" height="250">
               <el-table-column class="ha" prop="date" label="Победитель" width="400" />

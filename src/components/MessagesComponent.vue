@@ -3,12 +3,14 @@ import { ref, onMounted, watch, watchEffect } from 'vue';
 import { useMutation } from '@tanstack/vue-query';
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
+import { onClickOutside } from '@vueuse/core'
 import 'element-plus/es/components/message/style/css'; // this is only needed if the page also used ElMessage
 import 'element-plus/es/components/message-box/style/css';
 
 const props = defineProps<{
   id: string | string[];
 }>();
+const target = ref(null)
 
 const showModalMessage = ref(false);
 
@@ -51,7 +53,14 @@ const open1 = () => {
   ElMessage('Сообщение отправлено');
 };
 
+const haha =(e)=>{
+  // console.log(e)
+}
 
+onClickOutside(target, event => {
+  console.log('event',event)
+  showModalMessage.value = false}
+)
 
 watchEffect(() => {
   if (props.id) {
@@ -79,15 +88,15 @@ watch(
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="showModalMessage" @click.stop="showModalMessage = false" class="modal-mask">
-        <div class="modal-container">
+      <div v-if="showModalMessage"  class="modal-mask">
+        <div ref="target" @click.stop="haha" class="modal-container">
           <el-form :model="form" label-width="120px">
             <el-form-item label="Ваше имя:">
               <el-input v-model="form.name" />
             </el-form-item>
 
             <el-form-item label="Текст:">
-              <el-input v-model="form.desc" type="textarea" />
+              <el-input click.stop v-model="form.desc" type="textarea" />
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">Отправить</el-button>

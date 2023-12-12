@@ -175,7 +175,7 @@ watch(isErr, () => {
 
 .spis {
   position: absolute;
-  z-index: 1000;
+  z-index: 100000;
   width:231px;
   /* width: 22%; */
 }
