@@ -239,7 +239,7 @@ watch(valueSortType, () => {
   display: flex;
   justify-content: end;
   font-size: 15px;
-  margin-right: 15px;
+  margin-right: 11px;
   opacity:0.5;
 }
 .infinite-list {
@@ -272,7 +272,7 @@ watch(valueSortType, () => {
 }
 .personContainer {
   border-radius: 20px;
-  width: 80%;
+  width: 70%;
   text-decoration: none;
   margin-bottom: 20px;
   display: grid;
