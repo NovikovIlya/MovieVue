@@ -48,11 +48,10 @@ const awards = computed(() => {
 });
 
 const hehe = ()=>{
-  console.log('hehe')
   emit('close')
 }
 const haha = (e)=>{
-  console.log('haha')
+
 }
 
 
@@ -70,7 +69,7 @@ const haha = (e)=>{
               <el-table-column prop="state" label="Год" width="150" />
               <el-table-column prop="city" label="Фильм" width="200" />
             </el-table>
-            <el-button class="modal-default-button hh" @click="$emit('close')">OK</el-button>
+            <el-button class="modal-default-button hh1" @click="$emit('close')">OK</el-button>
           </slot>
         </div>
       </div>
@@ -79,6 +78,9 @@ const haha = (e)=>{
 </template>
 
 <style scoped>
+.hh1{
+  margin-top: 10px;
+}
 .hh{
   margin-top: 10px;
 }

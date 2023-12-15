@@ -9,10 +9,8 @@ const deleteFavorite = (person) => {
     //@ts-ignore
     const localstorage = JSON.parse(text);
     const ls = localstorage.filter((item) => {
-      console.log('ii', item.id, person.id);
       return item.id != person.id;
     });
-    console.log('ls', ls);
     if (ls) {
       let kls = Array.from(new Set(ls));
       localStorage.setItem('persons', JSON.stringify(kls));
@@ -54,6 +52,9 @@ const deleteFavorite = (person) => {
 </template>
 
 <style scoped>
+.name__info{
+  font-size: 10px;
+}
 .container2{
   padding-left: 5%;
   padding-right: 5%;
@@ -67,14 +68,23 @@ const deleteFavorite = (person) => {
 .photo {
   width: 100%;
   height: 480px;
+  border-radius: 20px 20px 0 0 ;
 }
 .personContainer {
   text-decoration: none;
+  border: 2px transparent solid;
+ 
+
 }
 .infinite-list-item {
   border-radius: 20px;
   margin: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 56%;
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .name {
   display: flex;
@@ -87,6 +97,7 @@ const deleteFavorite = (person) => {
   width: 100%;
   justify-content: center;
   display: flex;
+  font-size: 18px;
 }
 .elll {
   margin-top: 10px;
@@ -114,6 +125,7 @@ const deleteFavorite = (person) => {
   }
   .infinite-list-item {
     margin-bottom: 20px;
+    width: 94%;
   }
   .elll {
     padding-top: 10px;

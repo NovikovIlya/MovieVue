@@ -2,23 +2,49 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useMovieStore } from '../store/index';
 import { useQuery } from '@tanstack/vue-query';
-import { computed, ref, watch,onUpdated } from 'vue';
+import { computed, ref, watch, onUpdated } from 'vue';
 import { PersonInfo } from '../types/index.js';
 import ModalComponent from '../components/ModalComponent.vue';
 import MovieList from '../components/MovieList.vue';
 import MessagesComponent from '../components/MessagesComponent.vue';
 import { ElMessage } from 'element-plus';
-import 'element-plus/es/components/message/style/css'; 
+import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 
+const mobile = ref(false)
 const isFavorite = ref(false);
-const isFav = ref(false)
+const isFav = ref(false);
 const movieStore = useMovieStore();
 const {
   params: { id },
 } = useRoute();
 const router = useRouter();
 const showModal = ref(false);
+
+const getPersonTwo = async (id) => {
+  const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v1/staff/${id}`, {
+    headers: {
+      'X-API-KEY': 'c20920c8-07f7-41e3-8602-7160c2c03025',
+    },
+  });
+  const data = await res.json();
+  const dataZ = data;
+  return dataZ;
+};
+
+const {
+  data: data2,
+  refetch: refetch2,
+  isLoading: isLoad2,
+  isError: isEr2,
+  error: error2,
+} = useQuery<any, Error>({
+  queryKey: ['todos2', id],
+  queryFn: () => getPersonTwo(id),
+  retry: false,
+  // enabled: false,
+  refetchOnWindowFocus: false,
+});
 
 const getPerson = async (id) => {
   const res = await fetch(`https://api.kinopoisk.dev/v1.4/person/${id}`, {
@@ -53,26 +79,8 @@ const chechFavorite = () => {
   isFavorite.value = true;
   movieStore.addFavorite(data);
   open1();
-  isFav.value = true
+  isFav.value = true;
 };
-
-// const isFavoriteLocal = computed(() => {
-//   const text = localStorage.getItem('persons');
-//   console.log('text',text)
-//   if (text) {
-//     const localstorage = JSON.parse(text);
-//     console.log('localstorage',localstorage)
-//     if (localstorage.length > 0) {
-//       var ls = localstorage.filter((item) => {
-//         console.log('item id',item.id,id)
-//         return item.id == id;
-//       });
-//     }
-//     console.log('ls',ls)
-//     isFav.value = ls?.length > 0 ? true : false;
-//     // return ls?.length > 0 ? true : false;
-//   }
-// });
 
 const goBack = () => {
   router.push('/');
@@ -113,7 +121,7 @@ const height = computed(() => {
     if (data.value.growth) {
       const heightValid = String(data.value.growth).split('');
       const len = heightValid.length - 1;
-      const he = heightValid.map((item,index) => {
+      const he = heightValid.map((item, index) => {
         if (heightValid[len] === item && len === index) {
           return item + ' М';
         } else if (heightValid[0] === item) {
@@ -186,6 +194,15 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
+const isMobile = () => {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i
+    .test(navigator.userAgent)) {
+
+    mobile.value = true
+
+} else mobile.value = false
+};
+
 watch(
   data,
   (newData, prevData) => {
@@ -199,14 +216,18 @@ watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
 
-onUpdated(()=>{
-  console.log('я обновился')
-})
+onUpdated(() => {
+  console.log('я обновился');
+  isMobile()
+});
 </script>
 
-<template>
-  <div class="back">
-    <div class="back2"><el-button @click="goBack"> &lt;- Назад</el-button></div>
+<template> 
+  <el-backtop :right="mobile ? 20 : 75" :bottom="100" />
+  <div class="main2">
+    <div class="data2">
+      <div class="hahe"><el-button @click="goBack"> &lt;- Назад</el-button></div>
+    </div>
   </div>
 
   <div style="width: 100%" v-loading="isLoad" class="main">
@@ -219,20 +240,19 @@ onUpdated(()=>{
     <div v-if="data && !data.error" class="data2">
       <div class="containerMain">
         <div class="left">
-          <img   @error="imageLoadOnError" class="imageActor" :src="data?.photo ? data.photo : ''" alt="text" />
+          <img
+            @error="imageLoadOnError"
+            class="imageActor"
+            :src="data?.photo ? data.photo : ''"
+            alt="text" />
           <img
             v-if="data && data.countAwards"
             class="imgAward2"
             src="/public/award.png"
             id="show-modal"
-            @click="showModal = true" 
-           
-            />
+            @click="showModal = true" />
 
-          <el-icon
-            class="iconFav"
-            v-if="isFavorite === false && !isFav"
-            @click="chechFavorite"
+          <el-icon class="iconFav" v-if="isFavorite === false && !isFav" @click="chechFavorite"
             ><StarFilled
           /></el-icon>
           <el-icon class="iconFav1" v-if="isFav"><CircleCheckFilled /></el-icon>
@@ -268,7 +288,9 @@ onUpdated(()=>{
 
       <el-divider v-if="!data.error && data.facts && data.facts.length > 0" class="divid" />
 
-      <h2 v-if="!data.error && data.facts && data.facts.length > 0" style="width: 60%">Интересные факты:</h2>
+      <h2 v-if="!data.error && data.facts && data.facts.length > 0" style="width: 60%">
+        Интересные факты:
+      </h2>
       <div v-if="!data.error" class="bottom">
         <div class="bottom__left">
           <div>
@@ -283,11 +305,11 @@ onUpdated(()=>{
 
       <el-divider v-if="desc" class="divid" />
 
-      <div v-if="!data.error"  class="wh">
+      <div v-if="!data.error" class="wh">
         <h2 style="width: 60%">Фильмы:</h2>
       </div>
-      <div v-if="!data.error " class="movielist">
-        <MovieList :movies="data.movies" />
+      <div v-if="data2" class="movielist">
+        <MovieList :movies="data2.films" />
       </div>
 
       <h2 style="width: 60%">Отзывы о персоне:</h2>
@@ -305,6 +327,9 @@ onUpdated(()=>{
 </template>
 
 <style scoped>
+.hahe {
+  width: 60%;
+}
 .iconFav {
   position: absolute;
   bottom: 20px;
@@ -324,7 +349,7 @@ onUpdated(()=>{
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 1400px;
 }
 .back2 {
   width: 60%;
@@ -338,6 +363,7 @@ onUpdated(()=>{
   justify-content: center;
 }
 .data2 {
+  width: 1400px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -359,6 +385,12 @@ onUpdated(()=>{
   flex-wrap: wrap;
   min-height: 100px;
 }
+.main2 {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 .containerMain {
   width: 60%;
   display: grid;
@@ -373,8 +405,6 @@ onUpdated(()=>{
 }
 .ff {
   color: rgba(0, 0, 0, 0.6);
-  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva,
-    Verdana, sans-serif; */
 }
 .movielist {
   width: 100%;
@@ -389,7 +419,6 @@ onUpdated(()=>{
 .bottom {
   margin-top: 3px;
   width: 60%;
-
 }
 .header {
   font-size: 42px;
@@ -436,6 +465,10 @@ onUpdated(()=>{
 }
 
 @media screen and (max-width: 600px) {
+  .hahe {
+    display: flex;
+    justify-content: center;
+  }
   .containerMain {
     display: flex;
     flex-wrap: wrap;
@@ -447,13 +480,13 @@ onUpdated(()=>{
   .about {
     grid-template-columns: 24% 58%;
   }
-  .back2{
+  .back2 {
     display: none;
   }
-  .imgAward2{
+  .imgAward2 {
     right: 0%;
   }
-  .about{
+  .about {
     font-size: 3vw;
     grid-template-columns: 40% 60%;
   }

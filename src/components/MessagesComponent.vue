@@ -54,11 +54,9 @@ const open1 = () => {
 };
 
 const haha =(e)=>{
-  // console.log(e)
 }
 
 onClickOutside(target, event => {
-  console.log('event',event)
   showModalMessage.value = false}
 )
 

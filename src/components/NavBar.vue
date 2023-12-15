@@ -5,6 +5,7 @@ import CustomMenu from './UI/CustomMenu.vue';
 import { useMovieStore } from '../store/index';
 import { DataType } from '../types';
 import { ElMessage } from 'element-plus';
+import debounce from 'lodash.debounce';
 import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 
@@ -18,25 +19,18 @@ const getPerson = async (inputValue) => {
   if (inputValue.value.length <= 0) {
     return;
   }
-  if (switcher.value === 'Люди') {
-    var res = await fetch(
-      `https://api.kinopoisk.dev/v1.4/person/search?limit=15&query=${inputValue.value}`,
-      {
-        headers: {
-          'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
-        },
-      },
-    );
-  } else {
-    var res = await fetch(`https://api.kinopoisk.dev/v1.4/studio?title=${inputValue.value}`, {
+
+  var res = await fetch(
+    `https://kinopoiskapiunofficial.tech/api/v1/persons?name==${inputValue.value}`,
+    {
       headers: {
-        'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
+        'X-API-KEY': 'c20920c8-07f7-41e3-8602-7160c2c03025',
       },
-    });
-  }
+    },
+  );
 
   const data = await res.json();
-  const dataZ = data.docs;
+  const dataZ = data.items;
   return dataZ;
 };
 
@@ -45,7 +39,7 @@ const {
   refetch,
   isLoading,
   isError: isErr,
-} = useQuery<DataType[], any>({
+} = useQuery<any[], any>({
   queryKey: ['todos', inputValue],
   queryFn: () => getPerson(inputValue),
   retry: false,
@@ -57,12 +51,12 @@ const open4 = () => {
   ElMessage.error('Произошла ошибка, попробуйте позже.');
 };
 
-function onInputChange() {
+const onInputChange = debounce(() => {
   if (inputValue.value.length <= 0) {
     return;
   }
   refetch();
-}
+}, 500);
 
 const showModal = () => {
   movieStore.setShowModalTrue();
@@ -98,24 +92,25 @@ watch(isErr, () => {
 
         <div :class="['spis', 'blk', movieStore.showModal ? 'hidden' : '', 'kek']">
           <RouterLink
-            :to="'/person/' + item.id"
+            :to="'/person/' + item.kinopoiskId"
             @click.stop="showModal"
             class="inp2"
             :key="item.id"
-            v-for="item of data"
-           
-            >
-            <div class="nameAct" v-if="item.name?.length > 0 || item.title?.length > 0">
-              <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" />
-              <div class="nameAct">{{ item.name }}</div>
+            v-for="item of data">
+            <div class="nameAct" v-if="item.nameRu?.length > 0 ">
+              <img @error="imageLoadOnError" class="img" :src="item.posterUrl ? item.posterUrl : ''" />
+              <div class="nameAct">{{ item.nameRu }}</div>
               {{ item.title }}
               <div>{{ item.age === undefined ? item.type : '' }}</div>
-              {{
-                (item?.age && item.age === 0) || item.age === undefined ? '' : ',' + ' ' + item.age
-              }}
+             
             </div>
           </RouterLink>
-          <RouterLink v-show="data" :class="['lil', movieStore.showModal ? 'hidden' : '', 'kek']" :to="'/search/' + inputValue" >Показать всех</RouterLink>
+          <RouterLink
+            v-show="data"
+            :class="['lil', movieStore.showModal ? 'hidden' : '', 'kek']"
+            :to="'/search/' + inputValue"
+            >Показать всех</RouterLink
+          >
         </div>
       </div>
       <div class="spis2 ss" v-if="isLoading">
@@ -134,8 +129,8 @@ watch(isErr, () => {
 </template>
 
 <style scoped>
-.lil{
-  border:1px solid rgba(128, 128, 128, 0.342);
+.lil {
+  border: 1px solid rgba(128, 128, 128, 0.342);
   border-radius: 0 0 0 0;
   display: flex;
   justify-content: center;
@@ -176,7 +171,7 @@ watch(isErr, () => {
 .spis {
   position: absolute;
   z-index: 100000;
-  width:231px;
+  width: 231px;
   /* width: 22%; */
 }
 .spis2 {
@@ -187,7 +182,6 @@ watch(isErr, () => {
 }
 
 .inp {
-  
   color: rgb(36, 35, 42);
   font-size: 16px;
   line-height: 20px;
@@ -273,7 +267,7 @@ watch(isErr, () => {
   .el-table__column-resize-proxy {
     font-size: 10px;
   }
-  .inp{
+  .inp {
     width: 266px;
   }
 }

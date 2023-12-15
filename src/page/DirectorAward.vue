@@ -114,7 +114,6 @@ const getPerson = async (page) => {
         },
       },
     );
-    // const data = await res.json();
     //@ts-ignore
     const dataZ = res.data.docs;
     if (!dataZ) {
@@ -137,7 +136,6 @@ onMounted(() => {
   load();
 });
 watch(valueSort, (_) => {
-  console.log('valueSort', valueSort);
   dataPerson.value = [];
   page.value = 1;
   getPerson(page);
