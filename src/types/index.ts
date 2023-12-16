@@ -99,3 +99,25 @@ export type MovieZ = {
   name: string;
   rating: number;
 };
+
+export type spousesType = {
+  spouses:any,
+  children:any,
+  divorcedReason:any,
+  divorced:any
+  personId: number
+  webUrl: string
+  nameRu: string
+  nameEn: string
+  sex: string
+  posterUrl: string
+  growth: number
+  birthday: string
+  death: string
+  age: number
+  birthplace: string
+  deathplace: string
+  hasAwards: number
+  profession: any
+  facts: any[]
+}

@@ -19,7 +19,7 @@ const modal = ()=>{
 <template >
   <div class="hh" @click="modal">
     <NavBar :modal="show"/>
-    <RouterView :key="route.fullPath"></RouterView>
+    <RouterView :key="route.fullPath" />
   </div>
 </template>
 

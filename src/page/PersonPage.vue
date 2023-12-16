@@ -4,6 +4,8 @@ import { useMovieStore } from '../store/index';
 import { useQuery } from '@tanstack/vue-query';
 import { computed, ref, watch, onUpdated, onMounted } from 'vue';
 import { PersonInfo } from '../types/index.js';
+
+import Spouses from '../components/SpousesComponent.vue';
 import ModalComponent from '../components/ModalComponent.vue';
 import MovieList from '../components/MovieList.vue';
 import MessagesComponent from '../components/MessagesComponent.vue';
@@ -215,10 +217,11 @@ const isMobile = () => {
 };
 
 watch(
-  data,
+  data2,
   (newData, prevData) => {
     console.log('newData', newData);
     console.log('prevData', prevData);
+    // console.log('111',newData.spouses)
   },
   { deep: true },
 );
@@ -319,6 +322,13 @@ onMounted(()=>{
       </div>
 
       <el-divider v-if="desc" class="divid" />
+
+      <h2 v-if="data2 && data2.spouses.length > 0" style="width: 60%">
+        Семейное положение:
+      </h2>
+      <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" />
+
+      <el-divider v-if="data2 && data2.spouses.length > 0" class="divid" />
 
       <div v-if="!data.error" class="wh">
         <h2 style="width: 60%">Фильмы:</h2>
