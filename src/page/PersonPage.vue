@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useMovieStore } from '../store/index';
 import { useQuery } from '@tanstack/vue-query';
-import { computed, ref, watch, onUpdated } from 'vue';
+import { computed, ref, watch, onUpdated, onMounted } from 'vue';
 import { PersonInfo } from '../types/index.js';
 import ModalComponent from '../components/ModalComponent.vue';
 import MovieList from '../components/MovieList.vue';
@@ -11,7 +11,7 @@ import { ElMessage } from 'element-plus';
 import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 
-const mobile = ref(false)
+const mobile = ref(false);
 const isFavorite = ref(false);
 const isFav = ref(false);
 const movieStore = useMovieStore();
@@ -190,17 +190,28 @@ const desc = computed(() => {
     }
 });
 
+const fav = ()=>{
+  const x = localStorage.getItem('persons') ? JSON.parse(localStorage.getItem('persons')) : []
+  x.forEach((item)=>{
+    console.log(Number(item.id),Number(id))
+    if(Number(item.id) === Number(id)){
+      isFavorite.value = true
+    }
+  })
+}
+
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
 const isMobile = () => {
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i
-    .test(navigator.userAgent)) {
-
-    mobile.value = true
-
-} else mobile.value = false
+  if (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
+      navigator.userAgent,
+    )
+  ) {
+    mobile.value = true;
+  } else mobile.value = false;
 };
 
 watch(
@@ -218,11 +229,15 @@ watch(showModal, () => {
 
 onUpdated(() => {
   console.log('я обновился');
-  isMobile()
+
 });
+onMounted(()=>{
+  isMobile();
+  fav()
+})
 </script>
 
-<template> 
+<template>
   <el-backtop :right="mobile ? 20 : 75" :bottom="100" />
   <div class="main2">
     <div class="data2">
@@ -255,7 +270,7 @@ onUpdated(() => {
           <el-icon class="iconFav" v-if="isFavorite === false && !isFav" @click="chechFavorite"
             ><StarFilled
           /></el-icon>
-          <el-icon class="iconFav1" v-if="isFav"><CircleCheckFilled /></el-icon>
+          <el-icon class="iconFav1" v-if="isFavorite"><CircleCheckFilled /></el-icon>
         </div>
         <div class="right">
           <div class="about">

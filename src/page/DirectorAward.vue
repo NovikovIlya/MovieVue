@@ -2,13 +2,11 @@
 import { ref, onMounted, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { DataPersonType } from '../types';
-
-
 import cachedAxios from '../axios.js';
 
 const valueSort = ref('countAwards');
 const valueSortType = ref('-1');
-const valueSortProffession = ref('Режиссер');
+const valueSortProffession = ref('Актер');
 const page = ref(0);
 const dataPerson = ref<DataPersonType[]>([]);
 const isLoading = ref(false);
@@ -29,10 +27,7 @@ const options = [
   },
 ];
 const options2 = [
-  {
-    value: 'Режиссер',
-    label: 'Режиссер',
-  },
+
   {
     value: 'Актер',
     label: 'Актер',
@@ -72,6 +67,10 @@ const options2 = [
   {
     value: 'Переводчик',
     label: 'Переводчик',
+  },
+  {
+    value: 'Режиссер',
+    label: 'Режиссер',
   },
   {
     value: 'Сценарист',
@@ -166,7 +165,7 @@ watch(valueSortType, () => {
     </div>
     <div class="mainSort__right">
       <h4 class="header">Сортировать:</h4>
-      <el-select v-model="valueSort" class="m-2" placeholder="Select" size="large">
+      <el-select  v-model="valueSort" class="m-2 mr" placeholder="Select" size="large">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -219,6 +218,9 @@ watch(valueSortType, () => {
 </template>
 
 <style scoped lang="scss">
+.mr{
+  margin-right: 5px;
+}
 .el-loading-spinner{
   margin-top: 0;
 }

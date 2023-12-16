@@ -5,16 +5,16 @@ import { ref, onMounted } from 'vue';
 import { useMovieStore } from '../store/index';
 
 const {
-  params: { id },
+  params: { text },
 } = useRoute();
 const movieStore = useMovieStore();
 
 const total = ref(1);
 const pagination = ref(1);
 
-const getSearch = async (id, pagination) => {
+const getSearch = async (text, pagination) => {
   var res = await fetch(
-    `https://api.kinopoisk.dev/v1.4/person/search?limit=15&query=${id}&page=${pagination.value}`,
+    `https://api.kinopoisk.dev/v1.4/person/search?limit=15&query=${text}&page=${pagination.value}`,
     {
       headers: {
         'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
@@ -35,8 +35,8 @@ const {
   isLoading,
   isError: isErr,
 } = useQuery<any, any>({
-  queryKey: ['todos', id, pagination],
-  queryFn: () => getSearch(id, pagination),
+  queryKey: ['todos', text, pagination],
+  queryFn: () => getSearch(text, pagination),
   retry: false,
 
   refetchOnWindowFocus: false,

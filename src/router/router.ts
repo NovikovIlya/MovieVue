@@ -8,24 +8,28 @@ import SearchComponent from '../page/SearchComponent.vue'
 const routes = [
   {
     path: '/',
+    name: 'DirectorAward',
     component: DirectorAward,
   },
   {
     path: '/person/:id',
+    name: 'PersonPage',
     component: PersonPage,
   },
   {
     path: '/favorite',
+    name: 'FavoriteList',
     component: FavoriteList,
   },
   {
-    path: '/search/:id',
+    path: "/search/:text",
+    name: 'SearchComponent',
     component: SearchComponent,
-  },
+  }
 ];
 
 const router = createRouter({
-  routes,
+  routes: routes,
   history: createWebHistory(),
 });
 

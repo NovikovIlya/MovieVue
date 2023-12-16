@@ -67,7 +67,7 @@ const deleteFavorite = (person) => {
 }
 .photo {
   width: 100%;
-  height: 480px;
+  height: 45vh;
   border-radius: 20px 20px 0 0 ;
 }
 .personContainer {
