@@ -13,7 +13,11 @@ import { ElMessage } from 'element-plus';
 import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 
-const mobile = ref(false);
+import { useIsMobile } from '../components/useIsMobile';
+
+
+const {mobile, isMobile:updateIsMobile} = useIsMobile()
+// const mobile = ref(false);
 const isFavorite = ref(false);
 const isFav = ref(false);
 const movieStore = useMovieStore();
@@ -206,15 +210,15 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-const isMobile = () => {
-  if (
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
-      navigator.userAgent,
-    )
-  ) {
-    mobile.value = true;
-  } else mobile.value = false;
-};
+// const isMobile = () => {
+//   if (
+//     /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
+//       navigator.userAgent,
+//     )
+//   ) {
+//     mobile.value = true;
+//   } else mobile.value = false;
+// };
 
 watch(
   data2,
@@ -235,7 +239,8 @@ onUpdated(() => {
 
 });
 onMounted(()=>{
-  isMobile();
+  // isMobile();
+  updateIsMobile()
   fav()
 })
 </script>
