@@ -40,28 +40,38 @@ watch(
 
 <template>
   <div class="container">
-    <div v-for="spouse in dataSpouses" :key="spouse.personId">
+    <div v-for="(spouse,index) in dataSpouses" :key="spouse.personId">
      
       <div class="containerInfo">
         <img class="img" :src="spouse.posterUrl" />
         <div class="item">
-            <div class="wh">Имя: {{ spouse.nameRu }}</div>
-            <div class="wh">Семейный статус: {{ spouse.spouses[0].divorcedReason }}</div>
-            <div class="wh">Дети: {{ spouse.spouses[0].children }}</div>
+            <div class="wh"><span class="td">Имя:</span> {{ spouse.nameRu }}</div>
+            <div class="wh"><span class="td">Семейный статус:</span> {{ spouse.spouses[0].divorcedReason }}</div>
+            <div class="wh"><span class="td">Дети:</span> {{ spouse.spouses[0].children }}</div>
             
         </div>
         <div class="item">
-            <div class="wh">Дата рождения: {{ spouse.birthday }}</div>
-            <div class="wh">Дата смерти: {{ spouse.death }}</div>
-            <div class="wh">Возраст:  {{ spouse.age }}</div>
+            <div class="wh"><span class="td">Дата рождения:</span> {{ spouse.birthday.replace(/-/g, '.') }}</div>
+            <div class="wh"><span class="td">Дата смерти</span> {{ spouse.death.replace(/-/g, '.') }}</div>
+            <div class="wh"><span class="td">Возраст:</span>  {{ spouse.age }}</div>
         </div>
-       
+        
       </div>
+      <div v-if="dataSpouses.length-1 !== index" class="dvidMain"><el-divider  class="divid" /></div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.dvidMain{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.divid{
+  width: 75%;
+
+}
 .container {
   width: 60%;
 }
@@ -69,6 +79,7 @@ watch(
   width: 90px;
 }
 .containerInfo{
+    font-size: 17px;
     margin-bottom: 20px;
     display: grid;
     grid-template-columns: 14% 40% 40%;
@@ -80,5 +91,21 @@ watch(
 }
 .wh{
     width: 100%;
+}
+.td{
+  color:rgba(0, 0, 0, 0.6)
+}
+
+@media screen and (max-width: 600px) {
+  .containerInfo{
+    grid-template-columns: 100%;
+    font-size: 17px;
+  }
+  .img{
+    margin-bottom: 10px;
+  }
+  .wh{
+    margin-bottom: 10px;
+  }
 }
 </style>

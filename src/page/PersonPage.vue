@@ -323,12 +323,12 @@ onMounted(()=>{
 
       <el-divider v-if="desc" class="divid" />
 
-      <h2 v-if="data2 && data2.spouses.length > 0" style="width: 60%">
+      <h2 v-if="data2 && data2.spouses" style="width: 60%">
         Семейное положение:
       </h2>
       <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" />
 
-      <el-divider v-if="data2 && data2.spouses.length > 0" class="divid" />
+      <el-divider v-if="data2 && data2.spouses" class="divid" />
 
       <div v-if="!data.error" class="wh">
         <h2 style="width: 60%">Фильмы:</h2>

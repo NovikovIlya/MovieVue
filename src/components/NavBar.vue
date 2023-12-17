@@ -96,7 +96,10 @@ watch(isErr, () => {
             @click.stop="showModal"
             class="inp2"
             :key="item.id"
-            v-for="item of data">
+            v-for="item of data"
+            v-show="item.nameRu"
+            >
+            
             <div class="nameAct" v-if="item.nameRu?.length > 0 ">
               <img @error="imageLoadOnError" class="img" :src="item.posterUrl ? item.posterUrl : ''" />
               <div class="nameAct">{{ item.nameRu }}</div>
