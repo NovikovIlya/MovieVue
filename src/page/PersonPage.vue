@@ -210,15 +210,6 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-// const isMobile = () => {
-//   if (
-//     /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
-//       navigator.userAgent,
-//     )
-//   ) {
-//     mobile.value = true;
-//   } else mobile.value = false;
-// };
 
 watch(
   data2,
@@ -239,7 +230,6 @@ onUpdated(() => {
 
 });
 onMounted(()=>{
-  // isMobile();
   updateIsMobile()
   fav()
 })
@@ -328,12 +318,12 @@ onMounted(()=>{
 
       <el-divider v-if="desc" class="divid" />
 
-      <h2 v-if="data2 && data2.spouses" style="width: 60%">
+      <h2 v-if="data2 && data2?.spouses.length > 0" style="width: 60%">
         Семейное положение:
       </h2>
       <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" />
 
-      <el-divider v-if="data2 && data2.spouses" class="divid" />
+      <el-divider v-if="data2 && data2?.spouses.length > 0" class="divid" />
 
       <div v-if="!data.error" class="wh">
         <h2 style="width: 60%">Фильмы:</h2>
