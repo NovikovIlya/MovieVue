@@ -51,8 +51,8 @@ watch(
             
         </div>
         <div class="item">
-            <div class="wh"><span class="td">Дата рождения:</span> {{ spouse.birthday.replace(/-/g, '.') }}</div>
-            <div class="wh"><span class="td">Дата смерти</span> {{ spouse.death.replace(/-/g, '.') }}</div>
+            <div class="wh"><span class="td">Дата рождения:</span> {{ spouse?.birthday?.replace(/-/g, '.') }}</div>
+            <div class="wh"><span class="td">Дата смерти</span> {{ spouse?.death?.replace(/-/g, '.') }}</div>
             <div class="wh"><span class="td">Возраст:</span>  {{ spouse.age }}</div>
         </div>
         

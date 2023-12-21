@@ -88,9 +88,7 @@ const chechFavorite = () => {
   isFav.value = true;
 };
 
-const goBack = () => {
-  router.push('/');
-};
+
 
 const kek = computed(() => {
   if (data.value)
@@ -210,6 +208,10 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
+const goBackMaim = ()=>{
+  router.go(-1)
+}
+
 
 watch(
   data2,
@@ -239,7 +241,7 @@ onMounted(()=>{
   <el-backtop :right="mobile ? 20 : 75" :bottom="100" />
   <div class="main2">
     <div class="data2">
-      <div class="hahe"><el-button @click="goBack"> &lt;- Назад</el-button></div>
+      <div class="hahe"><el-button @click="goBackMaim"> &lt;- Назад</el-button></div>
     </div>
   </div>
 
