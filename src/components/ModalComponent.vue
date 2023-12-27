@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 import { useQuery } from '@tanstack/vue-query';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { awardsType } from '../types/index';
 
-
+//props and emits
 const props = defineProps<{
   show: boolean;
   idz?: string | string[];
 }>();
-// const emit = defineEmits(['close'])
+
 const emit = defineEmits<{
   (e:'close')
 }>()
 
 
+//composables
 const getAward = async (idz) => {
   const res = await fetch(`https://api.kinopoisk.dev/v1.4/person/awards?personId=${idz}`, {
     headers: {
@@ -24,7 +25,6 @@ const getAward = async (idz) => {
   const dataZ = data.docs;
   return dataZ;
 };
-
 const { data, refetch, isLoading, isError } = useQuery<awardsType[], Error>({
   queryKey: ['modal', props.idz],
   queryFn: () => getAward(props.idz),
@@ -33,6 +33,8 @@ const { data, refetch, isLoading, isError } = useQuery<awardsType[], Error>({
   refetchOnWindowFocus: false,
 });
 
+
+//methods
 const awards = computed(() => {
   if (data.value) {
     const array = data.value.map((item) => {
@@ -46,14 +48,11 @@ const awards = computed(() => {
     return array;
   }
 });
-
 const hehe = ()=>{
   emit('close')
 }
 const haha = (e)=>{
-
 }
-
 </script>
 
 <template>

@@ -10,32 +10,34 @@ import 'element-plus/es/components/message-box/style/css';
 const props = defineProps<{
   id: string | string[];
 }>();
+
+//data
 const target = ref(null)
-
 const showModalMessage = ref(false);
-
-const {
-  data: dataPost,
-  isPending,
-  isError,
-  error,
-  isSuccess,
-  mutate,
-} = useMutation({
-  mutationFn: (newTodo: any) =>
-    axios.post('https://backmovie.onrender.com/auth/sendperson', newTodo),
-});
-
-const { data: dataGet, mutate: muta } = useMutation<any>({
-  mutationFn: (newTodo: any) =>
-    axios.post('https://backmovie.onrender.com/auth/getperson', newTodo),
-});
-
 const form = ref({
   name: '',
   desc: '',
 });
 
+//composables
+onClickOutside(target, event => {
+  showModalMessage.value = false}
+)
+
+const {
+  data: dataPost,
+  mutate,
+} = useMutation({
+  mutationFn: (newTodo: any) =>
+    axios.post('https://backmovie.onrender.com/auth/sendperson', newTodo),
+});
+const { data: dataGet, mutate: muta } = useMutation<any>({
+  mutationFn: (newTodo: any) =>
+    axios.post('https://backmovie.onrender.com/auth/getperson', newTodo),
+});
+
+
+//methods
 const onSubmit = () => {
   const data = {
     id: props.id,
@@ -48,25 +50,20 @@ const onSubmit = () => {
   showModalMessage.value = false;
 
 };
-
 const open1 = () => {
   ElMessage('Сообщение отправлено');
 };
-
 const haha =(e)=>{
 }
 
-onClickOutside(target, event => {
-  showModalMessage.value = false}
-)
 
+//watchers
 watchEffect(() => {
   if (props.id) {
     //@ts-ignore
     muta({ id: props.id });
   }
 });
-
 
 watch(showModalMessage, () => {
   document.body.classList.toggle('fix');
