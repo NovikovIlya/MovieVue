@@ -152,8 +152,8 @@ watch(isErr, () => {
   align-items: center;
 }
 .container {
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 6%;
+  padding-right: 6%;
 }
 .ss {
   margin-top: 10px;

@@ -318,8 +318,8 @@ watch(valueSortType, () => {
 }
 .mainSort {
   display: flex;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 6%;
+  padding-right: 6%;
   justify-content: space-between;
   &__left {
     display: flex;
