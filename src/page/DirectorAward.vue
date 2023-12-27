@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 import { DataPersonType } from '../types';
 import cachedAxios from '../axios.js';
 
+// Component data and logic
 const valueSort = ref('countAwards');
 const valueSortType = ref('-1');
 const valueSortProffession = ref('Актер');
@@ -11,7 +12,6 @@ const page = ref(0);
 const dataPerson = ref<DataPersonType[]>([]);
 const isLoading = ref(false);
 const isError = ref(false);
-
 const options = [
   {
     value: 'countAwards',
@@ -27,7 +27,6 @@ const options = [
   },
 ];
 const options2 = [
-
   {
     value: 'Актер',
     label: 'Актер',
@@ -92,6 +91,12 @@ const options3 = [
   },
 ];
 
+// Lifecycle hooks
+onMounted(() => {
+  load();
+});
+
+// Component methods
 const load = () => {
   if (page.value === 35651) {
     alert('Последний страница');
@@ -100,7 +105,6 @@ const load = () => {
   page.value++;
   getPerson(page);
 };
-
 const getPerson = async (page) => {
   try {
     isError.value = false;
@@ -131,9 +135,7 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-onMounted(() => {
-  load();
-});
+// Watchers
 watch(valueSort, (_) => {
   dataPerson.value = [];
   page.value = 1;
@@ -165,14 +167,13 @@ watch(valueSortType, () => {
     </div>
     <div class="mainSort__right">
       <h4 class="header">Сортировать:</h4>
-      <el-select  v-model="valueSort" class="m-2 mr" placeholder="Select" size="large">
+      <el-select v-model="valueSort" class="m-2 mr" placeholder="Select" size="large">
         <el-option
           v-for="item in options"
           :key="item.value"
           :label="item.label"
           :value="item.value" />
       </el-select>
-
       <el-select v-model="valueSortType" class="m-2" placeholder="Select" size="large">
         <el-option
           v-for="item in options3"
@@ -182,65 +183,64 @@ watch(valueSortType, () => {
       </el-select>
     </div>
   </div>
-
   <div class="ww" style="width: 100%" v-loading="isLoading">
     <ul v-infinite-scroll="load" class="infinite-list" infinite-scroll-immediate="false">
-      <TransitionGroup  name="list"  >
-      <li v-for="(person,index) in dataPerson" :key="person.id" class="infinite-list-item">
-        <RouterLink :to="'/person/' + person.id" class="personContainer">
-          <img
-            @error="imageLoadOnError"
-            class="photo"
-            :src="
-              person.photo
-                ? person.photo
-                : 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png'
-            " />
-          <div class="name">
-            <div class="name__text">{{ person.name ? person.name : person.enName }}</div>
-            <div class="infoText">
-              <div class="name__info">Возраст: {{ person.age }}</div>
-              <div class="name__info">Пол: {{ person.sex }}</div>
-              
+      <TransitionGroup name="list">
+        <li v-for="(person, index) in dataPerson" :key="person.id" class="infinite-list-item">
+          <RouterLink :to="{name: 'PersonPage', params: {id: person.id}}" class="personContainer">
+            <img
+              @error="imageLoadOnError"
+              class="photo"
+              :src="
+                person.photo
+                  ? person.photo
+                  : 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png'
+              " />
+            <div class="name">
+              <div class="name__text">{{ person.name ? person.name : person.enName }}</div>
+              <div class="infoText">
+                <div class="name__info">Возраст: {{ person.age }}</div>
+                <div class="name__info">Пол: {{ person.sex }}</div>
+              </div>
+              <div class="ind">{{ index + 1 }}</div>
             </div>
-            <div class="ind">{{ index + 1}}</div>
-          </div>
-        </RouterLink>
-      </li>
-    </TransitionGroup>
+          </RouterLink>
+        </li>
+      </TransitionGroup>
     </ul>
     <div class="err" v-if="isError">
       <el-col :sm="12" :lg="6">
-        <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте пожалуйста позднее"> </el-result>
+        <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте пожалуйста позднее">
+        </el-result>
       </el-col>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.mr{
+.mr {
   margin-right: 5px;
 }
-.el-loading-spinner{
+.el-loading-spinner {
   margin-top: 0;
 }
-.ww{
+.ww {
   margin-top: 10px;
 }
-.container{
+.container {
   padding-left: 5%;
   padding-right: 5%;
 }
-.name__text{
+.name__text {
   font-weight: 700;
 }
-.ind{
+.ind {
   width: 100%;
   display: flex;
   justify-content: end;
   font-size: 15px;
   margin-right: 11px;
-  opacity:0.5;
+  opacity: 0.5;
 }
 .infinite-list {
   height: 99%;
@@ -260,7 +260,7 @@ watch(valueSortType, () => {
 .infinite-list .infinite-list-item + .list-item {
   margin-top: 10px;
 }
-.infinite-list{
+.infinite-list {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
 }
@@ -280,7 +280,7 @@ watch(valueSortType, () => {
   border: 2px solid transparent;
   box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
 }
-.infoText{
+.infoText {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -345,14 +345,14 @@ watch(valueSortType, () => {
   transform: translateX(30px);
 }
 
-@media screen and (max-width:600px) {
-  .infinite-list{
+@media screen and (max-width: 600px) {
+  .infinite-list {
     grid-template-columns: 100%;
   }
-  .mainSort{
+  .mainSort {
     flex-wrap: wrap;
   }
-  .err{
+  .err {
     margin-top: 10px;
   }
 }

@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useMovieStore } from '../store/index';
 import { useQuery } from '@tanstack/vue-query';
-import { computed, ref, watch, onUpdated, onMounted } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import { PersonInfo } from '../types/index.js';
 
 import Spouses from '../components/SpousesComponent.vue';
@@ -12,12 +12,10 @@ import MessagesComponent from '../components/MessagesComponent.vue';
 import { ElMessage } from 'element-plus';
 import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
-
 import { useIsMobile } from '../composable/useIsMobile';
 
-
-const {mobile, isMobile:updateIsMobile} = useIsMobile()
-// const mobile = ref(false);
+// Component data and logic
+const { mobile, isMobile: updateIsMobile } = useIsMobile();
 const isFavorite = ref(false);
 const isFav = ref(false);
 const movieStore = useMovieStore();
@@ -27,6 +25,13 @@ const {
 const router = useRouter();
 const showModal = ref(false);
 
+// Lifecycle hooks
+onMounted(() => {
+  updateIsMobile();
+  fav();
+});
+
+// Composable functions
 const getPersonTwo = async (id) => {
   const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v1/staff/${id}`, {
     headers: {
@@ -37,7 +42,6 @@ const getPersonTwo = async (id) => {
   const dataZ = data;
   return dataZ;
 };
-
 const {
   data: data2,
   refetch: refetch2,
@@ -77,19 +81,16 @@ const {
   refetchOnWindowFocus: false,
 });
 
+// Component methods
 const open1 = () => {
   ElMessage('Персона добавлена в избранное!');
 };
-
 const chechFavorite = () => {
   isFavorite.value = true;
   movieStore.addFavorite(data);
   open1();
   isFav.value = true;
 };
-
-
-
 const kek = computed(() => {
   if (data.value)
     if (data.value.profession) {
@@ -104,7 +105,6 @@ const kek = computed(() => {
       return array;
     }
 });
-
 const Place = computed(() => {
   if (data.value)
     if (data.value.birthPlace) {
@@ -119,7 +119,6 @@ const Place = computed(() => {
       return array;
     }
 });
-
 const height = computed(() => {
   if (data.value)
     if (data.value.growth) {
@@ -139,7 +138,6 @@ const height = computed(() => {
       return '1.72 М';
     }
 });
-
 const date = computed(() => {
   if (data.value) {
     const x = new Date(data.value.birthday);
@@ -155,7 +153,6 @@ const date = computed(() => {
     return y;
   }
 });
-
 const datePlace = computed(() => {
   if (data.value.death) {
     const x = new Date(data.value.death);
@@ -171,14 +168,12 @@ const datePlace = computed(() => {
     return y;
   }
 });
-
 const diff = computed(() => {
   const start = date.value.slice(6, 10);
   const end = datePlace.value.slice(6, 10);
   const d = Number(end) - Number(start);
   return d + ' Лет';
 });
-
 const desc = computed(() => {
   if (data.value)
     if (data.value.facts) {
@@ -193,47 +188,25 @@ const desc = computed(() => {
       return z;
     }
 });
-
-const fav = ()=>{
-  const x = localStorage.getItem('persons') ? JSON.parse(localStorage.getItem('persons')) : []
-  x.forEach((item)=>{
-  
-    if(Number(item.id) === Number(id)){
-      isFavorite.value = true
+const fav = () => {
+  const x = localStorage.getItem('persons') ? JSON.parse(localStorage.getItem('persons')) : [];
+  x.forEach((item) => {
+    if (Number(item.id) === Number(id)) {
+      isFavorite.value = true;
     }
-  })
-}
-
+  });
+};
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
+const goBackMaim = () => {
+  router.go(-1);
+};
 
-const goBackMaim = ()=>{
-  router.go(-1)
-}
-
-
-watch(
-  data2,
-  (newData, prevData) => {
-
-    // console.log('111',newData.spouses)
-  },
-  { deep: true },
-);
-
+//watchers
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
-
-// onUpdated(() => {
-//   console.log('я обновился');
-
-// });
-onMounted(()=>{
-  updateIsMobile()
-  fav()
-})
 </script>
 
 <template>
@@ -243,14 +216,12 @@ onMounted(()=>{
       <div class="hahe"><el-button @click="goBackMaim"> &lt;- Назад</el-button></div>
     </div>
   </div>
-
   <div style="width: 100%" v-loading="isLoad" class="main">
     <div v-if="data && data.error" class="err">
       <el-col :sm="12" :lg="6">
         <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
       </el-col>
     </div>
-
     <div v-if="data && !data.error" class="data2">
       <div class="containerMain">
         <div class="left">
@@ -274,26 +245,20 @@ onMounted(()=>{
         <div class="right">
           <div class="about">
             <h1 class="hea">{{ data?.name }}</h1>
-
             <h2 class="it">О персоне:</h2>
             <div></div>
-
             <div class="it ff">Карьера:</div>
             <div class="proff vv it">
               <div class="item" v-for="item of kek">{{ item }}</div>
             </div>
-
             <div class="height it ff">Рост:</div>
             <div class="it">{{ height }}</div>
-
             <div class="it ff">Дата рождения:</div>
             <div class="it">{{ date?.slice(0, 10) }}</div>
-
             <div class="it ff">Место рождения:</div>
             <div class="proff it">
               <div class="item" v-for="item of Place">{{ item }}</div>
             </div>
-
             <div class="it ff" v-show="data?.death">Дата смерти:</div>
             <div class="it" v-if="data?.death">{{ datePlace.slice(0, 10) }}{{ ',  ' + diff }}</div>
           </div>
@@ -319,9 +284,7 @@ onMounted(()=>{
 
       <el-divider v-if="desc" class="divid" />
 
-      <h2 v-if="data2 && data2?.spouses.length > 0" style="width: 60%">
-        Семейное положение:
-      </h2>
+      <h2 v-if="data2 && data2?.spouses.length > 0" style="width: 60%">Семейное положение:</h2>
       <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" />
 
       <el-divider v-if="data2 && data2?.spouses.length > 0" class="divid" />
@@ -380,7 +343,6 @@ onMounted(()=>{
 }
 .message {
   width: 100%;
-  /* display: flex; */
   justify-content: center;
 }
 .data2 {
@@ -479,7 +441,6 @@ onMounted(()=>{
   width: 80px;
   z-index: 1000;
   position: fixed;
-  /* left: 0; */
   right: 55px;
   bottom: 10px;
   cursor: pointer;

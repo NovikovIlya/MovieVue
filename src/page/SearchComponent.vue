@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useQuery } from '@tanstack/vue-query';
 import { ref, onMounted } from 'vue';
 import { useMovieStore } from '../store/index';
 
+//data/logic
 const {
   params: { text },
 } = useRoute();
@@ -12,6 +13,12 @@ const movieStore = useMovieStore();
 const total = ref(1);
 const pagination = ref(1);
 
+// Lifecycle hooks
+onMounted(() => {
+  movieStore.setShowModalTrue();
+});
+
+//composables
 const getSearch = async (text, pagination) => {
   var res = await fetch(
     `https://api.kinopoisk.dev/v1.4/person/search?limit=15&query=${text}&page=${pagination.value}`,
@@ -28,7 +35,6 @@ const getSearch = async (text, pagination) => {
   const dataZ = data.docs;
   return dataZ;
 };
-
 const {
   data,
   refetch,
@@ -42,13 +48,10 @@ const {
   refetchOnWindowFocus: false,
 });
 
+//methods
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
-
-onMounted(() => {
-  movieStore.setShowModalTrue();
-});
 </script>
 
 <template>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import {  ref } from 'vue';
 
-let cartItems = ref(JSON.parse(localStorage.getItem('persons')) || []);
+//data
+const cartItems = ref(JSON.parse(localStorage.getItem('persons')) || []);
 
+//methods
 const deleteFavorite = (person) => {
   const text = localStorage.getItem('persons') !== null ? localStorage.getItem('persons') : [];
   if (text) {
@@ -25,7 +27,6 @@ const deleteFavorite = (person) => {
 <template>
   <div class="container2" >
     <ul class="infinite-list" infinite-scroll-immediate="false">
-   
       <TransitionGroup  name="list"  >
         <li v-for="person of cartItems" :key="person.id" class="infinite-list-item">
           <RouterLink :to="'/person/' + person.id" class="personContainer">

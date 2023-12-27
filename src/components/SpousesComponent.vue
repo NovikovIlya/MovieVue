@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, watchEffect } from 'vue';
+import { ref, watch } from 'vue';
 import { type spousesType } from '../types';
 
 const props = defineProps<{
   spouses: any;
 }>();
 
+//data
 const dataSpouses = ref<spousesType[] | []>([]);
 
+//methods
 const fetchSpouses = async (spouses) => {
   for (const item of spouses) {
     if (item.personId) {
@@ -27,10 +29,10 @@ const fetchSpouses = async (spouses) => {
   }
 };
 
+//wathers
 watch(
   props,
   (newData, prevData) => {
-   
     fetchSpouses(props.spouses);
   },
   { deep: true, immediate: true },
@@ -40,21 +42,18 @@ watch(
 <template>
   <div class="container">
     <div v-for="(spouse,index) in dataSpouses" :key="spouse.personId">
-     
       <div class="containerInfo">
         <img class="img" :src="spouse.posterUrl" />
         <div class="item">
             <div class="wh"><span class="td">Имя:</span> {{ spouse.nameRu }}</div>
             <div v-show="spouse?.spouses[0].divorcedReason" class="wh"><span class="td">Семейный статус:</span> {{ spouse.spouses[0].divorcedReason }}</div>
             <div v-show="spouse?.spouses[0].children" class="wh"><span class="td">Дети:</span> {{ spouse.spouses[0].children }}</div>
-            
         </div>
         <div class="item">
-            <div class="wh"><span class="td">Дата рождения:</span> {{ spouse?.birthday?.replace(/-/g, '.') }}</div>
-            <div v-show="spouse?.death" class="wh"><span class="td">Дата смерти</span> {{ spouse?.death?.replace(/-/g, '.') }}</div>
+            <div class="wh"><span class="td">Дата рождения:</span> {{ spouse?.birthday?.replace(/-/g, '.').split('.').reverse().join('.') }}</div>
+            <div v-show="spouse?.death" class="wh"><span class="td">Дата смерти</span> {{ spouse?.death?.replace(/-/g, '.').split('.').reverse().join('.') }}</div>
             <div class="wh"><span class="td">Возраст:</span>  {{ spouse.age }}</div>
         </div>
-        
       </div>
       <div v-if="dataSpouses.length-1 !== index" class="dvidMain"><el-divider  class="divid" /></div>
     </div>
