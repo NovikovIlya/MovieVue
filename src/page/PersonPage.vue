@@ -197,7 +197,7 @@ const desc = computed(() => {
 const fav = ()=>{
   const x = localStorage.getItem('persons') ? JSON.parse(localStorage.getItem('persons')) : []
   x.forEach((item)=>{
-    console.log(Number(item.id),Number(id))
+  
     if(Number(item.id) === Number(id)){
       isFavorite.value = true
     }
@@ -216,8 +216,7 @@ const goBackMaim = ()=>{
 watch(
   data2,
   (newData, prevData) => {
-    console.log('newData', newData);
-    console.log('prevData', prevData);
+
     // console.log('111',newData.spouses)
   },
   { deep: true },
@@ -227,10 +226,10 @@ watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
 
-onUpdated(() => {
-  console.log('я обновился');
+// onUpdated(() => {
+//   console.log('я обновился');
 
-});
+// });
 onMounted(()=>{
   updateIsMobile()
   fav()

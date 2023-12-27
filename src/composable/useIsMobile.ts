@@ -8,10 +8,10 @@ export function useIsMobile() {
         navigator.userAgent,
       )
     ) {
-      console.log('Это тф');
+
       mobile.value = true;
     } else {
-      console.log('Это пк');
+     
       mobile.value = false;
     }
   };

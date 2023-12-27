@@ -30,8 +30,7 @@ const fetchSpouses = async (spouses) => {
 watch(
   props,
   (newData, prevData) => {
-    console.log('newProp', newData);
-    console.log('prevProp', prevData);
+   
     fetchSpouses(props.spouses);
   },
   { deep: true, immediate: true },
