@@ -14,6 +14,7 @@ import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 import { useIsMobile } from '../composable/useIsMobile';
 
+
 // Component data and logic
 const { mobile, isMobile: updateIsMobile } = useIsMobile();
 const isFavorite = ref(false);
