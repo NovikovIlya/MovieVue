@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Vue from 'vue';
 import DirectorAward from '../page/DirectorAward.vue';
 import PersonPage from '../page/PersonPage.vue';
-import FavoriteList from '../page/FavoritesList.vue';
+import FavoriteList from '../page/FavoriteList/FavoritesList.vue';
 import SearchComponent from '../page/SearchComponent.vue'
 
 const routes = [

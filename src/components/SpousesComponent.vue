@@ -46,13 +46,13 @@ watch(
         <img class="img" :src="spouse.posterUrl" />
         <div class="item">
             <div class="wh"><span class="td">Имя:</span> {{ spouse.nameRu }}</div>
-            <div class="wh"><span class="td">Семейный статус:</span> {{ spouse.spouses[0].divorcedReason }}</div>
-            <div class="wh"><span class="td">Дети:</span> {{ spouse.spouses[0].children }}</div>
+            <div v-show="spouse?.spouses[0].divorcedReason" class="wh"><span class="td">Семейный статус:</span> {{ spouse.spouses[0].divorcedReason }}</div>
+            <div v-show="spouse?.spouses[0].children" class="wh"><span class="td">Дети:</span> {{ spouse.spouses[0].children }}</div>
             
         </div>
         <div class="item">
             <div class="wh"><span class="td">Дата рождения:</span> {{ spouse?.birthday?.replace(/-/g, '.') }}</div>
-            <div class="wh"><span class="td">Дата смерти</span> {{ spouse?.death?.replace(/-/g, '.') }}</div>
+            <div v-show="spouse?.death" class="wh"><span class="td">Дата смерти</span> {{ spouse?.death?.replace(/-/g, '.') }}</div>
             <div class="wh"><span class="td">Возраст:</span>  {{ spouse.age }}</div>
         </div>
         

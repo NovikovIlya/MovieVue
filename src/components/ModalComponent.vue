@@ -54,7 +54,6 @@ const haha = (e)=>{
 
 }
 
-
 </script>
 
 <template>
@@ -148,6 +147,12 @@ const haha = (e)=>{
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 6px;
+  }
+  .modal-default-button{
+    margin-right: 15px;
+  }
+  .el-table--fit{
+    font-size: 7px;
   }
 
 }
