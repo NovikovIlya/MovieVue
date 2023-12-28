@@ -9,12 +9,14 @@ import debounce from 'lodash.debounce';
 import 'element-plus/es/components/message/style/css';
 import 'element-plus/es/components/message-box/style/css';
 
-defineProps<{ modal: boolean }>();
+const props = defineProps<{ modal: boolean }>();
 
+//data
 const movieStore = useMovieStore();
 const inputValue = ref('');
-const switcher = ref('Люди');
 
+
+//composables
 const getPerson = async (inputValue) => {
   if (inputValue.value.length <= 0) {
     return;
@@ -47,27 +49,38 @@ const {
   refetchOnWindowFocus: false,
 });
 
+
+//methods
 const open4 = () => {
   ElMessage.error('Произошла ошибка, попробуйте позже.');
 };
 
-const onInputChange = debounce(() => {
-  if (inputValue.value.length <= 0) {
+const onInputChange = debounce((e) => {
+  const kek = (e.target.value).trim();
+  
+  if (kek.length <= 0 || kek==='') {
+    
     return;
   }
+
+  inputValue.value = kek;
   refetch();
 }, 500);
 
 const showModal = () => {
   movieStore.setShowModalTrue();
 };
+
 const showModalFalse = () => {
   movieStore.setShowModalFalse();
 };
+
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
+
+//wathers
 watch(isErr, () => {
   if (isErr.value === true) {
     open4();
@@ -86,7 +99,7 @@ watch(isErr, () => {
           class="inp"
           @keypress.enter.stop
           @click.stop="showModalFalse"
-          v-model.stop="inputValue"
+          
           @input.stop="onInputChange"
           type="text" />
 

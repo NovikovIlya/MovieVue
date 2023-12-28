@@ -4,15 +4,16 @@ import { useMovieStore } from '../store/index';
 import { useQuery } from '@tanstack/vue-query';
 import { computed, ref, watch, onMounted } from 'vue';
 import { PersonInfo } from '../types/index.js';
+import { ElMessage } from 'element-plus';
+import 'element-plus/es/components/message/style/css';
+import 'element-plus/es/components/message-box/style/css';
 
 import Spouses from '../components/SpousesComponent.vue';
 import ModalComponent from '../components/ModalComponent.vue';
 import MovieList from '../components/MovieList.vue';
 import MessagesComponent from '../components/MessagesComponent.vue';
-import { ElMessage } from 'element-plus';
-import 'element-plus/es/components/message/style/css';
-import 'element-plus/es/components/message-box/style/css';
 import { useIsMobile } from '../composable/useIsMobile';
+import VideoComponent from '../components/VideoComponent.vue';
 
 
 // Component data and logic
@@ -25,6 +26,7 @@ const {
 } = useRoute();
 const router = useRouter();
 const showModal = ref(false);
+const wife = ref(false)
 
 // Lifecycle hooks
 onMounted(() => {
@@ -67,7 +69,6 @@ const getPerson = async (id) => {
   const dataZ = data;
   return dataZ;
 };
-
 const {
   data,
   refetch,
@@ -208,6 +209,7 @@ const goBackMaim = () => {
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
+console.log('wife',wife)
 </script>
 
 <template>
@@ -237,7 +239,6 @@ watch(showModal, () => {
             src="/public/award.png"
             id="show-modal"
             @click="showModal = true" />
-
           <el-icon class="iconFav" v-if="isFavorite === false && !isFav" @click="chechFavorite"
             ><StarFilled
           /></el-icon>
@@ -285,10 +286,14 @@ watch(showModal, () => {
 
       <el-divider v-if="desc" class="divid" />
 
-      <h2 v-if="data2 && data2?.spouses.length > 0" style="width: 60%">Семейное положение:</h2>
-      <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" />
+      <h2 v-if="data2 && data2?.spouses.length > 0 && wife===true" style="width: 60%">Семейное положение:</h2>
+      <Spouses v-if="data2 && data2.spouses " :spouses="data2.spouses"  @okWife="wife=true"/>
 
-      <el-divider v-if="data2 && data2?.spouses.length > 0" class="divid" />
+      <el-divider v-if="data2 && data2?.spouses.length > 0 && wife===true" class="divid" />
+
+      <VideoComponent :nameActor="data?.name"/>
+
+      <el-divider v-if="data && data?.name.length > 0" class="divid" />
 
       <div v-if="!data.error" class="wh">
         <h2 style="width: 60%">Фильмы:</h2>

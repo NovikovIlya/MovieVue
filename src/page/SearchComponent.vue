@@ -52,6 +52,9 @@ const {
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
+const up = ()=>{
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+}
 </script>
 
 <template>
@@ -69,7 +72,7 @@ const imageLoadOnError = (e) => {
     </RouterLink>
   </div>
   <div v-show="!isLoading" class="example-pagination-block">
-    <el-pagination v-model:current-page="pagination" layout="prev, pager, next" :page-count="total" />
+    <el-pagination v-model:current-page="pagination" @click="up" layout="prev, pager, next" :page-count="total" />
   </div>
   </div>
 </template>
