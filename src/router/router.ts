@@ -4,6 +4,7 @@ import DirectorAward from '../page/DirectorAward.vue';
 import PersonPage from '../page/PersonPage.vue';
 import FavoriteList from '../page/FavoriteList/FavoritesList.vue';
 import SearchComponent from '../page/SearchComponent.vue'
+import RandomPerson from '../page/RandomPerson.vue';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: "/search/:text",
     name: 'SearchComponent',
     component: SearchComponent,
+  },
+  {
+    path: "/random",
+    name: 'random',
+    component: RandomPerson,
   }
 ];
 
