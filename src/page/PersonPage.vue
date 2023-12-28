@@ -209,7 +209,6 @@ const goBackMaim = () => {
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
-console.log('wife',wife)
 </script>
 
 <template>
