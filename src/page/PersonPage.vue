@@ -202,7 +202,13 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 const goBackMaim = () => {
-  router.go(-1);
+  console.log('router', router);
+  if(router.options.history.state.back === null){
+    router.push('/');
+  }else{
+    router.go(-1);
+  }
+  // router.go(-1);
 };
 
 //watchers

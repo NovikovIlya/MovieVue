@@ -55,6 +55,7 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 const goBackMaim = () => {
+  console.log('router',router)
   router.go(-1);
 };
 </script>
