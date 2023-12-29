@@ -59,7 +59,6 @@ const onInputChange = debounce((e) => {
   const kek = (e.target.value).trim();
   
   if (kek.length <= 0 || kek==='') {
-    
     return;
   }
 
@@ -99,10 +98,8 @@ watch(isErr, () => {
           class="inp"
           @keypress.enter.stop
           @click.stop="showModalFalse"
-          
           @input.stop="onInputChange"
           type="text" />
-
         <div :class="['spis', 'blk', movieStore.showModal ? 'hidden' : '', 'kek']">
           <RouterLink
             :to="'/person/' + item.kinopoiskId"
@@ -112,13 +109,11 @@ watch(isErr, () => {
             v-for="item of data"
             v-show="item.nameRu"
             >
-            
             <div class="nameAct" v-if="item.nameRu?.length > 0 ">
               <img @error="imageLoadOnError" class="img" :src="item.posterUrl ? item.posterUrl : ''" />
               <div class="nameAct">{{ item.nameRu }}</div>
               {{ item.title }}
               <div>{{ item.age === undefined ? item.type : '' }}</div>
-             
             </div>
           </RouterLink>
           <RouterLink
@@ -137,7 +132,6 @@ watch(isErr, () => {
         </el-skeleton>
       </div>
     </div>
-
     <div class="men">
       <CustomMenu />
     </div>
