@@ -208,7 +208,6 @@ const goBackMaim = () => {
   }else{
     router.go(-1);
   }
-  // router.go(-1);
 };
 
 //watchers
