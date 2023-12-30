@@ -74,8 +74,10 @@ const deleteFavorite = (person) => {
 .personContainer {
   text-decoration: none;
   border: 2px transparent solid;
- 
-
+}
+.infinite-list-item:hover{
+  scale:1.03;
+  transition: 0.3s;
 }
 .infinite-list-item {
   border-radius: 20px;

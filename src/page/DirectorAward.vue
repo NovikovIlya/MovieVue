@@ -280,6 +280,11 @@ watch(valueSortType, () => {
   border: 2px solid transparent;
   box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
 }
+.personContainer:hover{
+  scale:1.03;
+  transition: 0.3s;
+  
+}
 .infoText {
   width: 100%;
   display: flex;
