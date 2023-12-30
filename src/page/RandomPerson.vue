@@ -22,15 +22,11 @@ const getPerson = async (random) => {
     const dataZ = data;
     return dataZ;
   } catch (error) {
-    console.log('ошибка',error);
+    console.log('ошибка', error);
     update();
   }
 };
-const {
-  data,
-  refetch,
-
-} = useQuery<any, Error>({
+const { data, refetch, error } = useQuery<any, Error>({
   queryKey: ['todos', random],
   queryFn: () => getPerson(random),
   retry: false,
@@ -55,7 +51,7 @@ const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 const goBackMaim = () => {
-  console.log('router',router)
+  console.log('router', router);
   router.go(-1);
 };
 </script>
@@ -66,8 +62,14 @@ const goBackMaim = () => {
       <el-button @click="goBackMaim"> &lt;- Назад</el-button>
       <el-button @click="update">Случайная персона -> </el-button>
     </div>
-    
-    <div class="main" v-if="data">
+
+    <div class="err" v-if="data?.error">
+      <el-col :sm="12" :lg="6">
+        <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
+      </el-col>
+    </div>
+
+    <div v-else class="main" v-if="data">
       <RouterLink
         v-if="data.id"
         :to="{ name: 'PersonPage', params: { id: data.id } }"
@@ -89,25 +91,30 @@ const goBackMaim = () => {
         </div>
       </RouterLink>
     </div>
-    
   </div>
 </template>
 
 <style scoped lang="scss">
-.container{
+.err{
+  width: 100%;
+}
+.el-col-sm-12 {
+  max-width: 100%;
+}
+.container {
   margin: 0 auto;
   width: 50%;
   display: flex;
   flex-wrap: wrap;
   justify-self: center;
 }
-.main{
+.main {
   margin-top: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.head{
+.head {
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -165,10 +172,10 @@ const goBackMaim = () => {
 }
 
 @media screen and (max-width: 600px) {
-  .personContainer{
+  .personContainer {
     width: 100%;
   }
-  .name__text{
+  .name__text {
     font-size: 14px;
   }
 }

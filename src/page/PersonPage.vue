@@ -14,7 +14,7 @@ import MovieList from '../components/MovieList.vue';
 import MessagesComponent from '../components/MessagesComponent.vue';
 import { useIsMobile } from '../composable/useIsMobile';
 import VideoComponent from '../components/VideoComponent.vue';
-
+import InfoPerson from '../components/InfoPerson.vue';
 
 // Component data and logic
 const { mobile, isMobile: updateIsMobile } = useIsMobile();
@@ -26,7 +26,7 @@ const {
 } = useRoute();
 const router = useRouter();
 const showModal = ref(false);
-const wife = ref(false)
+const wife = ref(false);
 
 // Lifecycle hooks
 onMounted(() => {
@@ -172,8 +172,8 @@ const datePlace = computed(() => {
 });
 const diff = computed(() => {
   const start = date.value.slice(6, 10);
-  const end = datePlace.value.slice(6, 10);
-  const d = Number(end) - Number(start);
+  const end = datePlace.value?.slice(6, 10);
+  const d = end ? Number(end) : 2023 - Number(start);
   return d + ' Лет';
 });
 const desc = computed(() => {
@@ -198,16 +198,18 @@ const fav = () => {
     }
   });
 };
-const imageLoadOnError = (e) => {
-  e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
-};
+
 const goBackMaim = () => {
   console.log('router', router);
-  if(router.options.history.state.back === null){
+  if (router.options.history.state.back === null) {
     router.push('/');
-  }else{
+  } else {
     router.go(-1);
   }
+};
+const pokazModal = () => {
+  console.log('показ');
+  showModal.value = true;
 };
 
 //watchers
@@ -230,46 +232,18 @@ watch(showModal, () => {
       </el-col>
     </div>
     <div v-if="data && !data.error" class="data2">
-      <div class="containerMain">
-        <div class="left">
-          <img
-            @error="imageLoadOnError"
-            class="imageActor"
-            :src="data?.photo ? data.photo : ''"
-            alt="text" />
-          <img
-            v-if="data && data.countAwards"
-            class="imgAward2"
-            src="/public/award.png"
-            id="show-modal"
-            @click="showModal = true" />
-          <el-icon class="iconFav" v-if="isFavorite === false && !isFav" @click="chechFavorite"
-            ><StarFilled
-          /></el-icon>
-          <el-icon class="iconFav1" v-if="isFavorite"><CircleCheckFilled /></el-icon>
-        </div>
-        <div class="right">
-          <div class="about">
-            <h1 class="hea">{{ data?.name }}</h1>
-            <h2 class="it">О персоне:</h2>
-            <div></div>
-            <div class="it ff">Карьера:</div>
-            <div class="proff vv it">
-              <div class="item" v-for="item of kek">{{ item }}</div>
-            </div>
-            <div class="height it ff">Рост:</div>
-            <div class="it">{{ height }}</div>
-            <div class="it ff">Дата рождения:</div>
-            <div class="it">{{ date?.slice(0, 10) }}</div>
-            <div class="it ff">Место рождения:</div>
-            <div class="proff it">
-              <div class="item" v-for="item of Place">{{ item }}</div>
-            </div>
-            <div class="it ff" v-show="data?.death">Дата смерти:</div>
-            <div class="it" v-if="data?.death">{{ datePlace.slice(0, 10) }}{{ ',  ' + diff }}</div>
-          </div>
-        </div>
-      </div>
+      <InfoPerson
+        :Place="Place"
+        :date="date"
+        :datePlace="datePlace ? datePlace : '2023'"
+        :diff="diff"
+        :height="height"
+        @check="chechFavorite"
+        :data="data"
+        @modalka="pokazModal"
+        :isFavorite="isFavorite"
+        :isFav="isFav"
+        :kek="kek" />
 
       <el-divider v-if="!data.error && data.facts && data.facts.length > 0" class="divid" />
 
@@ -290,12 +264,14 @@ watch(showModal, () => {
 
       <el-divider v-if="desc" class="divid" />
 
-      <h2 v-if="data2 && data2?.spouses.length > 0 && wife===true" style="width: 60%">Семейное положение:</h2>
-      <Spouses v-if="data2 && data2.spouses " :spouses="data2.spouses"  @okWife="wife=true"/>
+      <h2 v-if="data2 && data2?.spouses.length > 0 && wife === true" style="width: 60%">
+        Семейное положение:
+      </h2>
+      <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" @okWife="wife = true" />
 
-      <el-divider v-if="data2 && data2?.spouses.length > 0 && wife===true" class="divid" />
+      <el-divider v-if="data2 && data2?.spouses.length > 0 && wife === true" class="divid" />
 
-      <VideoComponent :nameActor="data?.name"/>
+      <VideoComponent :nameActor="data?.name" />
 
       <el-divider v-if="data && data?.name.length > 0" class="divid" />
 

@@ -26,7 +26,6 @@ const fetchSpouses = async (spouses) => {
             },
           },
         );
-        console.log('res',result)
         const data = await result.json();
         //@ts-ignore
         dataSpouses.value.push(data);

@@ -5,6 +5,7 @@ import PersonPage from '../page/PersonPage.vue';
 import FavoriteList from '../page/FavoriteList/FavoritesList.vue';
 import SearchComponent from '../page/SearchComponent.vue'
 import RandomPerson from '../page/RandomPerson.vue';
+import NotFound from '../page/NotFound.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: "/random",
     name: 'random',
     component: RandomPerson,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: 'notfound',
+    component: NotFound,
   }
 ];
 

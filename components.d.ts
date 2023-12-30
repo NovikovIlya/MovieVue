@@ -28,6 +28,7 @@ declare module 'vue' {
     ElSkeletonItem: typeof import('element-plus/es')['ElSkeletonItem']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    InfoPerson: typeof import('./src/components/InfoPerson.vue')['default']
     MessagesComponent: typeof import('./src/components/MessagesComponent.vue')['default']
     ModalComponent: typeof import('./src/components/ModalComponent.vue')['default']
     MovieList: typeof import('./src/components/MovieList.vue')['default']
