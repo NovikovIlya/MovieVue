@@ -80,7 +80,6 @@ watch(valueSortType, () => {
 </script>
 
 <template>
-
   <div class="mainSort">
     <div class="mainSort__left">
       <h4 class="header">Роль:</h4>
