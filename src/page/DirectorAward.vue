@@ -3,98 +3,24 @@ import { ref, onMounted, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { DataPersonType } from '../types';
 import cachedAxios from '../axios.js';
+import { useMovieStore } from '../store/index';
+import { storeToRefs } from 'pinia';
 
 // Component data and logic
-const valueSort = ref('countAwards');
-const valueSortType = ref('-1');
-const valueSortProffession = ref('Актер');
+const movieStore = useMovieStore();
 const page = ref(0);
 const dataPerson = ref<DataPersonType[]>([]);
 const isLoading = ref(false);
 const isError = ref(false);
-const options = [
-  {
-    value: 'countAwards',
-    label: 'По наградам',
-  },
-  {
-    value: 'age',
-    label: 'По возрасту',
-  },
-  {
-    value: 'movies.rating',
-    label: 'По рейтингу фильма',
-  },
-];
-const options2 = [
-  {
-    value: 'Актер',
-    label: 'Актер',
-  },
-  {
-    value: 'Актер дубляжа',
-    label: 'Актер дубляжа',
-  },
-  {
-    value: 'Актриса',
-    label: 'Актриса',
-  },
-  {
-    value: 'Актриса дубляжа',
-    label: 'Актриса дубляжа',
-  },
-  {
-    value: 'Звукорежиссер',
-    label: 'Звукорежиссер',
-  },
-  {
-    value: 'Композитор',
-    label: 'Композитор',
-  },
-  {
-    value: 'Монтажер',
-    label: 'Монтажер',
-  },
-  {
-    value: 'Озвучка',
-    label: 'Озвучка',
-  },
-  {
-    value: 'Оператор',
-    label: 'Оператор',
-  },
-  {
-    value: 'Переводчик',
-    label: 'Переводчик',
-  },
-  {
-    value: 'Режиссер',
-    label: 'Режиссер',
-  },
-  {
-    value: 'Сценарист',
-    label: 'Сценарист',
-  },
-  {
-    value: 'Художник',
-    label: 'Художник',
-  },
-];
-const options3 = [
-  {
-    value: '-1',
-    label: 'По убыванию',
-  },
-  {
-    value: '1',
-    label: 'По возрастанию',
-  },
-];
+
 
 // Lifecycle hooks
 onMounted(() => {
   load();
 });
+
+//composables
+const {valueSort, valueSortType, valueSortProffession} = storeToRefs(movieStore);
 
 // Component methods
 const load = () => {
@@ -154,12 +80,13 @@ watch(valueSortType, () => {
 </script>
 
 <template>
+
   <div class="mainSort">
     <div class="mainSort__left">
       <h4 class="header">Роль:</h4>
-      <el-select v-model="valueSortProffession" class="m-2" placeholder="Select" size="large">
+      <el-select v-model="movieStore.valueSortProffession" class="m-2" placeholder="Select" size="large">
         <el-option
-          v-for="item in options2"
+          v-for="item in movieStore.options2"
           :key="item.value"
           :label="item.label"
           :value="item.value" />
@@ -167,22 +94,23 @@ watch(valueSortType, () => {
     </div>
     <div class="mainSort__right">
       <h4 class="header">Сортировать:</h4>
-      <el-select v-model="valueSort" class="m-2 mr" placeholder="Select" size="large">
+      <el-select v-model="movieStore.valueSort" class="m-2 mr" placeholder="Select" size="large">
         <el-option
-          v-for="item in options"
+          v-for="item in movieStore.options"
           :key="item.value"
           :label="item.label"
           :value="item.value" />
       </el-select>
-      <el-select v-model="valueSortType" class="m-2" placeholder="Select" size="large">
+      <el-select v-model="movieStore.valueSortType" class="m-2" placeholder="Select" size="large">
         <el-option
-          v-for="item in options3"
+          v-for="item in movieStore.options3"
           :key="item.value"
           :label="item.label"
           :value="item.value" />
       </el-select>
     </div>
   </div>
+
   <div class="ww" style="width: 100%" v-loading="isLoading">
     <ul v-infinite-scroll="load" class="infinite-list" infinite-scroll-immediate="false">
       <TransitionGroup name="list">
