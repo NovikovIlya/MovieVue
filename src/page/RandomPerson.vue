@@ -44,14 +44,12 @@ const getRandom = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   random.value = Math.floor(Math.random() * (max - min + 1)) + min;
-  console.log(random.value);
 };
 
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 const goBackMaim = () => {
-  console.log('router', router);
   router.go(-1);
 };
 </script>
@@ -62,40 +60,40 @@ const goBackMaim = () => {
       <el-button @click="goBackMaim"> &lt;- Назад</el-button>
       <el-button @click="update">Случайная персона -> </el-button>
     </div>
-
     <div class="err" v-if="data?.error">
       <el-col :sm="12" :lg="6">
         <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
       </el-col>
     </div>
-
-    <div v-else class="main" v-if="data">
-      <RouterLink
-        v-if="data.id"
-        :to="{ name: 'PersonPage', params: { id: data.id } }"
-        class="personContainer">
-        <img
-          @error="imageLoadOnError"
-          class="photo"
-          :src="
-            data.photo
-              ? data.photo
-              : 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png'
-          " />
-        <div class="name">
-          <div class="name__text">{{ data.name ? data.name : data.enName }}</div>
-          <div class="infoText">
-            <div v-show="data?.age" class="name__info">Возраст: {{ data.age }}</div>
-            <div v-show="data?.sex" class="name__info">Пол: {{ data.sex }}</div>
+    <Transition name="slide-fade">
+      <div class="main" v-if="data">
+        <RouterLink
+          v-if="data.id"
+          :to="{ name: 'PersonPage', params: { id: data.id } }"
+          class="personContainer">
+          <img
+            @error="imageLoadOnError"
+            class="photo"
+            :src="
+              data.photo
+                ? data.photo
+                : 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png'
+            " />
+          <div class="name">
+            <div class="name__text">{{ data.name ? data.name : data.enName }}</div>
+            <div class="infoText">
+              <div v-show="data?.age" class="name__info">Возраст: {{ data.age }}</div>
+              <div v-show="data?.sex" class="name__info">Пол: {{ data.sex }}</div>
+            </div>
           </div>
-        </div>
-      </RouterLink>
-    </div>
+        </RouterLink>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <style scoped lang="scss">
-.err{
+.err {
   width: 100%;
 }
 .el-col-sm-12 {
@@ -169,6 +167,20 @@ const goBackMaim = () => {
     justify-content: center;
     width: 100%;
   }
+}
+
+.slide-fade-enter-active {
+  transition: all 0.8s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(80px);
+  opacity: 0;
 }
 
 @media screen and (max-width: 600px) {
