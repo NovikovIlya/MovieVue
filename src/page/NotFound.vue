@@ -23,5 +23,6 @@ const goBack = () => {
 <style scoped>
 .el-col-sm-12 {
   width: 100%;
+  max-width: 100%;
 }
 </style>

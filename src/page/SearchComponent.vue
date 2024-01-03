@@ -52,42 +52,46 @@ const {
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
-const up = ()=>{
-  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-}
+const up = () => {
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+};
 </script>
 
 <template>
-  <div v-loading="isLoading" class="load"></div>  
-  <div >
+  <div v-loading="isLoading" class="load"></div>
+  <div>
     <div>
-    <RouterLink :to="'/person/' + item.id" class="inp2" :key="item.id" v-for="item of data">
-      <div class="nameAct">
-        <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" />
-        <div class="nameAct">{{ item.name }}</div>
-        {{ item.title }}
-        <div>{{ item.age === undefined ? item.type : '' }}</div>
-        {{ (item?.age && item.age === 0) || item.age === undefined ? '' : ',' + ' ' + item.age }}
-      </div>
-    </RouterLink>
-  </div>
-  <div v-show="!isLoading" class="example-pagination-block">
-    <el-pagination v-model:current-page="pagination" @click="up" layout="prev, pager, next" :page-count="total" />
-  </div>
+      <RouterLink :to="'/person/' + item.id" class="inp2" :key="item.id" v-for="item of data">
+        <div class="nameAct">
+          <img @error="imageLoadOnError" class="img" :src="item.photo ? item.photo : ''" />
+          <div class="nameAct">{{ item.name }}</div>
+          {{ item.title }}
+          <div>{{ item.age === undefined ? item.type : '' }}</div>
+          {{ (item?.age && item.age === 0) || item.age === undefined ? '' : ',' + ' ' + item.age }}
+        </div>
+      </RouterLink>
+    </div>
+    <div v-show="!isLoading" class="example-pagination-block">
+      <el-pagination
+        v-model:current-page="pagination"
+        @click="up"
+        layout="prev, pager, next"
+        :page-count="total" />
+    </div>
   </div>
 </template>
 
 <style scoped>
-.load{
-    position: absolute;
-    top: 42%;
-    left: 48%;
+.load {
+  position: absolute;
+  top: 42%;
+  left: 48%;
 }
-.example-pagination-block{
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.example-pagination-block {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 .example-pagination-block + .example-pagination-block {
   margin-top: 10px;
@@ -154,12 +158,11 @@ const up = ()=>{
   border: 2px solid rgb(124, 138, 255);
 }
 .inp2 {
-    
-    width: 50%;
-    margin:  0 auto;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  justify-content: center;
   text-decoration: none;
   display: flex;
   align-items: center;
