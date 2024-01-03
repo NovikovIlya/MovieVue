@@ -71,10 +71,10 @@ const imageLoadOnError = (e) => {
     <div v-for="item of date" :key="data">
       <a target="_blank" class="container2" v-if="data" :href="item.url">
         <div><img @error="imageLoadOnError" class="image" :src="item.urlToImage" alt="text" /></div>
-        <div>
+        <div class="right">
           <div class="head">{{ item.title }}</div>
           <div class="text">{{ item.description }}</div>
-          <div>{{ item.date }}</div>
+          <div class="date">{{ item.date }}</div>
         </div>
       </a>
     </div>
@@ -96,24 +96,37 @@ const imageLoadOnError = (e) => {
 }
 .hahe {
   width: 30%;
+
 }
 .main {
   width: 70%;
   margin: 0 auto;
+  margin-top: 20px;
 }
 .container2 {
   display: grid;
   grid-template-columns: 50% 50%;
   text-decoration: none;
   color: black;
+  margin-bottom: 10px;
 }
 .image {
   width: 100%;
+  height: 250px;
+}
+.right{
+  margin-left: 10px;
 }
 .head {
   font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 .text {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.date{
   font-size: 12px;
 }
 </style>

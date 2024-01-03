@@ -15,7 +15,7 @@ import MessagesComponent from '../components/MessagesComponent.vue';
 import { useIsMobile } from '../composable/useIsMobile';
 import VideoComponent from '../components/VideoComponent.vue';
 import InfoPerson from '../components/InfoPerson.vue';
-import PersonNews from './PersonNews.vue';
+
 
 // Component data and logic
 const { mobile, isMobile: updateIsMobile } = useIsMobile();
@@ -224,9 +224,9 @@ watch(showModal, () => {
   <div class="main2">
     <div class="data2">
       <div class="hahe"><el-button @click="goBackMaim"> &lt;- Назад</el-button></div>
-      <RouterLink v-if="data" class="hahe hh1" :to="{ name: 'personNews', params: { name: data?.name } }"
+      <!-- <RouterLink v-if="data" class="hahe hh1" :to="{ name: 'personNews', params: { name: data?.name } }"
         ><div><el-button> Новости -> </el-button></div></RouterLink
-      >
+      > -->
     </div>
   </div>
 
@@ -305,6 +305,9 @@ watch(showModal, () => {
 <style scoped>
 .hahe {
   width: 30%;
+
+  display: flex;
+  justify-content: center;
 }
 .hh1 {
   display: flex;
