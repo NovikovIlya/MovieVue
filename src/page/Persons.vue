@@ -160,6 +160,7 @@ watch(valueSortType, () => {
 }
 .name__text {
   font-weight: 700;
+  text-align: center;
 }
 .ind {
   width: 100%;

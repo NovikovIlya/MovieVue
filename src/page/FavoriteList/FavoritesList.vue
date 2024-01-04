@@ -27,7 +27,7 @@ const deleteFavorite = (person) => {
 <template>
   <div class="container2" >
     <ul class="infinite-list" infinite-scroll-immediate="false">
-      <TransitionGroup  name="list"  >
+      <TransitionGroup  name="fade"  >
         <li v-for="person of cartItems" :key="person.id" class="infinite-list-item">
           <RouterLink :to="'/person/' + person.id" class="personContainer">
             <img
@@ -110,23 +110,23 @@ const deleteFavorite = (person) => {
 }
 
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 1.5s ease;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
 }
-.list-enter-from,
-.list-leave-to {
+
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateX(30px);
 }
 
 @media screen and (max-width: 600px) {
-  .infinite-list {
+  .infinite-list2 {
     margin-bottom: 20px;
     grid-template-columns: 100%;
     padding: 0;
   }
-  .infinite-list-item {
+  .infinite-list2-item {
     margin-bottom: 20px;
     width: 94%;
   }

@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
+
 export const useMovieStore = defineStore('movieStore', () => {
   //data
-  const showModal = ref(false);
+  const dataNews = ref(null)
+
+
+  const showModal = ref(true);
   const dataPerson = ref([]);
 
   const valueSort = ref('countAwards');
@@ -106,6 +110,11 @@ export const useMovieStore = defineStore('movieStore', () => {
     localStorage.setItem('persons', JSON.stringify(dataPerson.value));
   };
 
+  const fillNews = (name)=>{
+    dataNews.value = name
+  }
+
+
 
 
   return {
@@ -119,5 +128,9 @@ export const useMovieStore = defineStore('movieStore', () => {
     valueSort,
     valueSortType,
     valueSortProffession,
+
+    fillNews,
+    dataNews,
+    
   };
 });

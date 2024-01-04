@@ -102,6 +102,7 @@ watch(
       </div>
     </Transition>
   </Teleport>
+  <div class="h2style"><h2 style="width: 60%">Отзывы о персоне:</h2></div>
   <div class="showMess">
     <div class="showMessChild">
       <el-button @click="showModalMessage = true">Отправить отзыв</el-button>
@@ -122,6 +123,10 @@ watch(
 </template>
 
 <style scoped>
+.h2style{
+  display: flex;
+  justify-content: center;
+}
 .box-card{
   margin-bottom: 20px;
 }

@@ -2,54 +2,29 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useQuery } from '@tanstack/vue-query';
 import { computed } from 'vue';
+import { useMovieStore } from '../store/index';
 
 //data
-const {
-  params: { name },
-} = useRoute();
 const router = useRouter();
+const movieStore = useMovieStore();
 
-//composables
-const getNews = async (name) => {
-  const res = await fetch(
-    `https://newsapi.org/v2/everything?q=${name}&apiKey=35de744977574bf3885d9c13ed179bc7`,
-  );
-  const { articles } = await res.json();
-  return articles;
-};
-const {
-  data,
-  refetch,
-  isLoading: isLoad,
-  isError: isEr,
-  error,
-} = useQuery<any, Error>({
-  queryKey: ['news', name],
-  queryFn: () => getNews(name),
-  retry: false,
-  // enabled: false,
-  refetchOnWindowFocus: false,
-});
 
 //computed
 const date = computed(() => {
-  if (data.value) {
-    console.log('data',data)
-
-    const dateArray = data.value.map((item) => {
+  if (movieStore.dataNews) {
+    const dateArray = movieStore.dataNews.map((item) => {
       return {
         ...item,
         date: new Date(item.publishedAt).toLocaleDateString('ru-RU'),
       }
     });
-    console.log('dateArray',dateArray)
+    console.log('sszz',dateArray)
     return dateArray;
   }
 });
 
 //methods
 const goBackMaim = () => {
-  console.log('router', router);
   if (router.options.history.state.back === null) {
     router.push('/');
   } else {
@@ -67,9 +42,9 @@ const imageLoadOnError = (e) => {
       <div class="hahe"><el-button @click="goBackMaim"> &lt;- Назад</el-button></div>
     </div>
   </div>
-  <div class="main">
-    <div v-for="item of date" :key="data">
-      <a target="_blank" class="container2" v-if="data" :href="item.url">
+  <div v-if="movieStore.dataNews" class="main">
+    <div v-for="item of date" :key="movieStore.dataNews">
+      <a target="_blank" class="container2"  :href="item.url">
         <div><img @error="imageLoadOnError" class="image" :src="item.urlToImage" alt="text" /></div>
         <div class="right">
           <div class="head">{{ item.title }}</div>
@@ -79,9 +54,21 @@ const imageLoadOnError = (e) => {
       </a>
     </div>
   </div>
+  <div  v-if="movieStore.dataNews && movieStore.dataNews.length <= 0" class="err">
+    <el-col :sm="12" :lg="6">
+      <el-result icon="error" title="У персоны нет новостей" sub-title="Попробуйте позже"> </el-result>
+    </el-col>
+  </div>
 </template>
 
 <style scoped>
+.zagr{
+  margin-top: 20px;
+}
+.err{
+  display: flex;
+  justify-content: center;
+}
 .main2 {
   margin-top: 30px;
   display: flex;
@@ -96,7 +83,8 @@ const imageLoadOnError = (e) => {
 }
 .hahe {
   width: 30%;
-
+  display: flex;
+  justify-content: center;
 }
 .main {
   width: 70%;
@@ -109,24 +97,39 @@ const imageLoadOnError = (e) => {
   text-decoration: none;
   color: black;
   margin-bottom: 10px;
+
+  padding: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .image {
   width: 100%;
-  height: 250px;
+  height: 100%;
+  min-height: 200px;
 }
 .right{
   margin-left: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .head {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: bold;
-  margin-bottom: 10px;
 }
 .text {
-  font-size: 12px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  width: 100%;
 }
 .date{
-  font-size: 12px;
+  font-size: 14px;
+  display: flex;
+  align-self: end;
+}
+@media screen and (max-width: 600px) {
+  .container2{
+    grid-template-columns: 100%;
+  }
+  .right{
+    margin: 10px;
+  }
 }
 </style>

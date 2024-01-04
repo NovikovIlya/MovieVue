@@ -15,7 +15,6 @@ const props = defineProps<{ modal: boolean }>();
 const movieStore = useMovieStore();
 const inputValue = ref('');
 
-
 //composables
 const getPerson = async (inputValue) => {
   if (inputValue.value.length <= 0) {
@@ -49,16 +48,15 @@ const {
   refetchOnWindowFocus: false,
 });
 
-
 //methods
 const open4 = () => {
   ElMessage.error('Произошла ошибка, попробуйте позже.');
 };
 
 const onInputChange = debounce((e) => {
-  const kek = (e.target.value).trim();
-  
-  if (kek.length <= 0 || kek==='') {
+  const kek = e.target.value.trim();
+
+  if (kek.length <= 0 || kek === '') {
     return;
   }
 
@@ -77,7 +75,6 @@ const showModalFalse = () => {
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
-
 
 //wathers
 watch(isErr, () => {
@@ -100,22 +97,27 @@ watch(isErr, () => {
           @click.stop="showModalFalse"
           @input.stop="onInputChange"
           type="text" />
-        <div :class="['spis', 'blk', movieStore.showModal ? 'hidden' : '', 'kek']">
+        <div :class="['spis', movieStore.showModal ? 'hidden' : data && 'vv', 'kek']">
           <RouterLink
             :to="'/person/' + item.kinopoiskId"
             @click.stop="showModal"
             class="inp2"
             :key="item.id"
             v-for="item of data"
-            v-show="item.nameRu"
-            >
-            <div class="nameAct" v-if="item.nameRu?.length > 0 ">
-              <img @error="imageLoadOnError" class="img" :src="item.posterUrl ? item.posterUrl : ''" />
-              <div class="nameAct">{{ item.nameRu }}</div>
-              {{ item.title }}
-              <div>{{ item.age === undefined ? item.type : '' }}</div>
-            </div>
+            v-show="item.nameRu">
+            <Transition>
+              <div class="nameAct" v-if="item.nameRu?.length > 0">
+                <img
+                  @error="imageLoadOnError"
+                  class="img"
+                  :src="item.posterUrl ? item.posterUrl : ''" />
+                <div class="nameAct">{{ item.nameRu }}</div>
+                {{ item.title }}
+                <div>{{ item.age === undefined ? item.type : '' }}</div>
+              </div>
+            </Transition>
           </RouterLink>
+
           <RouterLink
             v-show="data"
             :class="['lil', movieStore.showModal ? 'hidden' : '', 'kek']"
@@ -125,9 +127,9 @@ watch(isErr, () => {
         </div>
       </div>
       <div class="spis2 ss" v-if="isLoading">
-        <el-skeleton animated style="width: 100%; height: 24px">
+        <el-skeleton animated style="width: 100%; height: 94vh">
           <template #template>
-            <el-skeleton-item variant="text" style="margin-right: 16px; height: 500px" />
+            <el-skeleton-item variant="text" style="margin-right: 16px; height: 90vh" />
           </template>
         </el-skeleton>
       </div>
@@ -139,6 +141,20 @@ watch(isErr, () => {
 </template>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+.vv {
+  overflow-y: scroll;
+  max-height: 500px;
+  /* height: 500px; */
+}
 .lil {
   border: 1px solid rgba(128, 128, 128, 0.342);
   border-radius: 0 0 0 0;
@@ -164,6 +180,7 @@ watch(isErr, () => {
 }
 .ss {
   margin-top: 10px;
+  
 }
 .imgLogo {
   width: 150px;
@@ -176,12 +193,16 @@ watch(isErr, () => {
 .hidden {
   visibility: hidden;
   color: aqua;
+  max-height: 94vh;
 }
 
 .spis {
   position: absolute;
   z-index: 100000;
   width: 231px;
+
+  max-height: 94vh;
+
   /* width: 22%; */
 }
 .spis2 {
@@ -189,6 +210,8 @@ watch(isErr, () => {
   z-index: 10000;
   width: 231px;
   /* width: 22%; */
+  
+  max-height: 94vh;
 }
 
 .inp {
@@ -215,7 +238,7 @@ watch(isErr, () => {
   font-size: 16px;
   line-height: 20px;
   min-height: 28px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   padding: 8px 16px;
   border: 2px solid transparent;
   box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
@@ -224,6 +247,7 @@ watch(isErr, () => {
 }
 .blk {
   box-shadow: 10px 8px 0px rgb(191 219 254);
+  max-height: 500px;
 }
 .img {
   width: 30px;

@@ -16,7 +16,6 @@ import { useIsMobile } from '../composable/useIsMobile';
 import VideoComponent from '../components/VideoComponent.vue';
 import InfoPerson from '../components/InfoPerson.vue';
 
-
 // Component data and logic
 const { mobile, isMobile: updateIsMobile } = useIsMobile();
 const isFavorite = ref(false);
@@ -81,6 +80,28 @@ const {
   queryFn: () => getPerson(id),
   retry: false,
   // enabled: false,
+  refetchOnWindowFocus: false,
+});
+
+const getNews = async (namez) => {
+  console.log('name', namez);
+  const res = await fetch(
+    `https://newsapi.org/v2/everything?q=${namez}&apiKey=35de744977574bf3885d9c13ed179bc7&sortBy=publishedAt`,
+  );
+  const { articles } = await res.json();
+  return articles;
+};
+const {
+  data: dataNews,
+  refetch: refetchNews,
+  isLoading: isLoadNews,
+  isError: isErNews,
+  error: errorNews,
+} = useQuery<any, Error>({
+  queryKey: ['news', data.value && data.value.name ? data.value.name : ''],
+  queryFn: () => getNews(data.value && data.value.name ? data.value.name : ''),
+  retry: false,
+  enabled: false,
   refetchOnWindowFocus: false,
 });
 
@@ -201,7 +222,6 @@ const fav = () => {
 };
 
 const goBackMaim = () => {
-  console.log('router', router);
   if (router.options.history.state.back === null) {
     router.push('/');
   } else {
@@ -209,7 +229,6 @@ const goBackMaim = () => {
   }
 };
 const pokazModal = () => {
-  console.log('показ');
   showModal.value = true;
 };
 
@@ -217,16 +236,37 @@ const pokazModal = () => {
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
+watch(
+  dataNews,
+  () => {
+    movieStore.fillNews(dataNews.value);
+  },
+  { deep: true, immediate: true },
+);
+watch(
+  data,
+  () => {
+    if (data.value) {
+      refetchNews();
+    }
+  },
+  { deep: true, immediate: true },
+);
 </script>
 
 <template>
   <el-backtop :right="mobile ? 20 : 75" :bottom="100" />
   <div class="main2">
     <div class="data2">
-      <div class="hahe"><el-button @click="goBackMaim"> &lt;- Назад</el-button></div>
-      <!-- <RouterLink v-if="data" class="hahe hh1" :to="{ name: 'personNews', params: { name: data?.name } }"
-        ><div><el-button> Новости -> </el-button></div></RouterLink
-      > -->
+      <div class="hahe">
+        <el-button @click="goBackMaim"> &lt;- Назад</el-button>
+        <RouterLink
+          v-if="data && dataNews && dataNews.length > 0"
+          class="hahe hh1"
+          :to="{ name: 'personNews', params: { name: data?.name } }"
+          ><div><el-button> Новости -> </el-button></div></RouterLink
+        >
+      </div>
     </div>
   </div>
 
@@ -236,7 +276,7 @@ watch(showModal, () => {
         <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
       </el-col>
     </div>
-   
+
     <div v-if="data && !data.error" class="data2">
       <InfoPerson
         :Place="Place"
@@ -288,7 +328,6 @@ watch(showModal, () => {
         <MovieList :movies="data2.films" />
       </div>
 
-      <h2 style="width: 60%">Отзывы о персоне:</h2>
       <div class="message">
         <MessagesComponent :id="id" />
       </div>
@@ -449,6 +488,7 @@ watch(showModal, () => {
   .hahe {
     display: flex;
     justify-content: center;
+    width: auto;
   }
   .containerMain {
     display: flex;
