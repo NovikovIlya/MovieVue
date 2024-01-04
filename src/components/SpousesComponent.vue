@@ -6,8 +6,8 @@ const props = defineProps<{
   spouses: any;
 }>();
 const emit = defineEmits<{
-  (e:'okWife')
-}>()
+  (e: 'okWife');
+}>();
 
 //data
 const dataSpouses = ref<spousesType[] | []>([]);
@@ -29,7 +29,7 @@ const fetchSpouses = async (spouses) => {
         const data = await result.json();
         //@ts-ignore
         dataSpouses.value.push(data);
-        emit('okWife')
+        emit('okWife');
       } catch (error) {
         console.log(error);
       }
@@ -48,6 +48,7 @@ watch(
 </script>
 
 <template>
+  <div class="wwhh"><h2 style="width: 60%">Семейное положение:</h2></div>
   <div class="container">
     <div v-for="(spouse, index) in dataSpouses" :key="spouse.personId">
       <div class="containerInfo">
@@ -81,6 +82,11 @@ watch(
 </template>
 
 <style scoped>
+.wwhh{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .dvidMain {
   width: 100%;
   display: flex;

@@ -126,6 +126,7 @@ watch(
 .h2style{
   display: flex;
   justify-content: center;
+  
 }
 .box-card{
   margin-bottom: 20px;

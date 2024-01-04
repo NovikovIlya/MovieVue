@@ -49,6 +49,10 @@ const movieData = computed(() => {
 </script>
 
 <template>
+
+  <div class="wwhh">
+    <h2 style="width: 60%">Фильмы:</h2>
+  </div>
   <el-table
     table-layout="auto"
     :default-sort="{ prop: 'rating', order: 'descending' }"
@@ -61,4 +65,10 @@ const movieData = computed(() => {
   </el-table>
 </template>
 
-<style scoped></style>
+<style scoped>
+.wwhh{
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+</style>

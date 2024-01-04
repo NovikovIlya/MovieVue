@@ -310,9 +310,6 @@ watch(
 
       <el-divider v-if="desc" class="divid" />
 
-      <h2 v-if="data2 && data2?.spouses.length > 0 && wife === true" style="width: 60%">
-        Семейное положение:
-      </h2>
       <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" @okWife="wife = true" />
 
       <el-divider v-if="data2 && data2?.spouses.length > 0 && wife === true" class="divid" />
@@ -321,12 +318,11 @@ watch(
 
       <el-divider v-if="data && data?.name.length > 0" class="divid" />
 
-      <div v-if="!data.error" class="wh">
-        <h2 style="width: 60%">Фильмы:</h2>
-      </div>
       <div v-if="data2" class="movielist">
         <MovieList :movies="data2.films" />
       </div>
+
+      <el-divider v-if="data2 && data2.films.length > 0" class="divid" />
 
       <div class="message">
         <MessagesComponent :id="id" />
@@ -382,6 +378,7 @@ watch(
 .message {
   width: 100%;
   justify-content: center;
+  /* margin-top: 70px; */
 }
 .data2 {
   width: 1400px;
@@ -431,6 +428,8 @@ watch(
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
 }
 .wh {
   width: 100%;

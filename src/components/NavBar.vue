@@ -153,7 +153,6 @@ watch(isErr, () => {
 .vv {
   overflow-y: scroll;
   max-height: 500px;
-  /* height: 500px; */
 }
 .lil {
   border: 1px solid rgba(128, 128, 128, 0.342);
@@ -204,6 +203,8 @@ watch(isErr, () => {
   max-height: 94vh;
 
   /* width: 22%; */
+  box-shadow: rgba(149, 157, 165, 1) 0px 8px 24px;
+
 }
 .spis2 {
   position: absolute;
