@@ -185,10 +185,10 @@ const {
 
 const getNews = async (namez) => {
   const res = await fetch(
-    `https://newsapi.org/v2/everything?q=${namez}&apiKey=35de744977574bf3885d9c13ed179bc7&sortBy=publishedAt`,
+    `https://api.worldnewsapi.com/search-news?api-key=aedeee1ac52f4ea7b89691c01b8bcd9b&text=${namez.split(" ").slice(1,2).join('')}&language=ru&sort=publish-time&sort-direction=DESC`,
   );
-  const { articles } = await res.json();
-  return articles;
+  const { news } = await res.json();
+  return news;
 };
 const {
   data: dataNews,

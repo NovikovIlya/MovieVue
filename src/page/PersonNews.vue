@@ -15,7 +15,7 @@ const date = computed(() => {
     const dateArray = movieStore.dataNews.map((item) => {
       return {
         ...item,
-        date: new Date(item.publishedAt).toLocaleDateString('ru-RU'),
+        date: new Date(item.publish_date).toLocaleDateString('ru-RU'),
       }
     });
     console.log('sszz',dateArray)
@@ -45,10 +45,10 @@ const imageLoadOnError = (e) => {
   <div v-if="movieStore.dataNews" class="main">
     <div v-for="item of date" :key="movieStore.dataNews">
       <a target="_blank" class="container2"  :href="item.url">
-        <div><img @error="imageLoadOnError" class="image" :src="item.urlToImage" alt="text" /></div>
+        <div><img @error="imageLoadOnError" class="image" :src="item.image" alt="text" /></div>
         <div class="right">
           <div class="head">{{ item.title }}</div>
-          <div class="text">{{ item.description }}</div>
+          <div class="text">{{ item?.text?.substring(0, 100) + '...' }}</div>
           <div class="date">{{ item.date }}</div>
         </div>
       </a>
