@@ -20,8 +20,6 @@ const emits = defineEmits<{
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
-
-
 </script>
 
 <template>

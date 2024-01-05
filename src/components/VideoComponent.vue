@@ -8,7 +8,9 @@ const props = defineProps<{
 const urlValue = ref('');
 
 // Lifecycle hooks
-onMounted(() => [fetchYoutube()]);
+onMounted(() => {
+  fetchYoutube();
+});
 
 //methods
 const fetchYoutube = async () => {

@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { type spousesType } from '../types';
 
-const wifes = ref(false)
+const wifes = ref(false);
 
 const props = defineProps<{
   spouses: any;
@@ -32,7 +32,7 @@ const fetchSpouses = async (spouses) => {
         //@ts-ignore
         dataSpouses.value.push(data);
         emit('okWife');
-        wifes.value = true
+        wifes.value = true;
       } catch (error) {
         console.log(error);
       }
@@ -86,7 +86,7 @@ watch(
 </template>
 
 <style scoped>
-.wwhh{
+.wwhh {
   width: 100%;
   display: flex;
   justify-content: center;

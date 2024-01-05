@@ -188,7 +188,7 @@ const getNews = async (namez) => {
     `https://api.worldnewsapi.com/search-news?api-key=aedeee1ac52f4ea7b89691c01b8bcd9b&text=${namez.split(" ").slice(1,2).join('')}&language=ru&sort=publish-time&sort-direction=DESC`,
   );
   const { news } = await res.json();
-  return news;
+  return news ? news : [];
 };
 const {
   data: dataNews,
@@ -300,10 +300,10 @@ watch(
       
       <VideoComponent :nameActor="data?.name" />
 
-      <MovieList v-if="data2" class="movielist" :movies="data2.films" />
+      <MovieList v-if="data2"  :movies="data2.films" />
 
       <div class="message">
-        <MessagesComponent :id="id" />
+        <MessagesComponent  :id="id" />
       </div>
 
       <div class="modalka">

@@ -3,7 +3,7 @@ import { ref, onMounted, watch, watchEffect } from 'vue';
 import { useMutation } from '@tanstack/vue-query';
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside } from '@vueuse/core';
 import 'element-plus/es/components/message/style/css'; // this is only needed if the page also used ElMessage
 import 'element-plus/es/components/message-box/style/css';
 
@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 //data
-const target = ref(null)
+const target = ref(null);
 const showModalMessage = ref(false);
 const form = ref({
   name: '',
@@ -20,14 +20,11 @@ const form = ref({
 });
 
 //composables
-onClickOutside(target, event => {
-  showModalMessage.value = false}
-)
+onClickOutside(target, (event) => {
+  showModalMessage.value = false;
+});
 
-const {
-  data: dataPost,
-  mutate,
-} = useMutation({
+const { data: dataPost, mutate } = useMutation({
   mutationFn: (newTodo: any) =>
     axios.post('https://backmovie.onrender.com/auth/sendperson', newTodo),
 });
@@ -35,7 +32,6 @@ const { data: dataGet, mutate: muta } = useMutation<any>({
   mutationFn: (newTodo: any) =>
     axios.post('https://backmovie.onrender.com/auth/getperson', newTodo),
 });
-
 
 //methods
 const onSubmit = () => {
@@ -48,14 +44,11 @@ const onSubmit = () => {
   form.value.name = '';
   form.value.desc = '';
   showModalMessage.value = false;
-
 };
 const open1 = () => {
   ElMessage('Сообщение отправлено');
 };
-const haha =(e)=>{
-}
-
+const haha = (e) => {};
 
 //watchers
 watchEffect(() => {
@@ -83,7 +76,7 @@ watch(
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="showModalMessage"  class="modal-mask">
+      <div v-if="showModalMessage" class="modal-mask">
         <div ref="target" @click.stop="haha" class="modal-container">
           <el-form :model="form" label-width="120px">
             <el-form-item label="Ваше имя:">
@@ -123,12 +116,11 @@ watch(
 </template>
 
 <style scoped>
-.h2style{
+.h2style {
   display: flex;
   justify-content: center;
-  
 }
-.box-card{
+.box-card {
   margin-bottom: 20px;
 }
 .recenzii {
@@ -176,7 +168,6 @@ watch(
 .modal-default-button {
   float: right;
 }
-
 
 .modal-enter-from {
   opacity: 0;

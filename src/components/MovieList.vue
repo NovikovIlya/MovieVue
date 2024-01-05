@@ -57,7 +57,7 @@ const movieData = computed(() => {
     :default-sort="{ prop: 'rating', order: 'descending' }"
     :data="movieData"
     style="width: 60%"
-    height="100%">
+   >
     <el-table-column class="ha" prop="name" label="Название фильма" sortable />
     <el-table-column prop="role" label="Роль" sortable />
     <el-table-column prop="rating" label="Рейтинг КП" sortable />
