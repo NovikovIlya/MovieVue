@@ -300,9 +300,7 @@ watch(
       
       <VideoComponent :nameActor="data?.name" />
 
-      <div v-if="data2" class="movielist">
-        <MovieList :movies="data2.films" />
-      </div>
+      <MovieList v-if="data2" class="movielist" :movies="data2.films" />
 
       <div class="message">
         <MessagesComponent :id="id" />
