@@ -294,21 +294,6 @@ watch(
         :isFav="isFav"
         :kek="kek" />
 
-      <!-- <h2 v-if="!data.error && data.facts && data.facts.length > 0" style="width: 60%">
-        Интересные факты:
-      </h2>
-      <div v-if="!data.error" class="bottom">
-        <div class="bottom__left">
-          <div>
-            <ul v-for="(item, index) in desc">
-              <li v-html="item" />
-              <el-divider v-if="index !== desc.length - 1" />
-            </ul>
-          </div>
-        </div>
-        <div class="bottom__right"></div>
-      </div>
-      <el-divider v-if="desc" class="divid" /> -->
       <TheFacts v-if="desc && desc.length > 0" :desc="desc" />
 
       <Spouses v-if="data2 && data2.spouses.length > 0" :spouses="data2.spouses" @okWife="wife = true" />

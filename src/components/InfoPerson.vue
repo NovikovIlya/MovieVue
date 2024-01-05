@@ -230,5 +230,8 @@ const imageLoadOnError = (e) => {
     font-size: 3vw;
     grid-template-columns: 40% 60%;
   }
+  .right{
+    margin-top: 22px;
+  }
 }
 </style>
