@@ -2,6 +2,8 @@
 import { ref, watch } from 'vue';
 import { type spousesType } from '../types';
 
+const wifes = ref(false)
+
 const props = defineProps<{
   spouses: any;
 }>();
@@ -30,6 +32,7 @@ const fetchSpouses = async (spouses) => {
         //@ts-ignore
         dataSpouses.value.push(data);
         emit('okWife');
+        wifes.value = true
       } catch (error) {
         console.log(error);
       }
@@ -48,8 +51,8 @@ watch(
 </script>
 
 <template>
-  <div class="wwhh"><h2 style="width: 60%">Семейное положение:</h2></div>
-  <div class="container">
+  <div v-if="wifes" class="wwhh"><h2 style="width: 60%">Семейное положение:</h2></div>
+  <div v-if="wifes" class="container">
     <div v-for="(spouse, index) in dataSpouses" :key="spouse.personId">
       <div class="containerInfo">
         <img class="img" :src="spouse.posterUrl" />
@@ -79,6 +82,7 @@ watch(
       </div>
     </div>
   </div>
+  <el-divider v-if="wifes" class="divid" style="width: 60%" />
 </template>
 
 <style scoped>

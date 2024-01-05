@@ -8,9 +8,7 @@ const props = defineProps<{
 const urlValue = ref('');
 
 // Lifecycle hooks
-onMounted(()=>[
-  fetchYoutube()
-])
+onMounted(() => [fetchYoutube()]);
 
 //methods
 const fetchYoutube = async () => {
@@ -28,7 +26,7 @@ const fetchYoutube = async () => {
   <div class="ww">
     <div className="video-responsive">
       <iframe
-         class="ww1"
+        class="ww1"
         :src="urlValue"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -36,14 +34,15 @@ const fetchYoutube = async () => {
         title="Embedded youtube" />
     </div>
   </div>
+  <el-divider style="width: 60%" />
 </template>
 
 <style scoped>
-.ww{
-    width: 60%;
+.ww {
+  width: 60%;
 }
-.ww1{
-    width: 100%;
-    height: 450px;
+.ww1 {
+  width: 100%;
+  height: 450px;
 }
 </style>

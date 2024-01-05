@@ -65,6 +65,7 @@ const imageLoadOnError = (e) => {
       </div>
     </div>
   </div>
+  <el-divider style="width: 60%"  />
 </template>
 
 <style scoped>

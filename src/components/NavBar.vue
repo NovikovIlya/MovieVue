@@ -151,11 +151,11 @@ watch(isErr, () => {
   opacity: 0;
 }
 .vv {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 500px;
 }
 .lil {
-  border: 1px solid rgba(128, 128, 128, 0.342);
+  border: 2px solid transparent;
   border-radius: 0 0 0 0;
   display: flex;
   justify-content: center;
@@ -163,6 +163,7 @@ watch(isErr, () => {
   background-color: white;
   z-index: 10000;
   position: relative;
+
 }
 .el-message {
   position: absolute;

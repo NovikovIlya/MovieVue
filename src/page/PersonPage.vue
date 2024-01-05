@@ -15,8 +15,10 @@ import MessagesComponent from '../components/MessagesComponent.vue';
 import { useIsMobile } from '../composable/useIsMobile';
 import VideoComponent from '../components/VideoComponent.vue';
 import InfoPerson from '../components/InfoPerson.vue';
+import TheFacts from '../components/TheFacts.vue';
 
-// Component data and logic
+
+// Data and logic
 const { mobile, isMobile: updateIsMobile } = useIsMobile();
 const isFavorite = ref(false);
 const isFav = ref(false);
@@ -28,93 +30,6 @@ const router = useRouter();
 const showModal = ref(false);
 const wife = ref(false);
 
-// Lifecycle hooks
-onMounted(() => {
-  updateIsMobile();
-  fav();
-});
-
-// Composable functions
-const getPersonTwo = async (id) => {
-  const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v1/staff/${id}`, {
-    headers: {
-      'X-API-KEY': 'c20920c8-07f7-41e3-8602-7160c2c03025',
-    },
-  });
-  const data = await res.json();
-  const dataZ = data;
-  return dataZ;
-};
-const {
-  data: data2,
-  refetch: refetch2,
-  isLoading: isLoad2,
-  isError: isEr2,
-  error: error2,
-} = useQuery<any, Error>({
-  queryKey: ['todos2', id],
-  queryFn: () => getPersonTwo(id),
-  retry: false,
-  // enabled: false,
-  refetchOnWindowFocus: false,
-});
-
-const getPerson = async (id) => {
-  const res = await fetch(`https://api.kinopoisk.dev/v1.4/person/${id}`, {
-    headers: {
-      'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
-    },
-  });
-  const data = await res.json();
-  const dataZ = data;
-  return dataZ;
-};
-const {
-  data,
-  refetch,
-  isLoading: isLoad,
-  isError: isEr,
-  error,
-} = useQuery<PersonInfo, Error>({
-  queryKey: ['todos', id],
-  queryFn: () => getPerson(id),
-  retry: false,
-  // enabled: false,
-  refetchOnWindowFocus: false,
-});
-
-const getNews = async (namez) => {
-  console.log('name', namez);
-  const res = await fetch(
-    `https://newsapi.org/v2/everything?q=${namez}&apiKey=35de744977574bf3885d9c13ed179bc7&sortBy=publishedAt`,
-  );
-  const { articles } = await res.json();
-  return articles;
-};
-const {
-  data: dataNews,
-  refetch: refetchNews,
-  isLoading: isLoadNews,
-  isError: isErNews,
-  error: errorNews,
-} = useQuery<any, Error>({
-  queryKey: ['news', data.value && data.value.name ? data.value.name : ''],
-  queryFn: () => getNews(data.value && data.value.name ? data.value.name : ''),
-  retry: false,
-  enabled: false,
-  refetchOnWindowFocus: false,
-});
-
-// Component methods
-const open1 = () => {
-  ElMessage('Персона добавлена в избранное!');
-};
-const chechFavorite = () => {
-  isFavorite.value = true;
-  movieStore.addFavorite(data);
-  open1();
-  isFav.value = true;
-};
 const kek = computed(() => {
   if (data.value)
     if (data.value.profession) {
@@ -212,6 +127,94 @@ const desc = computed(() => {
       return z;
     }
 });
+
+// Lifecycle 
+onMounted(() => {
+  updateIsMobile();
+  fav();
+});
+
+// Composable 
+const getPersonTwo = async (id) => {
+  const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v1/staff/${id}`, {
+    headers: {
+      'X-API-KEY': 'c20920c8-07f7-41e3-8602-7160c2c03025',
+    },
+  });
+  const data = await res.json();
+  const dataZ = data;
+  return dataZ;
+};
+const {
+  data: data2,
+  refetch: refetch2,
+  isLoading: isLoad2,
+  isError: isEr2,
+  error: error2,
+} = useQuery<any, Error>({
+  queryKey: ['todos2', id],
+  queryFn: () => getPersonTwo(id),
+  retry: false,
+  // enabled: false,
+  refetchOnWindowFocus: false,
+});
+
+const getPerson = async (id) => {
+  const res = await fetch(`https://api.kinopoisk.dev/v1.4/person/${id}`, {
+    headers: {
+      'X-API-KEY': '1EDBRR5-VBQ4W08-QBDF41V-KZSDBV8',
+    },
+  });
+  const data = await res.json();
+  const dataZ = data;
+  return dataZ;
+};
+const {
+  data,
+  refetch,
+  isLoading: isLoad,
+  isError: isEr,
+  error,
+} = useQuery<PersonInfo, Error>({
+  queryKey: ['todos', id],
+  queryFn: () => getPerson(id),
+  retry: false,
+  // enabled: false,
+  refetchOnWindowFocus: false,
+});
+
+const getNews = async (namez) => {
+  const res = await fetch(
+    `https://newsapi.org/v2/everything?q=${namez}&apiKey=35de744977574bf3885d9c13ed179bc7&sortBy=publishedAt`,
+  );
+  const { articles } = await res.json();
+  return articles;
+};
+const {
+  data: dataNews,
+  refetch: refetchNews,
+  isLoading: isLoadNews,
+  isError: isErNews,
+  error: errorNews,
+} = useQuery<any, Error>({
+  queryKey: ['news', data.value && data.value.name ? data.value.name : ''],
+  queryFn: () => getNews(data.value && data.value.name ? data.value.name : ''),
+  retry: false,
+  enabled: false,
+  refetchOnWindowFocus: false,
+});
+
+// Methods
+const open1 = () => {
+  ElMessage('Персона добавлена в избранное!');
+};
+const chechFavorite = () => {
+  isFavorite.value = true;
+  movieStore.addFavorite(data);
+  open1();
+  isFav.value = true;
+};
+
 const fav = () => {
   const x = localStorage.getItem('persons') ? JSON.parse(localStorage.getItem('persons')) : [];
   x.forEach((item) => {
@@ -232,7 +235,7 @@ const pokazModal = () => {
   showModal.value = true;
 };
 
-//watchers
+//Watchers
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
@@ -291,9 +294,7 @@ watch(
         :isFav="isFav"
         :kek="kek" />
 
-      <el-divider v-if="!data.error && data.facts && data.facts.length > 0" class="divid" />
-
-      <h2 v-if="!data.error && data.facts && data.facts.length > 0" style="width: 60%">
+      <!-- <h2 v-if="!data.error && data.facts && data.facts.length > 0" style="width: 60%">
         Интересные факты:
       </h2>
       <div v-if="!data.error" class="bottom">
@@ -307,22 +308,16 @@ watch(
         </div>
         <div class="bottom__right"></div>
       </div>
+      <el-divider v-if="desc" class="divid" /> -->
+      <TheFacts v-if="desc && desc.length > 0" :desc="desc" />
 
-      <el-divider v-if="desc" class="divid" />
-
-      <Spouses v-if="data2 && data2.spouses" :spouses="data2.spouses" @okWife="wife = true" />
-
-      <el-divider v-if="data2 && data2?.spouses.length > 0 && wife === true" class="divid" />
-
+      <Spouses v-if="data2 && data2.spouses.length > 0" :spouses="data2.spouses" @okWife="wife = true" />
+      
       <VideoComponent :nameActor="data?.name" />
-
-      <el-divider v-if="data && data?.name.length > 0" class="divid" />
 
       <div v-if="data2" class="movielist">
         <MovieList :movies="data2.films" />
       </div>
-
-      <el-divider v-if="data2 && data2.films.length > 0" class="divid" />
 
       <div class="message">
         <MessagesComponent :id="id" />

@@ -49,7 +49,6 @@ const movieData = computed(() => {
 </script>
 
 <template>
-
   <div class="wwhh">
     <h2 style="width: 60%">Фильмы:</h2>
   </div>
@@ -63,6 +62,7 @@ const movieData = computed(() => {
     <el-table-column prop="role" label="Роль" sortable />
     <el-table-column prop="rating" label="Рейтинг КП" sortable />
   </el-table>
+  <!-- <el-divider style="width: 60%"  /> -->
 </template>
 
 <style scoped>

@@ -36,6 +36,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SpousesComponent: typeof import('./src/components/SpousesComponent.vue')['default']
+    TheFacts: typeof import('./src/components/TheFacts.vue')['default']
     VideoComponent: typeof import('./src/components/VideoComponent.vue')['default']
   }
   export interface ComponentCustomProperties {
