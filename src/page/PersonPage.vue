@@ -318,7 +318,6 @@ watch(
 <style scoped>
 .hahe {
   width: 30%;
-
   display: flex;
   justify-content: center;
 }
@@ -356,7 +355,6 @@ watch(
 .message {
   width: 100%;
   justify-content: center;
-  /* margin-top: 70px; */
 }
 .data2 {
   width: 1400px;
