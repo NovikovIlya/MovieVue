@@ -18,7 +18,7 @@ import InfoPerson from '../components/InfoPerson.vue';
 import TheFacts from '../components/TheFacts.vue';
 
 
-// Data and logic
+// Data and Logic
 const { mobile, isMobile: updateIsMobile } = useIsMobile();
 const isFavorite = ref(false);
 const isFav = ref(false);
