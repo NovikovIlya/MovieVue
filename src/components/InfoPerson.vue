@@ -15,7 +15,6 @@ const emits = defineEmits<{
   (e: 'check'): void;
 }>();
 
-
 //methods
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
@@ -36,10 +35,21 @@ const imageLoadOnError = (e) => {
         src="/public/award.png"
         id="show-modal"
         @click="emits('modalka')" />
-      <el-icon class="iconFav" v-if="isFavorite === false && !isFav" @click="emits('check')"
-        ><StarFilled
-      /></el-icon>
-      <el-icon class="iconFav1" v-if="isFavorite"><CircleCheckFilled /></el-icon>
+      <el-tooltip
+        v-if="isFavorite === false && !isFav"
+        class="box-item"
+        effect="dark"
+        content="Добавить в избранное"
+        placement="top-start">
+        <el-icon class="iconFav" @click="emits('check')"><StarFilled /></el-icon>
+      </el-tooltip>
+      <el-tooltip
+        class="box-item"
+        effect="dark"
+        content="Добавлен в избранное"
+        placement="top-start">
+        <el-icon class="iconFav1" v-if="isFavorite"><CircleCheckFilled /></el-icon>
+      </el-tooltip>
     </div>
     <div class="right">
       <div class="about">
@@ -56,14 +66,17 @@ const imageLoadOnError = (e) => {
         <div class="it">{{ date?.slice(0, 10) }}</div>
         <div class="it ff">Место рождения:</div>
         <div class="proff it">
-          <div class="item" v-for="item of Place">{{ item }}</div>
+          <div class="item" v-for="(item,index) in Place">
+            <RouterLink v-show="index === Place.length - 1" :to="'/country/' + item">{{ item }}</RouterLink>
+            {{ index === Place.length - 1 ? '' : item }}
+          </div>
         </div>
         <div class="it ff" v-show="data?.death">Дата смерти:</div>
         <div class="it" v-if="data?.death">{{ datePlace.slice(0, 10) }}{{ ',  ' + diff }}</div>
       </div>
     </div>
   </div>
-  <el-divider style="width: 60%"  />
+  <el-divider style="width: 60%" />
 </template>
 
 <style scoped>
@@ -228,7 +241,7 @@ const imageLoadOnError = (e) => {
     font-size: 3vw;
     grid-template-columns: 40% 60%;
   }
-  .right{
+  .right {
     margin-top: 22px;
   }
 }

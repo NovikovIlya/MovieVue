@@ -7,6 +7,8 @@ import SearchComponent from '../page/SearchComponent.vue'
 import RandomPerson from '../page/RandomPerson.vue';
 import NotFound from '../page/NotFound.vue'
 import personNews from '../page/PersonNews.vue'
+import InfoCountry from '../page/InfoCountry.vue'
+import CountryList from '../page/CountryList.vue'
 
 const routes = [
   {
@@ -18,9 +20,16 @@ const routes = [
     path: '/person/:id',
     name: 'PersonPage',
     component: PersonPage,
-    // children:[
-      
-    // ],
+  },
+  {
+    path: '/country/:name',
+    name: 'InfoCountry',
+    component: InfoCountry,
+  },
+  {
+    path: '/allcountry',
+    name: 'CountryList',
+    component: CountryList,
   },
   {
     path: '/news/:name',

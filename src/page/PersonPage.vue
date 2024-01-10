@@ -109,8 +109,11 @@ const datePlace = computed(() => {
 });
 const diff = computed(() => {
   const start = date.value.slice(6, 10);
+  console.log('start',start)
   const end = datePlace.value?.slice(6, 10);
-  const d = end ? Number(end) : 2023 - Number(start);
+  console.log('end',end)
+  const d = end ? Number(end) - Number(start) : 2023 - Number(start);
+  console.log('d',d)
   return d + ' Лет';
 });
 const desc = computed(() => {

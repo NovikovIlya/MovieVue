@@ -18,7 +18,6 @@ const date = computed(() => {
         date: new Date(item.publish_date).toLocaleDateString('ru-RU'),
       }
     });
-    console.log('sszz',dateArray)
     return dateArray;
   }
 });
