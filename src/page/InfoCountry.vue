@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { useQuery } from '@tanstack/vue-query';
-import { ref,computed } from 'vue';
+import { ref, computed } from 'vue';
 
 //data
 const nameEng = ref('');
@@ -15,6 +15,9 @@ const validName = (name) => {
   switch (name) {
     case 'Буркина-Фасо':
       nameEng.value = 'Burkina Faso';
+      break;
+    case 'Соединённые Штаты Америки':
+      nameEng.value = 'usa';
       break;
     case 'Южный Судан':
       nameEng.value = 'South Sudan';
@@ -525,7 +528,7 @@ const {
 });
 
 const getCountryPersons = async (name) => {
-  validName(name);
+  name === 'Соединённые Штаты Америки' ? name = 'США' : name;
   const res = await fetch(
     `https://api.kinopoisk.dev/v1.4/person?birthPlace.value=${name}&notNullFields=name&notNullFields=photo&notNullFields=age&notNullFields=enName&sortField=countAwards&sortType=-1&limit=100`,
     {
@@ -552,14 +555,15 @@ const {
 });
 
 //computed
-const population = computed(()=>{
-  if(data2.value){
-    const x = data2.value?.map((item)=>{
-    return {...item,popul:(new Intl.NumberFormat('ru-RU').format(item.population))}
-  })
-  return x ? x : null
+const population = computed(() => {
+  console.log(data2.value)
+  if (data2.value) {
+    const x = data2.value?.map((item) => {
+      return { ...item, popul: new Intl.NumberFormat('ru-RU').format(item.population) };
+    });
+    return x 
   }
-})
+});
 </script>
 
 <template>
@@ -571,7 +575,6 @@ const population = computed(()=>{
     </div>
   </div>
 
-  
   <div v-if="data2" class="containerMain">
     <div v-for="item of population">
       <div class="ImageMain"><img class="image" :src="item?.flags?.png" alt="flag" /></div>
@@ -593,7 +596,7 @@ const population = computed(()=>{
     </el-col>
   </div>
 
-  <div class="div" ><h2 class="hh5" >Известные люди:</h2></div>
+  <div class="div"><h2 class="hh5">Известные люди:</h2></div>
   <div v-if="dataPerson" class="containerMain2">
     <ul class="infinite-list" infinite-scroll-immediate="false">
       <li v-for="(item, index) in dataPerson" :key="item.id">
@@ -627,13 +630,13 @@ const population = computed(()=>{
 </template>
 
 <style scoped lang="scss">
-.error{
+.error {
   margin-top: 50px;
 }
-.hh5{
+.hh5 {
   margin-bottom: 5px;
 }
-.div{
+.div {
   display: flex;
   justify-content: center;
 }
