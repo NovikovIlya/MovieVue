@@ -30,10 +30,13 @@ const {
 //computed
 const dataSort = computed(() => {
   const ara = data2.value.map((item) => {
-    if(item.population > 10000000){
-      return { name: item.translations.rus.common, nameEng: item.name.common, photo: item.flags.png };
+    if (item.population > 10000000) {
+      return {
+        name: item.translations.rus.common,
+        nameEng: item.name.common,
+        photo: item.flags.png,
+      };
     }
-    
   });
   const x = ara.sort((a, b) => {
     if (a.name < b.name) {
