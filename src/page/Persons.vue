@@ -183,7 +183,6 @@ watch(valueSortType, () => {
   color: var(--el-color-primary);
   margin-bottom: 40px;
   border-radius: 20px;
-  // padding: 0;
 }
 .infinite-list .infinite-list-item + .list-item {
   margin-top: 10px;

@@ -80,6 +80,7 @@ const deleteFavorite = (person) => {
   transition: 0.3s;
 }
 .infinite-list-item {
+
   border-radius: 20px;
   margin: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -88,6 +89,8 @@ const deleteFavorite = (person) => {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 .name {
   display: flex;

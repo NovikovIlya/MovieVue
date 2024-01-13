@@ -9,6 +9,7 @@ import NotFound from '../page/NotFound.vue'
 import personNews from '../page/PersonNews.vue'
 import InfoCountry from '../page/InfoCountry.vue'
 import CountryList from '../page/CountryList.vue'
+import BirthdayPerson from '../page/BirthdayPerson.vue';
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/allcountry',
     name: 'CountryList',
     component: CountryList,
+  },
+  {
+    path: '/birthday',
+    name: 'BirthdayPerson',
+    component: BirthdayPerson,
   },
   {
     path: '/news/:name',
