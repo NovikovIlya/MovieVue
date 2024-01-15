@@ -100,8 +100,6 @@ const population = computed(() => {
       <el-divider class="dvid" />
       <div class="population">Численность: {{ item.popul }} человек</div>
       <el-divider class="dvid" />
-      <div class="capital">Столица: {{ item?.capital?.[0] }}</div>
-      <el-divider class="dvid" />
       <div class="hre"><a :href="item?.maps?.googleMaps">Открыть в google map</a></div>
       <el-divider class="dvid" />
     </div>

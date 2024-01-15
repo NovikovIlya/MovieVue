@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
 import { useQuery } from '@tanstack/vue-query';
 import { ref, computed } from 'vue';
 
@@ -76,9 +75,20 @@ function filteredList() {
       </div>
     </div>
   </div>
+
+  <div class="error" v-loading="isLoad2" v-if="isLoad2"></div>
+
+  <div v-if="isEr2" class="error">
+    <el-col :sm="12" :lg="6">
+      <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
+    </el-col>
+  </div>
 </template>
 
 <style scoped>
+.error {
+  margin-top: 50px;
+}
 .main {
   width: 70%;
   margin: 0 auto;
