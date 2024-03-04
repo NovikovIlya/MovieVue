@@ -49,6 +49,7 @@ const {
 <template>
   <div>
     <h1 class="headText">Кто сегодня родился?</h1>
+    <div v-if="!isLoad2 && dataBirthday.length === 0" class="headText1">Сегодня никто не родился ;c</div>
     <ul class="infinite-list">
       <li v-for="(person, index) in dataBirthday" :key="person.id" class="infinite-list-item">
         <RouterLink :to="{ name: 'PersonPage', params: { id: person.id } }" class="personContainer">
@@ -89,6 +90,13 @@ const {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.headText1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: red;
+  margin-top: 30px;
 }
 
 .name__text {
