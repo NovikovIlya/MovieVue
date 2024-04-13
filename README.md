@@ -13,7 +13,7 @@
 
 ## Основные используемые технологии
 - [Vue 3](https://vuejs.org)
-- [Element-lus](https://element-plus.org/en-US/)
+- [Element-plus](https://element-plus.org/en-US/)
 
 ## Требования
 Для установки и запуска проекта, необходим NodeJs не ниже 18.13.0
