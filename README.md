@@ -1,18 +1,23 @@
-# Vue 3 + TypeScript + Vite
+# Приложение "Привет Люди"
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Приложение, содержающее информацию об известных людях в кино
 
-## Recommended IDE Setup
+## Инструкция по запуску проекта
+1. Клонируйте репозиторий: `git clone https://github.com/ваш_локальный_репозиторий.git`
+2. Перейдите в каталог проекта: `cd название_каталога`
+3. Установите необходимые зависимости, выполнив команду:
+   `npm install`
+4. Запустите проект, используя команду:
+   `npm start`
+5. Откройте браузер и перейдите по адресу `http://localhost:3000` для просмотра приложения.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Основные используемые технологии
+- [Vue 3]([https://angular.io](https://vuejs.org/))
+- [Element-lus](https://element-plus.org/en-US/)
 
-## Type Support For `.vue` Imports in TS
+## Требования
+Для установки и запуска проекта, необходим NodeJs не ниже 18.13.0
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+ 
