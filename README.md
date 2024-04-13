@@ -12,7 +12,7 @@
 5. Откройте браузер и перейдите по адресу `http://localhost:3000` для просмотра приложения.
 
 ## Основные используемые технологии
-- [Vue 3]([https://angular.io](https://vuejs.org/))
+- [Vue 3](https://vuejs.org)
 - [Element-lus](https://element-plus.org/en-US/)
 
 ## Требования
