@@ -121,3 +121,15 @@ export type spousesType = {
   profession: any
   facts: any[]
 }
+
+export type infoPersoType = {
+  data: any;
+  isFavorite: boolean;
+  isFav: boolean;
+  kek: any;
+  height: string;
+  date: string;
+  datePlace: string;
+  diff: string;
+  Place: any;
+}

@@ -1,15 +1,13 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import Vue from 'vue';
-import Persons from '../page/Persons.vue';
-import PersonPage from '../page/PersonPage.vue';
-import FavoriteList from '../page/FavoriteList/FavoritesList.vue';
-import SearchComponent from '../page/SearchComponent.vue'
-import RandomPerson from '../page/RandomPerson.vue';
-import NotFound from '../page/NotFound.vue'
-import personNews from '../page/PersonNews.vue'
-import InfoCountry from '../page/InfoCountry.vue'
-import CountryList from '../page/CountryList.vue'
-import BirthdayPerson from '../page/BirthdayPerson.vue';
+import Persons from '../pages/Persons.vue';
+import PersonPage from '../pages/PersonPage.vue';
+import FavoriteList from '../pages/FavoritesList.vue';
+import SearchComponent from '../pages/SearchComponent.vue'
+import RandomPerson from '../pages/RandomPerson.vue';
+import NotFound from '../pages/NotFound.vue'
+import personNews from '../pages/PersonNews.vue'
+import InfoCountry from '../pages/InfoCountry.vue'
+import CountryList from '../pages/CountryList.vue'
 
 const routes = [
   {
@@ -31,11 +29,6 @@ const routes = [
     path: '/allcountry',
     name: 'CountryList',
     component: CountryList,
-  },
-  {
-    path: '/birthday',
-    name: 'BirthdayPerson',
-    component: BirthdayPerson,
   },
   {
     path: '/news/:name',
@@ -65,12 +58,11 @@ const routes = [
 ];
 
 const router = createRouter({
-  //@ts-ignore
   routes: routes,
   history: createWebHistory(),
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior () {
     // возврат желаемого положения
-    return { top: 0 ,behavior: 'smooth'}
+    return { top: 0, behavior: 'smooth'}
   }
 });
 

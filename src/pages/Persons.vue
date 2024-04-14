@@ -6,23 +6,22 @@ import cachedAxios from '../axios.js';
 import { useMovieStore } from '../store/index';
 import { storeToRefs } from 'pinia';
 
-// Component data and logic
+// data 
 const movieStore = useMovieStore();
 const page = ref(0);
 const dataPerson = ref<DataPersonType[]>([]);
 const isLoading = ref(false);
 const isError = ref(false);
+const {valueSort, valueSortType, valueSortProffession} = storeToRefs(movieStore);
 
 
-// Lifecycle hooks
+// Lifecycle 
 onMounted(() => {
   load();
 });
 
-//composables
-const {valueSort, valueSortType, valueSortProffession} = storeToRefs(movieStore);
 
-// Component methods
+// methods
 const load = () => {
   if (page.value === 35651) {
     alert('Последний страница');
@@ -31,6 +30,7 @@ const load = () => {
   page.value++;
   getPerson(page);
 };
+
 const getPerson = async (page) => {
   try {
     isError.value = false;
@@ -43,7 +43,6 @@ const getPerson = async (page) => {
         },
       },
     );
-    //@ts-ignore
     const dataZ = res.data.docs;
     if (!dataZ) {
       throw new Error('Произошла ошибка');
@@ -57,22 +56,13 @@ const getPerson = async (page) => {
     isLoading.value = false;
   }
 };
+
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
 
-// Watchers
-watch(valueSort, (_) => {
-  dataPerson.value = [];
-  page.value = 1;
-  getPerson(page);
-});
-watch(valueSortProffession, () => {
-  dataPerson.value = [];
-  page.value = 1;
-  getPerson(page);
-});
-watch(valueSortType, () => {
+// watchers
+watch([valueSort, valueSortProffession, valueSortType], () => {
   dataPerson.value = [];
   page.value = 1;
   getPerson(page);

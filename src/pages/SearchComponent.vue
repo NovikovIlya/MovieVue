@@ -4,23 +4,21 @@ import { useQuery } from '@tanstack/vue-query';
 import { ref, onMounted } from 'vue';
 import { useMovieStore } from '../store/index';
 
-//data/logic
-const {
-  params: { text },
-} = useRoute();
-const movieStore = useMovieStore();
-
+//data
 const total = ref(1);
 const pagination = ref(1);
 
-// Lifecycle hooks
+const {params: { text }} = useRoute();
+const movieStore = useMovieStore();
+
+// Lifecycle 
 onMounted(() => {
   movieStore.setShowModalTrue();
 });
 
-//composables
+//methods
 const getSearch = async (text, pagination) => {
-  var res = await fetch(
+  const res = await fetch(
     `https://api.kinopoisk.dev/v1.4/person/search?limit=15&query=${text}&page=${pagination.value}`,
     {
       headers: {
@@ -35,23 +33,17 @@ const getSearch = async (text, pagination) => {
   const dataZ = data.docs;
   return dataZ;
 };
-const {
-  data,
-  refetch,
-  isLoading,
-  isError: isErr,
-} = useQuery<any, any>({
+const {data,isLoading,isError: isErr} = useQuery<any, any>({
   queryKey: ['todos', text, pagination],
   queryFn: () => getSearch(text, pagination),
   retry: false,
-
   refetchOnWindowFocus: false,
 });
 
-//methods
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
+
 const up = () => {
   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 };

@@ -5,11 +5,8 @@ import { ref } from 'vue';
 export const useMovieStore = defineStore('movieStore', () => {
   //data
   const dataNews = ref(null)
-
-
   const showModal = ref(true);
   const dataPerson = ref([]);
-
   const valueSort = ref('countAwards');
   const valueSortType = ref('-1');
   const valueSortProffession = ref('Актер');
@@ -102,11 +99,8 @@ export const useMovieStore = defineStore('movieStore', () => {
   };
 
   const addFavorite = (data) => {
-    const per =
-      localStorage.getItem('persons') !== null ? JSON.parse(localStorage.getItem('persons')) : [];
-
+    const per = localStorage.getItem('persons') !== null ? JSON.parse(localStorage.getItem('persons')) : [];
     dataPerson.value = Array.from(new Set([...per, data.value]));
-
     localStorage.setItem('persons', JSON.stringify(dataPerson.value));
   };
 

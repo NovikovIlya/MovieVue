@@ -7,7 +7,6 @@ import NavBar from './components/NavBar.vue';
 
 const route = useRoute()
 const movieStore = useMovieStore()
-
 const show = ref(false)
 
 const modal = ()=>{

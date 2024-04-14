@@ -39,15 +39,18 @@ const update = () => {
   getRandom(1, 10000);
   refetch();
 };
+
 const getRandom = (min: number, max: number) => {
   //Диапозон округляем
   min = Math.ceil(min);
   max = Math.floor(max);
   random.value = Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
 const imageLoadOnError = (e) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
-};
+}
+
 const goBackMaim = () => {
   router.go(-1);
 };

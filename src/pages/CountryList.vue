@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
-import { ref, computed } from 'vue';
+import { useQuery } from "@tanstack/vue-query";
+import { ref, computed } from "vue";
 
 //data
-const input = ref('');
+const input = ref("");
 
 //composable
 const getAllCountry = async (name) => {
@@ -19,10 +19,9 @@ const {
   isError: isEr2,
   error: error2,
 } = useQuery<any, Error>({
-  queryKey: ['countryAll', name],
+  queryKey: ["countryAll", name],
   queryFn: () => getAllCountry(name),
   retry: false,
-  //   enabled: false,
   refetchOnWindowFocus: false,
 });
 
@@ -52,14 +51,19 @@ const dataSort = computed(() => {
 //methods
 function filteredList() {
   return dataSort.value.filter((item) =>
-    item?.name?.toLowerCase().includes(input.value.toLowerCase()),
+    item?.name?.toLowerCase().includes(input.value.toLowerCase())
   );
 }
 </script>
 
 <template>
   <div class="mainInp">
-    <input class="inp" type="text" v-model="input" placeholder="Поиск по странам" />
+    <input
+      class="inp"
+      type="text"
+      v-model="input"
+      placeholder="Поиск по странам"
+    />
   </div>
   <div class="main" v-if="data2">
     <div v-for="item of filteredList()">
@@ -68,7 +72,11 @@ function filteredList() {
           <figure>
             <img class="image" :src="item.photo" alt="flag" />
             <figcaption class="fig">
-              {{ item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name }}
+              {{
+                item.name.length > 10
+                  ? item.name.substring(0, 10) + "..."
+                  : item.name
+              }}
             </figcaption>
           </figure>
         </RouterLink>
@@ -80,7 +88,12 @@ function filteredList() {
 
   <div v-if="isEr2" class="error">
     <el-col :sm="12" :lg="6">
-      <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
+      <el-result
+        icon="error"
+        title="Произошла ошибка"
+        sub-title="Попробуйте позже"
+      >
+      </el-result>
     </el-col>
   </div>
 </template>

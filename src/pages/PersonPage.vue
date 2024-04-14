@@ -19,117 +19,29 @@ import TheFacts from '../components/TheFacts.vue';
 
 
 // Data and Logic
-const { mobile, isMobile: updateIsMobile } = useIsMobile();
 const isFavorite = ref(false);
 const isFav = ref(false);
-const movieStore = useMovieStore();
-const {
-  params: { id },
-} = useRoute();
-const router = useRouter();
 const showModal = ref(false);
 const wife = ref(false);
+const router = useRouter();
+const { params: { id } } = useRoute();
+const { mobile, isMobile: updateIsMobile } = useIsMobile();
+const movieStore = useMovieStore();
 
-const kek = computed(() => {
-  if (data.value)
-    if (data.value.profession) {
-      const len = data.value.profession.length - 1;
-      const array = data.value.profession.map((item, index) => {
-        if (data.value.profession[len] === item) {
-          return item.value;
-        } else {
-          return item.value + ',';
-        }
-      });
-      return array;
-    }
-});
-const Place = computed(() => {
-  if (data.value)
-    if (data.value.birthPlace) {
-      const len = data.value.birthPlace.length - 1;
-      const array = data.value.birthPlace.map((item, index) => {
-        if (data.value.birthPlace[len] === item) {
-          return item.value;
-        } else {
-          return item.value + ',';
-        }
-      });
-      return array;
-    }
-});
+const Profession = computed(() => data.value?.profession?.map(item => item.value).join(','));
+const Place = computed(() => data.value?.birthPlace?.map(item => item.value).join(','));
 const height = computed(() => {
-  if (data.value)
-    if (data.value.growth) {
-      const heightValid = String(data.value.growth).split('');
-      const len = heightValid.length - 1;
-      const he = heightValid.map((item, index) => {
-        if (heightValid[len] === item && len === index) {
-          return item + ' М';
-        } else if (heightValid[0] === item) {
-          return item + ',';
-        } else {
-          return item;
-        }
-      });
-      return he.join('');
-    } else {
-      return '1.72 М';
-    }
+  const heightValid = String(data.value?.growth || 172).split('');
+  return heightValid.map((item, index) => (index === 0 ? item + ',' : item)).join('') + ' М';
 });
-const date = computed(() => {
-  if (data.value) {
-    const x = new Date(data.value.birthday);
-    const z = new Date(x);
-    const options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      timeZoneName: 'long',
-    };
-    //@ts-ignore
-    const y = z.toLocaleDateString('ru-RU', options);
-    return y;
-  }
-});
-const datePlace = computed(() => {
-  if (data.value.death) {
-    const x = new Date(data.value.death);
-    const z = new Date(x);
-    const options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      timeZoneName: 'long',
-    };
-    //@ts-ignore
-    const y = z.toLocaleDateString('ru-RU', options);
-    return y;
-  }
-});
+const date = computed(() => formatDate(data.value?.birthday));
+const datePlace = computed(() => formatDate(data.value?.death) || '2023');
 const diff = computed(() => {
   const start = date.value.slice(6, 10);
-  console.log('start',start)
-  const end = datePlace.value?.slice(6, 10);
-  console.log('end',end)
-  const d = end ? Number(end) - Number(start) : 2023 - Number(start);
-  console.log('d',d)
-  return d + ' Лет';
+  const end = datePlace.value.slice(6, 10);
+  return (Number(end) - Number(start) || 2023 - Number(start)) + ' Лет';
 });
-const desc = computed(() => {
-  if (data.value)
-    if (data.value.facts) {
-      const array = data.value.facts.map((item) => {
-        if (!item.value.includes('a href')) {
-          return item.value;
-        }
-      });
-      const z = array.filter((item) => {
-        return item !== undefined;
-      });
-      return z;
-    }
-});
+const desc = computed(() => data.value?.facts?.filter(item => !item.value.includes('a href')).map(item => item.value));
 
 // Lifecycle 
 onMounted(() => {
@@ -137,7 +49,18 @@ onMounted(() => {
   fav();
 });
 
-// Composable 
+// functions 
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('ru-RU', {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZoneName: 'long',
+  });
+};
+
 const getPersonTwo = async (id) => {
   const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v1/staff/${id}`, {
     headers: {
@@ -149,16 +72,10 @@ const getPersonTwo = async (id) => {
   return dataZ;
 };
 const {
-  data: data2,
-  refetch: refetch2,
-  isLoading: isLoad2,
-  isError: isEr2,
-  error: error2,
-} = useQuery<any, Error>({
+  data: data2, refetch: refetch2, isLoading: isLoad2, isError: isEr2, error: error2} = useQuery<any, Error>({
   queryKey: ['todos2', id],
   queryFn: () => getPersonTwo(id),
   retry: false,
-  // enabled: false,
   refetchOnWindowFocus: false,
 });
 
@@ -172,17 +89,10 @@ const getPerson = async (id) => {
   const dataZ = data;
   return dataZ;
 };
-const {
-  data,
-  refetch,
-  isLoading: isLoad,
-  isError: isEr,
-  error,
-} = useQuery<PersonInfo, Error>({
+const {data,isLoading: isLoad, isError: isEr, error} = useQuery<PersonInfo, Error>({
   queryKey: ['todos', id],
   queryFn: () => getPerson(id),
   retry: false,
-  // enabled: false,
   refetchOnWindowFocus: false,
 });
 
@@ -193,13 +103,7 @@ const getNews = async (namez) => {
   const { news } = await res.json();
   return news ? news : [];
 };
-const {
-  data: dataNews,
-  refetch: refetchNews,
-  isLoading: isLoadNews,
-  isError: isErNews,
-  error: errorNews,
-} = useQuery<any, Error>({
+const {data: dataNews, refetch: refetchNews, isLoading: isLoadNews,  isError: isErNews, error: errorNews} = useQuery<any, Error>({
   queryKey: ['news', data.value && data.value.name ? data.value.name : ''],
   queryFn: () => getNews(data.value && data.value.name ? data.value.name : ''),
   retry: false,
@@ -207,10 +111,11 @@ const {
   refetchOnWindowFocus: false,
 });
 
-// Methods
+
 const open1 = () => {
   ElMessage('Персона добавлена в избранное!');
 };
+
 const chechFavorite = () => {
   isFavorite.value = true;
   movieStore.addFavorite(data);
@@ -234,6 +139,7 @@ const goBackMaim = () => {
     router.go(-1);
   }
 };
+
 const pokazModal = () => {
   showModal.value = true;
 };
@@ -242,16 +148,10 @@ const pokazModal = () => {
 watch(showModal, () => {
   document.body.classList.toggle('fix');
 });
-watch(
-  dataNews,
-  () => {
-    movieStore.fillNews(dataNews.value);
-  },
+watch(dataNews, () => {movieStore.fillNews(dataNews.value)},
   { deep: true, immediate: true },
 );
-watch(
-  data,
-  () => {
+watch(data, () => {
     if (data.value) {
       refetchNews();
     }
@@ -270,8 +170,7 @@ watch(
           v-if="data && dataNews && dataNews.length > 0"
           class="hahe hh1"
           :to="{ name: 'personNews', params: { name: data?.name } }"
-          ><div><el-button> Новости -> </el-button></div></RouterLink
-        >
+          ><div><el-button> Новости -> </el-button></div></RouterLink >
       </div>
     </div>
   </div>
@@ -290,12 +189,13 @@ watch(
         :datePlace="datePlace ? datePlace : '2023'"
         :diff="diff"
         :height="height"
-        @check="chechFavorite"
         :data="data"
-        @modalka="pokazModal"
         :isFavorite="isFavorite"
         :isFav="isFav"
-        :kek="kek" />
+        :kek="Profession" 
+        @check="chechFavorite"
+        @modalka="pokazModal"
+        />
 
       <TheFacts v-if="desc && desc.length > 0" :desc="desc" />
 

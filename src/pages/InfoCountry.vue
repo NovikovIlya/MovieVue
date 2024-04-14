@@ -73,7 +73,6 @@ const {
 
 //computed
 const population = computed(() => {
-  console.log(data2.value)
   if (data2.value) {
     const x = data2.value?.map((item) => {
       return { ...item, popul: new Intl.NumberFormat('ru-RU').format(item.population) };

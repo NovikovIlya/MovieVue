@@ -2,6 +2,7 @@ import { ref } from 'vue';
 
 export function useValidName(name) {
   const nameEng = ref('');
+  
   const validName = (name) => {
     switch (name) {
       case 'Буркина-Фасо':

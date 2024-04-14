@@ -1,15 +1,7 @@
 <script setup lang="ts">
-const props = defineProps<{
-  data: any;
-  isFavorite: boolean;
-  isFav: boolean;
-  kek: string[];
-  height: string;
-  date: string;
-  datePlace: string;
-  diff: string;
-  Place: string[];
-}>();
+import { infoPersoType } from '../types';
+
+const props = defineProps<infoPersoType>();
 const emits = defineEmits<{
   (e: 'modalka'): void;
   (e: 'check'): void;
