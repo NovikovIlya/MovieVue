@@ -110,7 +110,7 @@ const population = computed(() => {
     </el-col>
   </div>
 
-  <div v-if="dataPerson" class="div"><h2 class="hh5">Известные люди:</h2></div>
+  <div v-if="dataPerson && !isEr2" class="div"><h2 class="hh5">Известные люди:</h2></div>
   <div v-if="dataPerson" class="containerMain2">
     <ul class="infinite-list" infinite-scroll-immediate="false">
       <li v-for="(item, index) in dataPerson" :key="item.id">
