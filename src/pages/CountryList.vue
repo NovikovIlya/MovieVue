@@ -102,6 +102,10 @@ function filteredList() {
 .error {
   margin-top: 50px;
 }
+.errorWh{
+  display: flex;
+  justify-content: center;
+}
 .main {
   width: 70%;
   margin: 0 auto;

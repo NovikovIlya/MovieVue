@@ -104,7 +104,7 @@ const population = computed(() => {
     </div>
   </div>
   <div class="error" style="width: 100%" v-loading="isLoad2" v-if="isLoad2"></div>
-  <div v-if="isEr2" class="error">
+  <div v-if="isEr2" class="error errorWh">
     <el-col :sm="12" :lg="6">
       <el-result icon="error" title="Произошла ошибка" sub-title="Попробуйте позже"> </el-result>
     </el-col>
@@ -146,6 +146,10 @@ const population = computed(() => {
 <style scoped lang="scss">
 .error {
   margin-top: 50px;
+}
+.errorWh{
+  display: flex;  
+  justify-content: center;
 }
 .hh5 {
   margin-bottom: 5px;
