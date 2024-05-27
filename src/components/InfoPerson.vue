@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { infoPersoType } from '../types';
 
 const props = defineProps<infoPersoType>();
@@ -7,10 +8,28 @@ const emits = defineEmits<{
   (e: 'check'): void;
 }>();
 
+//computed
+const validKek = computed(() => {
+  return props.kek.map((item)=>{
+    if(item===','){
+      return ', '
+    }else return item
+  });
+});
+
+
 //methods
-const imageLoadOnError = (e) => {
+const imageLoadOnError = (e: any) => {
   e.target.src = 'https://myivancrismanalo.files.wordpress.com/2017/10/cropped-unknown_person.png';
 };
+const validArray = (item)=>{
+  console.log(item)
+  return item?.split('').map((item)=>{
+    if(item===','){
+      return ',' + ' '
+    }else return item
+  }).join('')
+}
 </script>
 
 <template>
@@ -50,7 +69,7 @@ const imageLoadOnError = (e) => {
         <div></div>
         <div class="it ff">Карьера:</div>
         <div class="proff vv it">
-          <div class="item" v-for="item of kek">{{ item }}</div>
+          <div class="item" >{{validArray(kek)}}</div>
         </div>
         <div class="height it ff">Рост:</div>
         <div class="it">{{ height }}</div>
@@ -58,9 +77,9 @@ const imageLoadOnError = (e) => {
         <div class="it">{{ date?.slice(0, 10) }}</div>
         <div class="it ff">Место рождения:</div>
         <div class="proff it">
-          <div class="item" v-for="(item,index) in Place">
-            <RouterLink v-show="index === Place.length - 1" :to="'/country/' + item">{{ item }}</RouterLink>
-            {{ index === Place.length - 1 ? '' : item }}
+          <div class="item" >
+            <RouterLink  :to="'/country/' + validArray(Place).split(',').slice(-1)">{{ validArray(Place) }}</RouterLink>
+           
           </div>
         </div>
         <div class="it ff" v-show="data?.death">Дата смерти:</div>
@@ -193,7 +212,7 @@ const imageLoadOnError = (e) => {
   flex-wrap: wrap;
 }
 .item {
-  margin-right: 5px;
+  /* margin-right: 5px; */
 }
 .imgAward {
   cursor: pointer;
